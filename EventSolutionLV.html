@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Event Solutions Las Vegas</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06);
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  .hero{text-align:center;padding:104px 0 56px}
+  .eyebrow{font-size:15px;font-weight:600;color:var(--blue);letter-spacing:.02em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+  .hero .sub{font-size:21px;color:var(--sub);margin-top:20px;font-weight:400}
+  .hero .meta{font-size:14px;color:var(--sub);margin-top:28px}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .nav a{font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:980px}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:34px 0 18px}
+  .gauge{--val:58;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--red) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:26px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--red)}
+  .lead{max-width:700px;text-align:center;color:var(--sub);font-size:18px;margin:18px auto 0}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:14px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;text-align:center}
+  .sec-sub{font-size:14px;color:var(--sub);text-align:center;max-width:640px;margin:0 auto 26px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:var(--radius);padding:28px 26px;box-shadow:var(--shadow)}
+  .card h3{font-size:15px;color:var(--sub);font-weight:600}
+  .card .v{font-size:44px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px}
+  .card .w{font-size:13px;color:var(--sub)}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:870px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px}
+  .item .body p{font-size:14.5px;color:var(--sub)}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:38px 40px;margin-top:20px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .panel .tag{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .panel p{color:#3a3a3c;font-size:15.5px;margin-bottom:13px}
+  .panel p:last-child{margin-bottom:0}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  .kv td,.kv th{padding:10px 13px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .bad{color:var(--red)}.ok{color:var(--green)}.warn{color:#b26a00}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13.5px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f}
+  .fix b{color:var(--blue)}
+  .callout{background:linear-gradient(135deg,#fff,#fff4f3);border:1px solid rgba(255,59,48,.25);border-radius:var(--radius);padding:36px 40px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--red);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+  .callout p{font-size:16.5px;color:#3a3a3c}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:30px 34px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:880px;margin:0 auto}
+  .plan .group{margin-bottom:28px}
+  .plan .gh{font-size:18px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:11px}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:15px;display:flex;gap:13px;align-items:flex-start}
+  .ol li b{color:var(--blue);flex:none;min-width:22px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:92px;padding-top:40px;border-top:1px solid var(--line)}
+  .community{max-width:520px;margin:40px auto 0;background:var(--card);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);font-size:15px;text-align:center}
+  .community a{color:var(--blue);text-decoration:none}
+  @media(max-width:640px){
+    body{font-size:16px}.hero{padding:60px 0 32px}
+    .panel,.limit,.callout{padding:24px 20px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report - Fully Consolidated</div>
+    <h1>Event Solutions&nbsp;Las&nbsp;Vegas</h1>
+    <p class="sub">Seven parallel lenses converged on one root cause: the Las Vegas migration is unfinished, and the publishing-layer identity is split.</p>
+    <p class="meta">
+      <b>eventsolutions-lv.com</b> &nbsp;·&nbsp; Local event planning Las Vegas
+      &nbsp;·&nbsp; WordPress + Rank Math + WP Rocket &nbsp;·&nbsp; 36 URLs analyzed &nbsp;·&nbsp; <b>20 May 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#scores">Scores</a><a href="#first">Start Here</a><a href="#critical">Critical</a>
+      <a href="#tech">Technical</a><a href="#eeat">Content/E-E-A-T</a><a href="#schema">Schema</a>
+      <a href="#geo">GEO</a><a href="#local">Local</a><a href="#sxo">SXO</a>
+      <a href="#blog">Blog</a><a href="#roadmap">Roadmap</a>
+      <a href="#measure">Measure</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:58"><div class="inner"><div class="num">58</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Marginal&nbsp;·&nbsp;D</span></div>
+    <p class="lead">A technically operational local site whose biggest problems are
+      <b>identity</b> — coordinates, author, brand name, social profiles, and team
+      bios all still read as San Francisco, not Las Vegas — and a <b>schema layer
+      that misclassifies its own pages</b>: <code>BlogPosting</code> on the
+      homepage, <code>Person</code> <code>@id</code> resolving to <code>admin</code>,
+      Article schema shipped with literal <code>[placeholder]</code> strings.</p>
+  </div>
+
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <div class="sec-sub">Each lens scored independently in parallel. Conflicts reconciled in-section, not averaged away.</div>
+    <div class="grid">
+      <div class="card r"><h3>SEO Health</h3><div class="v">58</div><div class="w">Overall · Marginal (D)</div><div class="bar"><i style="width:58%"></i></div></div>
+      <div class="card a"><h3>Technical</h3><div class="v">71</div><div class="w">Operational with defects</div><div class="bar"><i style="width:71%"></i></div></div>
+      <div class="card r"><h3>Content / E-E-A-T</h3><div class="v">54</div><div class="w">Blog strong · trust pages thin</div><div class="bar"><i style="width:54%"></i></div></div>
+      <div class="card r"><h3>Schema</h3><div class="v">45</div><div class="w">Geo wrong · BlogPosting misapplied</div><div class="bar"><i style="width:45%"></i></div></div>
+      <div class="card r"><h3>GEO / AI Search</h3><div class="v">50</div><div class="w">3 of 6 AI crawlers blocked</div><div class="bar"><i style="width:50%"></i></div></div>
+      <div class="card r"><h3>Local SEO</h3><div class="v">45</div><div class="w">Identity confusion site-wide</div><div class="bar"><i style="width:45%"></i></div></div>
+      <div class="card r"><h3>SXO</h3><div class="v">49</div><div class="w">LV2 page structurally broken</div><div class="bar"><i style="width:49%"></i></div></div>
+      <div class="card a"><h3>Sitemap</h3><div class="v">68</div><div class="w">Functional · robots.txt gap</div><div class="bar"><i style="width:68%"></i></div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <table class="kv">
+        <tr><th>Audit category</th><th class="r">Score</th><th>Weight</th></tr>
+        <tr><td>Technical SEO</td><td class="r warn">71</td><td>22%</td></tr>
+        <tr><td>Content Quality</td><td class="r bad">54</td><td>23%</td></tr>
+        <tr><td>On-Page SEO</td><td class="r bad">55</td><td>20%</td></tr>
+        <tr><td>Schema / Structured Data</td><td class="r bad">45</td><td>10%</td></tr>
+        <tr><td>Performance (CWV)</td><td class="r warn">65*</td><td>10% — not measured</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r bad">50</td><td>10%</td></tr>
+        <tr><td>Images</td><td class="r bad">50</td><td>5%</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">Weighted aggregate
+        <code>22%·71 + 23%·54 + 20%·55 + 10%·45 + 10%·65 + 10%·50 + 5%·50 = 57.54 → 58</code>.
+        Performance inferred from WP Rocket cache state, minification, and page weight —
+        not field-measured. Set up CrUX or an authorized PSI key for ground-truth CWV.</p>
+    </div>
+  </section>
+
+  <section id="first">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <div class="callout">
+      <div class="tag">● Flagged independently by five of seven analyses</div>
+      <h3>The Las Vegas migration is unfinished, and identity is split</h3>
+      <p>The same root cause surfaces in Local, Schema, GEO, Content, and SXO independently:
+        <code>geo</code> coordinates 3–4 km off the 89148 street address ·
+        <code>sameAs</code> URLs pointing at SF-branded LinkedIn/Facebook/Instagram ·
+        four concurrent brand-name variants · all seven team bios describing Bay Area /
+        NY / San Diego backgrounds · <code>/las-vegas-event-planning-services-2/</code>
+        carrying an H1 of "Las Vegas Event Planning Services" with an H2 of
+        <b>"Experienced Bay Area Event Planning"</b> and a
+        <code>&lt;section class="San Francisco"&gt;</code> block ·
+        <code>Person</code> <code>@id</code> resolving to <code>admin</code> while
+        some posts inline <code>author.name: "Joie Nguyen"</code> ·
+        Article JSON-LD shipping literal <code>[placeholder]</code> strings on all 16 posts.
+        Treat as one body of work. Most fixes are minutes of configuration. Doing them
+        first lifts Local, Schema, GEO, Content, and SXO at once.</p>
+    </div>
+  </section>
+
+  <section id="critical">
+    <div class="sec-title">Critical &amp; High Findings</div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Schema · Local</div>
+      <h3>Geo coordinates are 3–4 km off the real address</h3>
+      <table class="kv">
+        <tr><td>Schema <code>geo</code></td><td class="r bad">36.1612, -115.2976 ✕ (Summerlin South)</td></tr>
+        <tr><td>True parcel for 655 S Fort Apache Rd, 89148</td><td class="r ok">~36.0862, -115.3025 (Spring Valley)</td></tr>
+      </table>
+      <p>Google's local pack uses <code>geo</code> for proximity and pin placement.
+        The current pin lands in Summerlin South / Hualapai Way, ~3–4 km north of
+        the 89148 street address. Large enough to suppress the listing for
+        Spring Valley searchers and to flag a structured-data mismatch.</p>
+      <div class="fix"><b>Fix —</b> correct lat/lng on the LocalBusiness block;
+        verify against Google Maps before publishing.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Schema · Technical</div>
+      <h3>Homepage is typed as <code>BlogPosting</code> in JSON-LD</h3>
+      <p>Rank Math's "rich snippet" override is misfiring on every non-blog page —
+        homepage, about-us, contact-us, and service pages all carry
+        <code>BlogPosting</code> alongside <code>WebPage</code>. A homepage typed as
+        a blog post is the most semantically incorrect schema instance on the site
+        and forfeits Organization/LocalBusiness rich-result eligibility on the
+        most-linked URL.</p>
+      <div class="fix"><b>Fix —</b> set the homepage Rank Math schema type to
+        <code>WebPage</code>; link <code>LocalBusiness</code> into the
+        <code>@graph</code> via <code>@id</code>; remove
+        <code>BlogPosting</code> override from non-blog page types.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Content · Schema · GEO</div>
+      <h3>Author identity is split between <code>admin</code> and "Joie Nguyen"</h3>
+      <table class="kv">
+        <tr><td>Some posts (inline <code>author.name</code>)</td><td class="r warn">Joie Nguyen</td></tr>
+        <tr><td><code>Person</code> <code>@id</code> dereferences to</td><td class="r bad"><code>/author/admin/</code> · <code>"name": "admin"</code></td></tr>
+        <tr><td>Twitter card <code>data1</code> on every page</td><td class="r bad">"Written by: admin"</td></tr>
+        <tr><td>Author archive <code>/author/admin/</code></td><td class="r bad">HTTP 200 · <code>index, follow</code></td></tr>
+      </table>
+      <p>Google's structured-data renderer uses <code>@id</code> as authoritative —
+        so even posts that inline "Joie Nguyen" resolve to "admin" in rich-result
+        author attribution. The indexable <code>/author/admin/</code> archive also
+        leaks the WordPress login username.</p>
+      <div class="fix"><b>Fix —</b> change WordPress display name; migrate the author
+        slug; build an actual <code>/author/joie-nguyen/</code> bio page with
+        credentials and external <code>sameAs</code>; add <code>jobTitle</code> to the
+        <code>Person</code> node. <i>Confirm the real principal first.</i></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Content</div>
+      <h3>No privacy policy or terms — on an active GA4 + contact-form site</h3>
+      <p><code>/privacy-policy/</code>, <code>/terms/</code>, and
+        <code>/terms-of-service/</code> all return 404. The site runs GA4
+        (<code>G-DXW417419P</code>) and contact forms collecting personal data.
+        September 2025 QRG weights Trustworthiness at 30% — the heaviest E-E-A-T
+        factor. CCPA exposure given California-adjacent operations.</p>
+      <div class="fix"><b>Fix —</b> publish privacy policy + terms; link both in
+        the footer. Disclose GA4 data collection at minimum.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Content · Schema</div>
+      <h3>Article JSON-LD ships with literal <code>[placeholder]</code> strings</h3>
+      <p>Every blog post's Article schema contains literal <code>[placeholder]</code>
+        text in <code>author.name</code>, <code>image</code>,
+        <code>publisher.logo.url</code>, and <code>mainEntityOfPage.@id</code>. Zero
+        rich-result eligibility for the entire blog. The literal text signals
+        "unpublished-quality work" to any structured-data parser.</p>
+      <div class="fix"><b>Fix —</b> replace placeholder values in the Rank Math
+        Article schema template with real author name, hosted headshot URL, full
+        canonical URL, and organization logo URL.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · SXO · Content · Local</div>
+      <h3>LV2 page is a Las Vegas URL with San Francisco content</h3>
+      <table class="kv">
+        <tr><td>URL</td><td class="r"><code>/las-vegas-event-planning-services-2/</code></td></tr>
+        <tr><td>H1</td><td class="r ok">"Las Vegas Event Planning Services"</td></tr>
+        <tr><td>H2</td><td class="r bad">"Experienced <b>Bay Area</b> Event Planning"</td></tr>
+        <tr><td>Section class</td><td class="r bad"><code>&lt;section class="San Francisco"&gt;</code></td></tr>
+        <tr><td>Footer "SAN FRANCISCO" link target</td><td class="r bad">points to this LV URL</td></tr>
+      </table>
+      <p>The same "Bay Area" H2 also appears on <code>/wedding-concierge/</code>,
+        confirming this is template propagation — not an isolated typo. Google sees
+        a Las Vegas URL with Bay Area H2 content and a San Francisco section class.
+        Neither Las Vegas nor Bay Area signals win. The page dilutes both, and the
+        footer's SF link sends visitors to this LV URL.</p>
+      <div class="fix"><b>Fix —</b> 301 <code>/las-vegas-event-planning-services-2/</code>
+        → canonical LV services page; remove the "Bay Area" H2 from the surviving page
+        and from <code>/wedding-concierge/</code>; fix the footer SF link target.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · GEO · Technical</div>
+      <h3>ModSecurity blocks GPTBot, ClaudeBot, CCBot (HTTP 406)</h3>
+      <table class="kv">
+        <tr><th>Crawler</th><th class="r">HTTP</th><th>Status</th></tr>
+        <tr><td>Googlebot/2.1</td><td class="r ok">200</td><td>Allowed</td></tr>
+        <tr><td>PerplexityBot/1.0</td><td class="r ok">200</td><td>Allowed</td></tr>
+        <tr><td>OAI-SearchBot/1.0</td><td class="r ok">200</td><td>Allowed</td></tr>
+        <tr><td>GPTBot/1.0</td><td class="r bad">406</td><td>Blocked at WAF</td></tr>
+        <tr><td>ClaudeBot/1.0</td><td class="r bad">406</td><td>Blocked at WAF</td></tr>
+        <tr><td>CCBot/2.0</td><td class="r bad">406</td><td>Blocked at WAF</td></tr>
+      </table>
+      <p>Block is enforced at the ModSecurity layer — not via robots.txt — so
+        the crawlers receive a hard 406 with no Disallow signal. ChatGPT's browsing
+        pipeline (GPTBot) and Claude.ai retrieval (ClaudeBot) cannot reach the site.
+        OAI-SearchBot passes, so OpenAI's search-specific bot can crawl, but the
+        ChatGPT-Browse pathway is cut off.</p>
+      <div class="fix"><b>Fix —</b> whitelist by UA <b>and</b> reverse-DNS-verify
+        (PTR records in <code>*.gptbot.openai.com</code>, <code>*.anthropic.com</code>);
+        do not disable ModSecurity globally. Declare allow rules in robots.txt for
+        the same UAs to make intent discoverable.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Local · Schema · GEO</div>
+      <h3><code>sameAs</code> points at the San Francisco sister brand</h3>
+      <table class="kv">
+        <tr><td>LinkedIn</td><td class="r bad"><code>ec.linkedin.com/company/event-solutions-san-francisco</code></td></tr>
+        <tr><td>Facebook</td><td class="r bad"><code>facebook.com/eventsolutionssf</code></td></tr>
+        <tr><td>Instagram</td><td class="r warn"><code>instagram.com/eventsolutions_us</code></td></tr>
+      </table>
+      <p>Google uses <code>sameAs</code> for entity disambiguation. Pointing the
+        Las Vegas LocalBusiness at SF-labeled profiles tells the Knowledge Graph the
+        LV business is the same entity as a San Francisco one — subordinating LV
+        ranking signal to SF and confusing the local pack.</p>
+      <div class="fix"><b>Fix —</b> replace with verified LV-specific profile URLs
+        (LinkedIn / Facebook / Instagram / Yelp). The Rank Math
+        <code>Organization</code> node currently has no <code>sameAs</code> at all —
+        populate it.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Schema · Local</div>
+      <h3>Schema type is generic <code>LocalBusiness</code></h3>
+      <p>Schema.org defines <code>EventPlanningService</code> as a direct subtype
+        of <code>LocalBusiness &gt; ProfessionalService</code>. Using the parent
+        type forgoes the more specific semantic signal Google uses to match the
+        business to event-planning queries.</p>
+      <div class="fix"><b>Fix —</b> set <code>"@type":
+        ["EventPlanningService", "LocalBusiness"]</code>; add an
+        <code>@id</code> so the block can be cross-referenced from other graph
+        nodes.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Technical · Sitemap</div>
+      <h3>robots.txt has no <code>Sitemap:</code> directive</h3>
+      <p>The 25-byte robots.txt is <code>User-agent: * / Disallow:</code> only.
+        Google can discover the sitemap via Search Console, but Bing, Yandex, and
+        other crawlers relying on robots.txt autodiscovery cannot. One-line fix.</p>
+      <div class="fix"><b>Fix —</b> append
+        <code>Sitemap: https://eventsolutions-lv.com/sitemap_index.xml</code>.
+        Optionally declare explicit AI-crawler Allow rules to make the WAF/robots
+        intent consistent.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Content</div>
+      <h3>Trust-anchor pages are critically thin</h3>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Words</th><th>Floor</th></tr>
+        <tr><td>Homepage</td><td class="r bad">265</td><td>500</td></tr>
+        <tr><td>About Us</td><td class="r bad">165</td><td>500</td></tr>
+        <tr><td>Contact Us</td><td class="r bad">79</td><td>200 (practical)</td></tr>
+      </table>
+      <p>About Us is a near-duplicate of the homepage intro. The pages that should
+        carry the most brand authority carry the least content. Six service pages
+        also fall below the 800-word service floor — Graphic Design 138 w,
+        Locations 94 w, and Services hub 94 w are essentially stubs.</p>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Local · SXO</div>
+      <h3>No Las Vegas team bios; three brand-name variants in use</h3>
+      <p>All seven <code>/team/</code> profiles describe Bay Area / NY / San Diego /
+        San Jose / USF backgrounds — zero LV residency, zero LV-venue experience,
+        zero LV-client references. Concurrently, four distinct brand strings are in
+        active use: JSON-LD "Las Vegas Event Solutions Productions, Inc." · H1
+        "Event Solutions Productions, Inc." · og:site_name "Event Solutions Las Vegas
+        | Event Planners &amp; Designers" · footer "Event Solutions". NAP consistency
+        requires exactly one canonical legal name.</p>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="sec-title">Technical SEO · 71 / 100</div>
+    <div class="panel">
+      <div class="tag ok">● Strengths</div>
+      <p>HTTPS enforced; all 36 pages return 200 OK with Chrome UA; valid sitemap
+        index serving 3 child sitemaps; active WP Rocket cache + minified CSS/JS;
+        mobile viewport correct; <code>/llms.txt</code> served at 200 (8.3 KB,
+        Rank Math-generated); <code>index, follow</code> + <code>max-snippet:-1</code>
+        on all pages; self-canonical URLs.</p>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Homepage <code>BlogPosting</code> schema</td><td class="r bad">Critical</td><td>Rank Math rich-snippet override misfiring on <code>/</code></td></tr>
+        <tr><td>Author archive <code>/author/admin/</code> indexable</td><td class="r bad">Critical</td><td>Login username leak + thin/duplicate index</td></tr>
+        <tr><td>WAF 406 for GPTBot / ClaudeBot / CCBot</td><td class="r warn">High</td><td>UA filter at WAF layer, not declared in robots.txt</td></tr>
+        <tr><td><code>-2</code> duplicate service slug</td><td class="r warn">High</td><td>166 KB twin of canonical LV services page</td></tr>
+        <tr><td>robots.txt missing <code>Sitemap:</code> directive</td><td class="r warn">High</td><td>Crawler autodiscovery broken</td></tr>
+        <tr><td><code>/sitemap.xml</code> 301 → <code>/sitemap_index.xml</code></td><td class="r warn">High</td><td>Submit canonical URL in GSC</td></tr>
+        <tr><td>Legal pages 404</td><td class="r note">Medium</td><td>CCPA exposure + EEAT signal failure</td></tr>
+        <tr><td>Homepage <code>&lt;title&gt;</code> prefix <code>Home - …</code></td><td class="r note">Medium</td><td>Wastes title budget; triggers Google rewrite</td></tr>
+        <tr><td><code>twitter:data1</code> shows <code>"Written by: admin"</code></td><td class="r note">Medium</td><td>Display-name leak on every page</td></tr>
+        <tr><td><code>/feed/</code> 200, no <code>noindex</code></td><td class="r note">Medium</td><td>Scraping/syndication exposure</td></tr>
+        <tr><td><code>og:type=website</code> + <code>article:published_time</code></td><td class="r note">Medium</td><td>Invalid OG namespace bleed on homepage</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="eeat">
+    <div class="sec-title">Content Quality &amp; E-E-A-T · 54 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Factor</th><th class="r">Score</th><th>Key signals</th></tr>
+        <tr><td>Experience</td><td class="r warn">52/100</td><td>✅ 11 long-form blog posts with operational specificity · ❌ no portfolio, case studies, named-client testimonials on service pages</td></tr>
+        <tr><td>Expertise</td><td class="r warn">58/100</td><td>✅ team page with 7 named planners and credentials · ❌ team siloed from blog; bylines unlinked to bios</td></tr>
+        <tr><td>Authoritativeness</td><td class="r bad">45/100</td><td>❌ <code>admin</code> slug + Twitter card · ❌ Top-Planners post is self-promotional · ❌ no awards/press</td></tr>
+        <tr><td>Trustworthiness</td><td class="r bad">40/100</td><td>❌ no privacy/terms · ❌ <code>[placeholder]</code> in Article schema · ❌ contact page 79 w · ⚠️ SF social profiles</td></tr>
+        <tr><td class="r"><b>Total (avg)</b></td><td class="r"><b>54</b></td><td>Marginal — Trust the critical weakness</td></tr>
+      </table>
+      <p><b>Split personality.</b> The blog is the site's strongest asset — 11 of 16 posts
+        clear the 1,500-word floor with genuine operational specificity (37-point
+        checklist, attrition clauses, freight policies, ADA intake workflows, named
+        venues). The <code>/team/</code> page at 826 words has real credential
+        depth: SF State, University at Buffalo, USC, USF.</p>
+      <p><b>What sinks the score.</b> The pages that should carry the most trust
+        carry the least content. Stub service pages (Graphic Design 138 w,
+        Locations 94 w, Services 94 w) take up keyword real estate without ranking.
+        The <code>top-event-planners-las-vegas</code> post lists Event Solutions as
+        <code>#1</code> in its own roundup — under an <code>admin</code> byline at
+        668 words — a textbook QRG anti-pattern.</p>
+      <table class="kv">
+        <tr><th>Bucket</th><th class="r">Count</th><th class="r">Range</th><th>Verdict</th></tr>
+        <tr><td>Strong blog posts (≥1,500 w)</td><td class="r">11 / 16</td><td class="r">1,251–2,982</td><td>Hold</td></tr>
+        <tr><td>Thin blog posts</td><td class="r">4 / 16</td><td class="r">668–1,324</td><td>Expand or 301</td></tr>
+        <tr><td>Service pages ≥800 w</td><td class="r">1 / 12</td><td class="r">825</td><td>Wedding Planning only</td></tr>
+        <tr><td>Service pages 500–800 w</td><td class="r">5 / 12</td><td class="r">562–723</td><td>Expand</td></tr>
+        <tr><td>Service pages &lt; 500 w</td><td class="r">6 / 12</td><td class="r">79–409</td><td>Critical depth gap</td></tr>
+      </table>
+      <div class="fix"><b>Top fixes —</b> publish privacy + terms · replace
+        <code>[placeholder]</code> in Article schema · resolve <code>admin</code>
+        identity · expand homepage and About Us to 600+ w · 301 the LV2 duplicate.</div>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="sec-title">Schema · 45 / 100</div>
+    <div class="panel">
+      <p>Strong skeleton, wrong wiring.</p>
+      <table class="kv">
+        <tr><th>State</th><th>Item</th></tr>
+        <tr><td class="ok">✅ Present</td><td><code>LocalBusiness</code>, <code>Organization</code>, <code>PostalAddress</code>, <code>GeoCoordinates</code>, <code>WebSite</code> + <code>SearchAction</code>, <code>WebPage</code>, <code>BlogPosting</code>, <code>BreadcrumbList</code>, <code>Person</code>, <code>ProfilePage</code>, <code>ImageObject</code></td></tr>
+        <tr><td class="bad">❌ Wrong</td><td><code>geo</code> 3–4 km off · <code>@type: LocalBusiness</code> instead of <code>EventPlanningService</code> · <code>BlogPosting</code> applied to non-blog pages · <code>Person @id</code> resolves to <code>admin</code></td></tr>
+        <tr><td class="bad">❌ Disconnected</td><td><code>LocalBusiness</code> is an orphan block — no <code>@id</code>, not linked into the Rank Math <code>@graph</code> Organization node</td></tr>
+        <tr><td class="bad">❌ Placeholder</td><td>Literal <code>[placeholder]</code> in Article schema on all blog posts</td></tr>
+        <tr><td class="warn">⚠️ Wrong source</td><td><code>sameAs</code> URLs point at SF social profiles</td></tr>
+        <tr><td class="warn">⚠️ Missing</td><td><code>priceRange</code>, <code>description</code>, <code>image</code> on LocalBusiness · <code>openingHoursSpecification</code> array · <code>AggregateRating</code> · <code>Service</code> per service page · <code>jobTitle</code>/<code>description</code> on Person</td></tr>
+        <tr><td class="warn">⚠️ Stale</td><td>Deprecated <code>query-input</code> property on <code>SearchAction</code></td></tr>
+        <tr><td class="note">ℹ️ Note</td><td>FAQPage rich results restricted to gov/healthcare since Aug 2023 — only Info-priority for commercial sites; useful for AI/LLM citation, not Google rich results</td></tr>
+      </table>
+      <div class="fix"><b>Recommended core upgrade —</b>
+        <code>"@type": ["EventPlanningService", "LocalBusiness"]</code> ·
+        <code>"@id": "https://eventsolutions-lv.com/#localbusiness"</code> ·
+        correct lat/lng to <code>36.0862, -115.3025</code> · numeric values not
+        strings · LV-specific <code>sameAs</code> · <code>openingHoursSpecification</code>
+        array · add <code>priceRange</code>, <code>description</code>,
+        <code>image</code> · link <code>provider</code> from per-page
+        <code>Service</code> nodes back to this LocalBusiness <code>@id</code>.</div>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">GEO / AI-Search · 50 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Criterion</th><th class="r">Score</th><th>Note</th></tr>
+        <tr><td>AI crawler accessibility (25%)</td><td class="r bad">36</td><td>GPTBot / ClaudeBot / CCBot 406; Perplexity, OAI-Search, Googlebot 200</td></tr>
+        <tr><td>llms.txt quality (15%)</td><td class="r warn">62</td><td>Rank Math boilerplate, present, functional list; no llms-full.txt; no narrative authority</td></tr>
+        <tr><td>Passage citability (15%)</td><td class="r warn">60</td><td>FAQ schema on checklist post; body H2s mostly topic labels not questions</td></tr>
+        <tr><td>Author / expert identity (10%)</td><td class="r bad">35</td><td><code>admin</code> on homepage; Joie Nguyen partial; no bio page, no external sameAs</td></tr>
+        <tr><td>Schema / entity citation signals (10%)</td><td class="r warn">72</td><td>LocalBusiness strong; <code>sameAs</code> polluted by SF</td></tr>
+        <tr><td>Question-shaped headings (10%)</td><td class="r bad">45</td><td>~20–25% of H2s match question format</td></tr>
+        <tr><td>Numeric specificity (5%)</td><td class="r ok">75</td><td>37-point checklist, named venues (Wynn), schema phone/geo</td></tr>
+        <tr><td>TL;DR / summary blocks (5%)</td><td class="r bad">30</td><td>"Key Takeaways" appears too deep in body, not in first 150 words</td></tr>
+        <tr><td>Platform-specific signals (5%)</td><td class="r bad">42</td><td>No YouTube, no Reddit presence, no Wikipedia entity, LinkedIn points to SF</td></tr>
+      </table>
+      <p><b>Platform outlook</b></p>
+      <table class="kv">
+        <tr><th>Platform</th><th class="r">Status</th><th>Primary blocker</th></tr>
+        <tr><td>ChatGPT (browsing)</td><td class="r bad">Blocked</td><td>GPTBot 406 at WAF</td></tr>
+        <tr><td>ChatGPT (search)</td><td class="r warn">Partial</td><td>OAI-SearchBot passes; GPTBot still blocked</td></tr>
+        <tr><td>Claude.ai</td><td class="r bad">Blocked</td><td>ClaudeBot 406 at WAF</td></tr>
+        <tr><td>Perplexity</td><td class="r ok">Accessible</td><td>—</td></tr>
+        <tr><td>Google AI Overviews</td><td class="r ok">Accessible</td><td>—</td></tr>
+        <tr><td>Bing Copilot</td><td class="r ok">Accessible</td><td>—</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)"><i>Live brand-mention search and
+        AI citation tracking not performed this run — reported from on-site evidence
+        only. Whitelisting the three blocked UAs is the single highest-leverage
+        AI-search change available.</i></p>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="sec-title">Local SEO · 45 / 100</div>
+    <div class="panel">
+      <p><b>NAP fingerprint</b></p>
+      <table class="kv">
+        <tr><th>Signal</th><th class="r">Current</th><th>Action</th></tr>
+        <tr><td>Street</td><td class="r warn">655 S Fort Apache Rd, Las Vegas, NV 89148 (schema only — not in HTML)</td><td>Add visible <code>&lt;address&gt;</code> in footer + contact</td></tr>
+        <tr><td>Phone</td><td class="r ok">702.816.9570 (visible) · <code>+1 702-816-9570</code> (schema)</td><td>Consistent</td></tr>
+        <tr><td><code>geo</code></td><td class="r bad">36.1612, -115.2976 ✕</td><td>Correct to ~36.0862, -115.3025 (Spring Valley)</td></tr>
+        <tr><td><code>areaServed</code></td><td class="r warn">Strip · Downtown · Summerlin · Henderson</td><td>Add Spring Valley (actual office neighborhood)</td></tr>
+        <tr><td>Brand name (canonical)</td><td class="r bad">Four variants in use</td><td>Pick one; standardize sitewide + GBP + citations</td></tr>
+        <tr><td><code>sameAs</code></td><td class="r bad">SF-branded LinkedIn/Facebook/Instagram</td><td>Replace with verified LV-specific profiles</td></tr>
+        <tr><td>Team bios</td><td class="r bad">All Bay Area / NY / SD / SJ backgrounds</td><td>Add at least one LV-resident / LV-experienced bio</td></tr>
+        <tr><td>Reviews / testimonials</td><td class="r warn">3 brief testimonials on homepage; none on service pages</td><td>Add structured testimonials per page; <code>AggregateRating</code> only when real</td></tr>
+      </table>
+      <div class="fix"><b>Deferred (no live access this run) —</b>
+        GBP audit (category, pin, photo count, post velocity, Q&amp;A);
+        Tier-1 citation scrape (Yelp, BBB-SoNev, WeddingWire, The Knot, Cvent, PartySlate);
+        live local-pack rank positions; review velocity (Sterling Sky 18-day rule);
+        proximity factor (~55% of local pack variance per Search Atlas, outside site control).</div>
+    </div>
+  </section>
+
+  <section id="sxo">
+    <div class="sec-title">SXO / Search Experience · 49 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Dimension</th><th class="r">Score</th></tr>
+        <tr><td>Page-type / SERP intent match</td><td class="r warn">52</td></tr>
+        <tr><td>User journey / conversion funnel</td><td class="r bad">44</td></tr>
+        <tr><td>Persona composite</td><td class="r warn">51</td></tr>
+      </table>
+      <p><b>Page-type alignment is acceptable for the money pages</b> that target
+        Commercial Investigation intent (Wedding Planning Services, Corporate Event
+        Planning, LV Event Planning Services). The structural defects sit elsewhere.</p>
+      <table class="kv">
+        <tr><th>Persona</th><th class="r">Score</th><th>Top friction</th></tr>
+        <tr><td>Bride researching wedding planner</td><td class="r warn">55</td><td>No pricing transparency; blog posts ship without in-body CTA to wedding pages; <code>/author/admin/</code> slug visible on bylines</td></tr>
+        <tr><td>Corporate coordinator (90-day, budget-approved)</td><td class="r bad">42</td><td>No client logos · no case studies · "BOOK A CONSULT NOW!" reads informal for procurement · LV2 page's Bay Area H2 surfaces in search</td></tr>
+        <tr><td>Local social / party host</td><td class="r bad">35</td><td>No dedicated social events page · homepage H1 reads B2B · meta description references parties but never reinforces in visible hero copy</td></tr>
+      </table>
+      <p><b>BOFU conversion friction.</b> The contact form has 14 inputs + 1 textarea
+        and <b>zero <code>&lt;label&gt;</code> elements</b>. No corporate-RFP track.
+        No required-field indicators. Accessibility risk and usability friction at
+        the conversion point itself.</p>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="sec-title">Blog Deep-Dive · 16 Posts</div>
+    <div class="grid">
+      <div class="card g"><h3>Strong long-form</h3><div class="v">11 / 16</div><div class="w">≥1,500 words</div><div class="bar"><i style="width:69%"></i></div></div>
+      <div class="card a"><h3>Borderline</h3><div class="v">2</div><div class="w">1,251–1,324 w</div><div class="bar"><i style="width:13%"></i></div></div>
+      <div class="card r"><h3>Thin posts</h3><div class="v">3</div><div class="w">668–900 w</div><div class="bar"><i style="width:19%"></i></div></div>
+      <div class="card r"><h3>Article placeholder</h3><div class="v">16/16</div><div class="w">all posts ship <code>[placeholder]</code></div><div class="bar"><i style="width:100%"></i></div></div>
+    </div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Article schema <code>[placeholder]</code> across all posts</td><td class="r bad">Critical</td><td>Zero rich-result eligibility for the entire blog</td></tr>
+        <tr><td>Self-promotional roundup under <code>admin</code></td><td class="r bad">High</td><td><code>top-event-planners-las-vegas</code> lists Event Solutions as #1, 668 words, anonymous byline</td></tr>
+        <tr><td>No in-body CTAs to service hubs</td><td class="r warn">High</td><td>Blog→conversion routing relies on nav/footer only</td></tr>
+        <tr><td>Keyword stuffing on the LV checklist post</td><td class="r note">Medium</td><td>"Planning a Las Vegas Event" repeats 23+ times — Sept-2025 QRG flag</td></tr>
+        <tr><td>Author display split (<code>admin</code> vs "Joie Nguyen")</td><td class="r warn">High</td><td>See Critical findings — <code>Person</code> <code>@id</code> resolves to <code>admin</code></td></tr>
+        <tr><td>Strengths</td><td class="r ok">—</td><td>Genuine 2026/2027 freshness, FAQ schema on long-form posts, operational specificity (named venues, real-world details)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap — Phased, Deduplicated</div>
+    <div class="sec-sub">Every finding above, merged and traced to the analyses that flagged it. Phase 0 gates block dependent work.</div>
+    <div class="plan">
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--ink)"></span>Phase 0 — Verify first (owner input)</div>
+        <p class="gs">Do not publish changes built on unverified data.</p>
+        <ul class="ol">
+          <li><b>V1</b><span>Confirm real LV office parcel coordinates against Google Maps for 655 S Fort Apache Rd, 89148 <i>(blocks P1-1)</i></span><span class="src">Local·Schema</span></li>
+          <li><b>V2</b><span>Confirm real principal planner identity behind <code>admin</code> — "Joie Nguyen" or other; provide bio + headshot + LinkedIn URL <i>(blocks P1-5, P2-16)</i></span><span class="src">Content·GEO·Schema</span></li>
+          <li><b>V3</b><span>Confirm canonical legal entity name (four variants in use) <i>(blocks P2-14)</i></span><span class="src">Local·Content</span></li>
+          <li><b>V4</b><span>Identify LV-specific social profile URLs for sameAs <i>(blocks P2-12)</i></span><span class="src">Local·Schema·GEO</span></li>
+          <li><b>V5</b><span>Confirm whether GPTBot/ClaudeBot/CCBot WAF block is intentional <i>(blocks P3-25)</i></span><span class="src">GEO·Technical</span></li>
+          <li><b>V6</b><span>Identify any LV-resident or LV-experienced planner for <code>/team/</code> <i>(blocks P2-22)</i></span><span class="src">Local·Content</span></li>
+          <li><b>V7</b><span>Access: GBP, GA4/GSC, Moz/DataForSEO, awards, review data</span><span class="src">All</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Phase 1 — This week · high impact, low effort</div>
+        <ul class="ol">
+          <li><b>1</b><span>Correct <code>LocalBusiness.geo</code> to true parcel coordinates <i>(after V1)</i></span><span class="ef">15 min</span><span class="src">Local·Schema</span></li>
+          <li><b>2</b><span>Add <code>Sitemap:</code> directive to robots.txt</span><span class="ef">5 min</span><span class="src">Technical·Sitemap</span></li>
+          <li><b>3</b><span>Change homepage Rank Math schema type from <code>BlogPosting</code> to <code>WebPage</code>; link LocalBusiness into the @graph via <code>@id</code></span><span class="ef">30 min</span><span class="src">Technical·Schema</span></li>
+          <li><b>4</b><span>Remove <code>[placeholder]</code> strings from Article schema template (Rank Math)</span><span class="ef">30 min</span><span class="src">Content·Schema</span></li>
+          <li><b>5</b><span>Rename WordPress display name from <code>admin</code>; redirect or <code>noindex</code> the <code>/author/admin/</code> archive <i>(after V2)</i></span><span class="ef">30 min</span><span class="src">All five</span></li>
+          <li><b>6</b><span>301 <code>/las-vegas-event-planning-services-2/</code> → canonical LV services page</span><span class="ef">15 min</span><span class="src">Technical·Sitemap·SXO</span></li>
+          <li><b>7</b><span>Remove "Experienced Bay Area Event Planning" H2 from the surviving LV services page and <code>/wedding-concierge/</code></span><span class="ef">15 min</span><span class="src">SXO·Content·Local</span></li>
+          <li><b>8</b><span>Fix the footer "SAN FRANCISCO" link target (currently points to the LV2 URL)</span><span class="ef">10 min</span><span class="src">SXO·Technical</span></li>
+          <li><b>9</b><span>Remove <code>article:published_time</code> / <code>article:modified_time</code> from homepage OG (og:type=website mismatch)</span><span class="ef">5 min</span><span class="src">Technical</span></li>
+          <li><b>10</b><span>Drop the <code>Home -</code> prefix from the homepage <code>&lt;title&gt;</code></span><span class="ef">5 min</span><span class="src">Technical</span></li>
+          <li><b>11</b><span>Publish Privacy Policy + Terms of Service; link in footer</span><span class="ef">1–2 hr</span><span class="src">Content·Technical</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Phase 2 — This month · authority core + content hygiene</div>
+        <ul class="ol">
+          <li><b>12</b><span>Replace SF <code>sameAs</code> URLs with verified LV-branded profiles <i>(after V4)</i></span><span class="ef">20 min</span><span class="src">Schema·Local·GEO</span></li>
+          <li><b>13</b><span>Set <code>@type</code> to <code>["EventPlanningService", "LocalBusiness"]</code>; add <code>priceRange</code>, <code>description</code>, <code>image</code>, <code>openingHoursSpecification</code>; assign <code>@id</code></span><span class="ef">1 hr</span><span class="src">Schema·Local</span></li>
+          <li><b>14</b><span>Standardize canonical legal name across schema / H1 / og:site_name / footer <i>(after V3)</i></span><span class="ef">30 min</span><span class="src">Local·Content</span></li>
+          <li><b>15</b><span>Rewrite homepage H1 from "Event Solutions Productions, Inc." to a service+geo H1 (e.g., "Las Vegas Event Planner — Weddings, Corporate &amp; Social Events")</span><span class="ef">30 min</span><span class="src">Content·Local·SXO</span></li>
+          <li><b>16</b><span>Build a real <code>/author/joie-nguyen/</code> bio page with credentials, photo, LinkedIn <code>sameAs</code>; reassign all 16 posts <i>(after V2)</i></span><span class="ef">2–3 hr</span><span class="src">All five</span></li>
+          <li><b>17</b><span>Add <code>&lt;address&gt;</code> element to footer and contact page with the corrected street address</span><span class="ef">20 min</span><span class="src">Local·SXO</span></li>
+          <li><b>18</b><span>Expand homepage (265 w → 600+ w) with LV-specific value prop</span><span class="ef">2 hr</span><span class="src">Content·SXO</span></li>
+          <li><b>19</b><span>Expand About Us (165 w → 600+ w); founding story, LV office history, named segments</span><span class="ef">3 hr</span><span class="src">Content·Local</span></li>
+          <li><b>20</b><span>Expand Contact Us (79 w → 250+ w); add visible address, hours, map embed</span><span class="ef">1 hr</span><span class="src">Content·Local·SXO</span></li>
+          <li><b>21</b><span>Add visible <code>&lt;label&gt;</code> elements to the 14-input contact form</span><span class="ef">30 min</span><span class="src">SXO·a11y</span></li>
+          <li><b>22</b><span>Add at least one LV-resident or LV-experienced bio to <code>/team/</code> <i>(after V6)</i></span><span class="ef">1 hr</span><span class="src">Local·SXO·Content</span></li>
+          <li><b>23</b><span>Add 2–4 contextual in-body links per blog post to the relevant service hub</span><span class="ef">3–4 hr</span><span class="src">SXO·Content</span></li>
+          <li><b>24</b><span>Expand stub service pages (Graphic Design 138 w · Locations 94 w · Services hub 94 w) to ≥400 w or fold and 301</span><span class="ef">4–6 hr</span><span class="src">Content·SXO</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 3 — This quarter · depth, GEO, measurement</div>
+        <ul class="ol">
+          <li><b>25</b><span>Whitelist GPTBot / ClaudeBot / CCBot in ModSecurity by UA + reverse-DNS <i>(after V5)</i></span><span class="ef">half-day</span><span class="src">GEO·Technical</span></li>
+          <li><b>26</b><span>Create <code>/llms-full.txt</code> with pre-rendered plain text of top 5 pages</span><span class="ef">2 hr</span><span class="src">GEO</span></li>
+          <li><b>27</b><span>Add TL;DR / Key Takeaways callout boxes at the top of all long-form posts</span><span class="ef">4 hr</span><span class="src">GEO·SXO</span></li>
+          <li><b>28</b><span>Rewrite top-level H2s in long-form posts as direct questions</span><span class="ef">1 day</span><span class="src">GEO·Content</span></li>
+          <li><b>29</b><span>Add <code>Service</code> schema per service page; <code>AggregateRating</code> only when real review data available <i>(after V7)</i></span><span class="ef">half-day</span><span class="src">Schema·GEO</span></li>
+          <li><b>30</b><span>Editorial pass on the LV checklist post to remove repetitive "Planning a Las Vegas Event" stuffing</span><span class="ef">2 hr</span><span class="src">Content</span></li>
+          <li><b>31</b><span>Expand 4 thin blog posts to ≥1,500 w or 301-consolidate; reclassify Top Planners as informational, remove self-promotional ranking</span><span class="ef">2 days</span><span class="src">Content·GEO</span></li>
+          <li><b>32</b><span>Differentiate <code>/locations/</code> from a stub into a real neighborhood hub (Strip / Summerlin / Henderson / Spring Valley)</span><span class="ef">1 day</span><span class="src">Local·SXO</span></li>
+          <li><b>33</b><span>Add <code>&lt;image:image&gt;</code> entries to the pages sitemap for image-heavy service pages</span><span class="ef">15 min</span><span class="src">Sitemap</span></li>
+          <li><b>34</b><span>Disable <code>/author/</code> sitemap or migrate to the new author slug</span><span class="ef">5 min</span><span class="src">Sitemap·GEO</span></li>
+          <li><b>35</b><span>Update homepage <code>lastmod</code> (currently 2025-05-27); trigger a publish</span><span class="ef">1 min</span><span class="src">Sitemap</span></li>
+          <li><b>36</b><span>Instrument GA4 events for <code>tel:</code> click and contact-form submit; segment by landing page type</span><span class="ef">half-day</span><span class="src">Measurement</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--sub)"></span>Phase 4 — Backlog · longer-term ceiling</div>
+        <ul class="ol">
+          <li><b>37</b><span>Build a YouTube channel (5–10 LV-event videos) — strongest predictor of AI citation frequency</span><span class="src">GEO</span></li>
+          <li><b>38</b><span>Establish a Reddit presence in r/EventPlanning, r/LasVegas, r/weddingplanning</span><span class="src">GEO</span></li>
+          <li><b>39</b><span>Measure Core Web Vitals via authorized PSI key / GSC-CrUX (no field data this run)</span><span class="src">Technical</span></li>
+          <li><b>40</b><span>GBP audit + Tier-1 citation crawl + review velocity</span><span class="src">Local</span></li>
+          <li><b>41</b><span>Backlink profile assessment (needs Moz / DataForSEO / Ahrefs)</span><span class="src">Off-site</span></li>
+          <li><b>42</b><span>Build a proprietary first-party data asset (e.g., LV event-cost benchmark)</span><span class="src">GEO·Content</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <div class="panel">
+      <p><b>Instrument before judging.</b> Add GA4 events for <code>tel:</code> click,
+        "text" click, and contact-form submit — segmented by landing-page type
+        (blog vs. service vs. location) — <i>today</i>, before any change.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Method</th><th>When</th></tr>
+        <tr><td>Identity propagation</td><td>Re-query AI systems ("event planner Las Vegas", "who runs Event Solutions Las Vegas") for branded mention with the correct named planner</td><td>Baseline now → +4 wks after Phase 1–2</td></tr>
+        <tr><td>AI crawler access</td><td>Re-curl GPTBot/ClaudeBot/CCBot UAs; confirm 200</td><td>After Phase 3 #25</td></tr>
+        <tr><td>Local pack</td><td>GBP insights + manual SERP for "event planner near me" in Spring Valley / Summerlin / Henderson</td><td>After Phase 1 #1 (geo fix)</td></tr>
+        <tr><td>Cannibalization</td><td>GSC impressions/position for the "las vegas event planning" cluster (needs GSC access — Phase 0 V7)</td><td>After Phase 1 #6</td></tr>
+        <tr><td>Conversion routing</td><td>Assisted conversions blog → service; inline-form submit rate</td><td>30 days after Phase 2 #21 / #23</td></tr>
+        <tr><td>Overall</td><td>Re-run this audit</td><td>Quarterly</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <div class="sec-title">Limits &amp; What Was Not Assessed</div>
+    <div class="limit">
+      <h3>No live Core Web Vitals</h3>
+      <p>No PSI / CrUX key this run. Performance score of 65 is inferred from page
+        weight, WP Rocket cache state, and minification — not measured. Set up CrUX
+        or authorized PSI key.</p>
+    </div>
+    <div class="limit">
+      <h3>No GBP / Maps audit</h3>
+      <p>No Maps/GBP access. Category accuracy, pin location, photo count, post
+        velocity, Q&amp;A, response rate, and review velocity all require GBP
+        dashboard or API.</p>
+    </div>
+    <div class="limit">
+      <h3>No live citation crawl</h3>
+      <p>Tier-1 directory consistency (Yelp, BBB-SoNev, WeddingWire, The Knot, Cvent)
+        is unverified. Recommend a citation audit alongside NAP standardization
+        (Phase 2 #14).</p>
+    </div>
+    <div class="limit">
+      <h3>No keyword volume data</h3>
+      <p>All cluster prioritization is qualitative. DataForSEO / GSC needed to
+        re-rank Phase 3.</p>
+    </div>
+    <div class="limit">
+      <h3>No backlink profile</h3>
+      <p>Moz / DataForSEO / Ahrefs needed for referring-domain assessment.
+        Currently in Phase 4 backlog.</p>
+    </div>
+    <div class="limit">
+      <h3>JS rendering risk inferred from source</h3>
+      <p>No headless browser run (browser tooling intentionally disabled in this
+        environment). JS render parity inferred from server-side HTML; spot-check
+        with a real browser before final sign-off.</p>
+    </div>
+    <div class="limit">
+      <h3>Proximity factor</h3>
+      <p>~55% of local-pack variance is proximity to the searcher (Search Atlas
+        ML study). This is not addressable by on-site changes; mentioned for
+        context only.</p>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · eventsolutions-lv.com · 20 May 2026 · 7 parallel-lens audit
+  </footer>
+
+</div>
+</body>
+</html>

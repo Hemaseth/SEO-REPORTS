@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Event Solutions Las Vegas</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06);
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  .hero{text-align:center;padding:104px 0 56px}
+  .eyebrow{font-size:15px;font-weight:600;color:var(--blue);letter-spacing:.02em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+  .hero .sub{font-size:21px;color:var(--sub);margin-top:20px;font-weight:400}
+  .hero .meta{font-size:14px;color:var(--sub);margin-top:28px}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .nav a{font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:980px}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:34px 0 18px}
+  .gauge{--val:50;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--red) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:26px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--red)}
+  .lead{max-width:700px;text-align:center;color:var(--sub);font-size:18px;margin:18px auto 0}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:14px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;text-align:center}
+  .sec-sub{font-size:14px;color:var(--sub);text-align:center;max-width:640px;margin:0 auto 26px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:var(--radius);padding:28px 26px;box-shadow:var(--shadow)}
+  .card h3{font-size:15px;color:var(--sub);font-weight:600}
+  .card .v{font-size:44px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px}
+  .card .w{font-size:13px;color:var(--sub)}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:870px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px}
+  .item .body p{font-size:14.5px;color:var(--sub)}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:38px 40px;margin-top:20px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .panel .tag{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .panel p{color:#3a3a3c;font-size:15.5px;margin-bottom:13px}
+  .panel p:last-child{margin-bottom:0}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  .kv td,.kv th{padding:10px 13px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .bad{color:var(--red)}.ok{color:var(--green)}.warn{color:#b26a00}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13.5px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f}
+  .fix b{color:var(--blue)}
+  .callout{background:linear-gradient(135deg,#fff,#fff4f3);border:1px solid rgba(255,59,48,.25);border-radius:var(--radius);padding:36px 40px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--red);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+  .callout p{font-size:16.5px;color:#3a3a3c}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:30px 34px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:880px;margin:0 auto}
+  .plan .group{margin-bottom:28px}
+  .plan .gh{font-size:18px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:11px}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:15px;display:flex;gap:13px;align-items:flex-start}
+  .ol li b{color:var(--blue);flex:none;min-width:22px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:92px;padding-top:40px;border-top:1px solid var(--line)}
+  .community{max-width:520px;margin:40px auto 0;background:var(--card);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);font-size:15px;text-align:center}
+  .community a{color:var(--blue);text-decoration:none}
+  @media(max-width:640px){
+    body{font-size:16px}.hero{padding:60px 0 32px}
+    .panel,.limit,.callout{padding:24px 20px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report — Fully Consolidated</div>
+    <h1>Event Solutions&nbsp;Las Vegas</h1>
+    <p class="sub">A clone-stamped satellite of the San Francisco site that was never localized to Las&nbsp;Vegas.</p>
+    <p class="meta">
+      <b>eventsolutions-lv.com</b> &nbsp;·&nbsp; Local event planning Las Vegas
+      &nbsp;·&nbsp; WordPress + Rank Math + custom theme &nbsp;·&nbsp; 30 URLs analyzed &nbsp;·&nbsp; <b>19 May 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#scores">Scores</a><a href="#first">Start Here</a><a href="#critical">Critical</a>
+      <a href="#tech">Technical</a><a href="#eeat">Content/E-E-A-T</a><a href="#geo">GEO</a>
+      <a href="#local">Local</a><a href="#blog">Blog</a><a href="#sxo">Conversion</a>
+      <a href="#find">Find</a><a href="#roadmap">Roadmap</a>
+      <a href="#measure">Measure</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:50"><div class="inner"><div class="num">50</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Poor–Fair&nbsp;·&nbsp;D</span></div>
+    <p class="lead">Recent content and an occasionally strong blog tier, undermined by a
+      defect cluster the San Francisco sister site doesn't have: a fully broken XML
+      sitemap, AI crawlers shut at the firewall, no legal pages, and a machine
+      identity that still points at San&nbsp;Francisco. Every conversion signal leaks.</p>
+  </div>
+
+  <section id="scores">
+    <div class="sec-title">Scorecard — Independent Lenses</div>
+    <div class="sec-sub">Each lens is scored independently; differences are reconciled in-section, not averaged away.</div>
+    <div class="grid">
+      <div class="card r"><h3>SEO Health</h3><div class="v">50</div><div class="w">Overall · Poor–Fair (D)</div><div class="bar"><i style="width:50%"></i></div></div>
+      <div class="card r"><h3>Content Quality</h3><div class="v">44</div><div class="w">Weak</div><div class="bar"><i style="width:44%"></i></div></div>
+      <div class="card r"><h3>E-E-A-T</h3><div class="v">41</div><div class="w">Trust ok · Expertise critical</div><div class="bar"><i style="width:41%"></i></div></div>
+      <div class="card r"><h3>AI Citation</h3><div class="v">48</div><div class="w">Weak–Moderate</div><div class="bar"><i style="width:48%"></i></div></div>
+      <div class="card r"><h3>GEO Readiness</h3><div class="v">41</div><div class="w">Low–Moderate</div><div class="bar"><i style="width:41%"></i></div></div>
+      <div class="card r"><h3>Local SEO</h3><div class="v">30</div><div class="w">Poor · binding for a local biz</div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="card r"><h3>Performance (CWV)</h3><div class="v">55*</div><div class="w">Not measured — inferred</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card r"><h3>Conversion (SXO)</h3><div class="v">22</div><div class="w">Critical — binding constraint</div><div class="bar"><i style="width:22%"></i></div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <table class="kv">
+        <tr><th>Audit category</th><th class="r">Score</th><th>Weight</th></tr>
+        <tr><td>Technical SEO</td><td class="r warn">52</td><td>22%</td></tr>
+        <tr><td>Content Quality</td><td class="r bad">44</td><td>23%</td></tr>
+        <tr><td>On-Page SEO</td><td class="r warn">55</td><td>20%</td></tr>
+        <tr><td>Schema / Structured Data</td><td class="r bad">48</td><td>10%</td></tr>
+        <tr><td>Performance (CWV)</td><td class="r warn">55*</td><td>10% — not measured</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r bad">41</td><td>10%</td></tr>
+        <tr><td>Images</td><td class="r warn">58</td><td>5%</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">The audit Content category (44)
+        and the dedicated Content/E-E-A-T lens (41) differ because the latter weights
+        Trustworthiness at 30% and caught the privacy/terms 404, the circular
+        self-award, and the SF-clone framing. Both are correct at their granularity.
+        SF sister site scored 69 (C); LV is lower because SF's defects are present
+        here <i>and compounded</i> by a broken sitemap, blocked AI crawlers, and
+        cross-site entity contamination SF did not have.</p>
+    </div>
+  </section>
+
+  <section id="first">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <div class="callout">
+      <div class="tag">● Flagged independently by all five analyses</div>
+      <h3>This site is a San Francisco clone wearing a Las Vegas name</h3>
+      <p>The lowest-scoring lenses share one root cause: the identity layer was copied
+        from the SF site and <b>never re-pointed to Las Vegas</b>. <code>sameAs</code>
+        on all 30 pages lists <code>linkedin.com/company/event-solutions-san-francisco</code>
+        and <code>facebook.com/eventsolutionssf</code>; the visible Yelp link is
+        <code>yelp.com/biz/event-solutions-san-francisco</code>. The business carries
+        <b>three different names</b> (footer “Event Solutions” · schema “Event Solutions
+        Las Vegas | Event Planners &amp; Designers” · LocalBusiness “Las Vegas Event
+        Solutions Productions, Inc.”). The <code>LocalBusiness</code> block has <b>no
+        <code>@id</code></b> and is severed from the Rank Math <code>@graph</code>. All
+        16 posts are authored by <code>"admin"</code>; the only named expert,
+        <b>Sheila Dizon-Burns</b>, is credited nowhere. The About page calls the company
+        “based in the San Francisco Bay Area, with operations in Las Vegas.” One body
+        of work — unify the entity, credit a real author, reframe as LV-native — lifts
+        Schema, Local, GEO, E-E-A-T and AI-citation at once. Everything else is
+        sequenced around it.</p>
+    </div>
+  </section>
+
+  <section id="critical">
+    <div class="sec-title">Critical &amp; High Findings</div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Crawl / Indexation</div>
+      <h3>The XML sitemap is completely broken</h3>
+      <table class="kv">
+        <tr><th>Step</th><th>URL</th><th class="r">HTTP</th><th>Result</th></tr>
+        <tr><td>1</td><td><code>/sitemap.xml</code></td><td class="r bad">301</td><td><code>x-redirect-by: Rank Math</code> → <code>/sitemap_index.xml</code></td></tr>
+        <tr><td>2</td><td><code>/sitemap_index.xml</code></td><td class="r bad">404</td><td>152 KB themed HTML page — incl. for Googlebot</td></tr>
+        <tr><td>3</td><td>post/page/author-sitemap.xml</td><td class="r bad">404</td><td>all child sitemaps unreachable</td></tr>
+        <tr><td>4</td><td><code>/?sitemap=1</code></td><td class="r ok">200</td><td>only reachable index — undocumented, advertises the 404 URLs</td></tr>
+      </table>
+      <p><code>robots.txt</code> has <b>no <code>Sitemap:</code> directive</b>, so even
+        the working query-form index is undiscoverable. Root cause: Rank Math's sitemap
+        rewrite rules were never flushed into <code>.htaccess</code>. Net effect: Google
+        and Bing have <b>zero machine-readable URL discovery</b>; all 16 blog posts hang
+        off a single discovery path (<code>/blogs/</code>) — one point of failure for
+        53% of the site.</p>
+      <div class="fix"><b>Fix —</b> WP → Settings → Permalinks → Save (flush) →
+        verify <code>/sitemap_index.xml</code> = 200 XML → add <code>Sitemap:</code> to
+        robots.txt → submit in GSC. Hand-built fallback saved at
+        <code>_raw/RECOMMENDED-sitemap.xml</code>.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · AI Search</div>
+      <h3>GPTBot, ClaudeBot &amp; CCBot blocked by ModSecurity</h3>
+      <p>Verified with <b>canonical bot UA strings</b> (re-tested to resolve a
+        phase-agent disagreement — the GEO report's “200 allowed” table is superseded):</p>
+      <table class="kv">
+        <tr><td>Googlebot / Bingbot / PerplexityBot / OAI-SearchBot</td><td class="r ok">200 — allowed</td></tr>
+        <tr><td><code>GPTBot</code> (ChatGPT browse/train)</td><td class="r bad">406 — blocked ✕</td></tr>
+        <tr><td><code>ClaudeBot</code> (Anthropic)</td><td class="r bad">406 — blocked ✕</td></tr>
+        <tr><td><code>CCBot</code> (Common Crawl → many LLMs)</td><td class="r bad">406 — blocked ✕</td></tr>
+      </table>
+      <p>This is a ModSecurity WAF block, <b>not a robots.txt policy</b> — unintentional
+        and uncontrolled. ChatGPT deep-browsing, Claude, and the Common-Crawl corpus
+        cannot read the site.</p>
+      <div class="fix"><b>Fix —</b> allowlist <code>GPTBot</code>,
+        <code>ClaudeBot</code>, <code>CCBot</code> in ModSecurity, then set explicit
+        <code>robots.txt</code> policy so access is a deliberate choice.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Trust / Compliance</div>
+      <h3>No privacy policy or terms — on a lead-capture site running reCAPTCHA</h3>
+      <p><code>/privacy-policy/</code>, <code>/terms/</code>,
+        <code>/terms-of-service/</code>, <code>/terms-and-conditions/</code> all return
+        <b>404</b>; zero footer legal links. The site runs a CF7 lead form <i>and</i> a
+        Brevo newsletter signup, and loads <b>reCAPTCHA v3 on every page</b> — Google's
+        reCAPTCHA terms legally require a linked privacy policy, and CCPA covers Nevada
+        residents. A QRG Trustworthiness-floor failure.</p>
+      <div class="fix"><b>Fix —</b> publish privacy policy + terms with data-collection
+        + Nevada-consumer-rights language; link both in the footer.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Trust / Authority</div>
+      <h3>Circular self-awarded authority</h3>
+      <p><code>/top-event-planners-las-vegas/</code> is a company-authored post that
+        ranks itself <b>#1</b> (“1. Event Solutions — That's Us!”).
+        <code>/las-vegas-event-planning-services-2/</code> then cites being “voted into
+        the Top 10 Event Planners in Las Vegas” as if it were external recognition.
+        Quality Raters are trained to detect and penalize manufactured authority.</p>
+      <div class="fix"><b>Fix —</b> remove the self-ranked list or label it transparently
+        as a self-assessment; replace the location-page claim with a verifiable
+        third-party source — <i>or drop it. Verify with owner first.</i></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Schema / Local</div>
+      <h3>Entity fragmentation &amp; a ~12 km geo error</h3>
+      <p>Orphaned <code>@id</code>-less <code>LocalBusiness</code>; bare
+        <code>LocalBusiness</code> instead of <code>EventPlanner</code>;
+        <code>Organization</code> has no <code>sameAs</code>; <code>BlogPosting</code>
+        schema on the homepage and all 8 service pages; <code>&amp;amp;</code> entities
+        inside JSON-LD sitewide. Separately, <code>geo</code> =
+        <code>36.1612,-115.2976</code> (Summerlin/Red Rock) sits <b>~12 km</b> from the
+        stated 655 S Fort Apache Rd — and that address is <b>schema-only, invisible on
+        every page</b>.</p>
+      <div class="fix"><b>Fix —</b> add <code>@id</code>, upgrade to
+        <code>EventPlanner</code>, link into <code>@graph</code>; verify address vs
+        coordinates with the owner; render the address or declare SAB.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Content / Conversion</div>
+      <h3>Thin money pages · a leaky, unmeasured funnel</h3>
+      <p><code>/graphic-design/</code> = <b>62 words</b> (near-doorway stub);
+        <code>/event-marketing/</code> 201; <code>/about-us/</code> 173; homepage 279;
+        7 of 8 service pages below the 800-word floor; the highest-revenue page
+        <code>/meeting-procurement-hotel-selection/</code> is the thinnest. No inline
+        lead form on any service page (only <code>/contact-us/</code> has one);
+        <code>tel:</code> is an untracked static link; <b>zero <code>gtag('event')</code>
+        calls anywhere</b> despite GA4 installed; three high-intent posts route to no
+        service/contact page.</p>
+      <div class="fix"><b>Fix —</b> instrument GA4 lead/call events first; add inline
+        forms to the top 5 service pages; expand the stub/thin pages with LV-specific
+        depth; in-body link the dead-end posts to money pages.</div>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="sec-title">Technical SEO · 52 / 100</div>
+    <div class="panel">
+      <div class="tag ok">● Strengths</div>
+      <p>HTTPS enforced (1-hop HTTP→HTTPS); all 30 pages return 200 with clean
+        self-referencing canonicals and consistent trailing slashes; correct soft-404
+        (themed page + <code>noindex</code>); SSR confirmed (2,082 words server-rendered
+        in <code>/corporate-event-ideas/</code>); Googlebot, Bingbot, PerplexityBot,
+        OAI-SearchBot all 200; exactly one H1 per page.</p>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Sitemap 301→404, no robots <code>Sitemap:</code></td><td class="r bad">Critical</td><td>Zero machine discovery; un-flushed Rank Math rewrites</td></tr>
+        <tr><td>GPTBot/ClaudeBot/CCBot 406 (WAF)</td><td class="r bad">Critical</td><td>Verified canonical UAs; unintentional ModSecurity block</td></tr>
+        <tr><td>No legal pages + sitewide reCAPTCHA</td><td class="r bad">Critical</td><td>Compliance + QRG trust failure</td></tr>
+        <tr><td>Security headers absent</td><td class="r warn">High</td><td>HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy all missing</td></tr>
+        <tr><td><code>-2</code> slug in main nav</td><td class="r warn">High</td><td>Collision artifact; investigate ghost original; rename + 301</td></tr>
+        <tr><td><code>og:image</code> missing</td><td class="r warn">High</td><td>Home, <code>/blogs/</code>, <code>/wedding-concierge/</code> — image-less shares</td></tr>
+        <tr><td>10 over-length titles</td><td class="r warn">High</td><td><code>why-host</code> = 124 chars; Rank Math append-site-name</td></tr>
+        <tr><td>Near-zero native lazy-load</td><td class="r warn">High</td><td>29/30 pages; all images load eagerly → LCP/TBT</td></tr>
+        <tr><td>reCAPTCHA sync sitewide; GTM ×2</td><td class="r note">Med</td><td>Render-blocking 3rd-party on every page</td></tr>
+        <tr><td>No <code>llms.txt</code>; bare robots.txt; no IndexNow</td><td class="r note">Med–Low</td><td>AI/crawl hygiene (regression vs SF sister)</td></tr>
+      </table>
+      <p><b>Core Web Vitals — inferred 55*</b> (no CrUX/GSC/lab). LCP at-risk (JS
+        lazy-swap heroes, no preload, 155–215 KB raw HTML); INP likely-OK (mostly async
+        scripts; reCAPTCHA blocks main thread); CLS at-risk (no width/height; font CSS
+        not WOFF2-preloaded). <i>Must be measured before judged.</i></p>
+    </div>
+  </section>
+
+  <section id="eeat">
+    <div class="sec-title">Content Quality &amp; E-E-A-T · 44 / 41</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Factor</th><th class="r">Score</th><th>Key signals</th></tr>
+        <tr><td>Experience</td><td class="r warn">11/25</td><td>✅ named founder (est. 2000), LV venue familiarity · ❌ no case studies; “founded as a hobby” undercuts 20-yr claim</td></tr>
+        <tr><td>Expertise</td><td class="r bad">8/25</td><td>❌ all 16 posts “admin”; no bios, no ILEA/MPI/NACE credentials</td></tr>
+        <tr><td>Authoritativeness</td><td class="r bad">9/25</td><td>❌ circular self-Top-10; no press, client logos, or external citations</td></tr>
+        <tr><td>Trustworthiness</td><td class="r warn">13/25</td><td>✅ phone/email/HTTPS · ❌ privacy/terms 404, first-name testimonials, SF-clone framing</td></tr>
+        <tr><td class="r"><b>Total</b></td><td class="r"><b>41</b></td><td>Weak — Trust the relative strength, Expertise the critical weakness</td></tr>
+      </table>
+      <p><b>AI Citation Readiness 48/100:</b> ✅ LocalBusiness+Geo schema, FAQ on long
+        posts, ISO dates, recent (Jan–May 2026) · ❌ “admin” authorship (−10), no expert
+        attribution (−8), zero first-party data (−6), privacy 404 (−5), near-duplicate
+        intros (<code>corporate-event-ideas</code> vs <code>corporate-events-guide-2026</code>).</p>
+      <p><b>Page-type coverage</b> (topical floors, not targets):</p>
+      <table class="kv">
+        <tr><th>Type</th><th class="r">Floor</th><th class="r">Observed</th><th>Verdict</th></tr>
+        <tr><td>Homepage</td><td class="r">500</td><td class="r">279</td><td>Thin; brand-name H1</td></tr>
+        <tr><td>Service pages</td><td class="r">800</td><td class="r">62–833</td><td>7/8 fail; <code>/graphic-design/</code> = 62 w (critical)</td></tr>
+        <tr><td>About Us</td><td class="r">250</td><td class="r">173</td><td>Thin for the primary trust page</td></tr>
+        <tr><td>Location page</td><td class="r">550</td><td class="r">584</td><td>Barely meets; <code>-2</code> slug</td></tr>
+        <tr><td>Blog posts</td><td class="r">1,500</td><td class="r">556–2,715</td><td>10/16 strong; 5 thin</td></tr>
+      </table>
+      <div class="fix"><b>Top fixes —</b> publish privacy/terms · named bylined author +
+        bio + Person schema · expand the 62-word graphic-design stub + thin service
+        pages · remove/relabel the self-award · fix homepage H1 &amp; generic H1s.</div>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">GEO / AI-Search · 41 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Criterion</th><th class="r">Score</th><th>Note</th></tr>
+        <tr><td>Citability (25%)</td><td class="r bad">32</td><td><b>Zero</b> paragraphs in the 134–167 w sweet spot across 3 sampled posts; no sourced stats; no data tables sitewide</td></tr>
+        <tr><td>Structural readability (20%)</td><td class="r warn">54</td><td>Clean hierarchy; only 15% question-style headings (89/585; target 30%)</td></tr>
+        <tr><td>Multi-modal (15%)</td><td class="r warn">52</td><td>91% alt but generic; 3 branding MP4s + 1 Vimeo, no transcripts</td></tr>
+        <tr><td>Authority &amp; brand (20%)</td><td class="r bad">22</td><td>“admin” sitewide; cross-brand <code>sameAs</code>; no YouTube/Reddit/Wikipedia</td></tr>
+        <tr><td>Technical access (20%)</td><td class="r warn">52</td><td>SSR ok · <b>no llms.txt</b> (regression vs SF) · sitemap broken · GPTBot/ClaudeBot/CCBot blocked</td></tr>
+      </table>
+      <p><b>Platform estimates:</b> Google AIO ~40 · ChatGPT ~30 (GPTBot blocked) ·
+        Perplexity ~35 · Bing Copilot ~42. <b>llms.txt absent</b> — a regression vs the
+        SF sister which has one; a complete <code>/llms.txt</code> is a low-effort win
+        but <i>sequence it after the sitemap and crawler fixes</i>.</p>
+      <table class="kv">
+        <tr><th>Brand presence (on-site <code>sameAs</code>)</th><th class="r">Status</th><th>AI weight</th></tr>
+        <tr><td>LinkedIn / Facebook / Yelp</td><td class="r bad">point to SF entity ✕</td><td>cross-brand contamination</td></tr>
+        <tr><td>Instagram</td><td class="r warn">shared US handle</td><td>Low</td></tr>
+        <tr><td>YouTube</td><td class="r bad">absent</td><td>~0.737 — strongest</td></tr>
+        <tr><td>Reddit / Wikipedia / Wikidata</td><td class="r bad">absent</td><td>High (ChatGPT/Perplexity)</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)"><i>Live brand-mention search not
+        performed this run — reported from on-site evidence only; the cross-brand
+        contamination is confirmed in the on-site code and is itself the actionable
+        signal.</i></p>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="sec-title">Local SEO Deep-Dive · ~30 / 100</div>
+    <div class="panel">
+      <p><b>Canonical NAP (schema-only — never rendered):</b> Las Vegas Event Solutions
+        Productions, Inc. · 655 S Fort Apache Rd, Las Vegas, NV 89148 ·
+        <code>+1 702-816-9570</code> (displayed <code>702.816.9570</code>) ·
+        sheila@eventsolutions-lv.com · Mon–Fri 9–6. <b>No NAP phone defect</b>
+        (differs from the SF sister site) — the phone is consistent; the defects are
+        identity, visibility and geo.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th class="r">State</th><th>Action</th></tr>
+        <tr><td>Business name</td><td class="r bad">3 conflicting variants</td><td>Pick one legal + brand name; align GBP + Tier-1 citations</td></tr>
+        <tr><td><code>sameAs</code> / Yelp / FB / LinkedIn</td><td class="r bad">all point to SF</td><td>Replace with LV-specific or remove until they exist</td></tr>
+        <tr><td>Geo coordinates</td><td class="r bad">~12 km off</td><td>Owner verifies address vs coords; 5-decimal precision</td></tr>
+        <tr><td>Street address</td><td class="r bad">invisible (schema only)</td><td>Render in footer + contact, or declare SAB</td></tr>
+        <tr><td>LocalBusiness schema</td><td class="r warn">orphan, no <code>@id</code></td><td>Add <code>@id</code>; upgrade to <code>EventPlanner</code>; link into graph</td></tr>
+        <tr><td>Reviews / AggregateRating</td><td class="r bad">none on site</td><td>Build acquisition (Google/Yelp-LV/Knot/WeddingWire); add rating only if genuine</td></tr>
+        <tr><td>Google Business Profile + citations</td><td class="r bad">not assessed</td><td>No Maps/GBP access — verify category, NAP exact-match, LV-vs-SF separation, review velocity</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="sec-title">Blog Deep-Dive · 16 Posts</div>
+    <div class="grid">
+      <div class="card a"><h3>Long-form depth</h3><div class="v">10/16</div><div class="w">1,500–2,715 words</div><div class="bar"><i style="width:62%"></i></div></div>
+      <div class="card a"><h3>Thin posts</h3><div class="v">5</div><div class="w">under ~1,100 words</div><div class="bar"><i style="width:31%"></i></div></div>
+      <div class="card r"><h3>Authored “admin”</h3><div class="v">16/16</div><div class="w">no byline · no bio</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="card r"><h3>Dead-end posts</h3><div class="v">3</div><div class="w">0 in-body money-page links</div><div class="bar"><i style="width:19%"></i></div></div>
+    </div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Anonymous authorship</td><td class="r bad">High</td><td>All 16 “admin”; no byline/bio — E-E-A-T failure</td></tr>
+        <tr><td>Dead-end high-intent posts</td><td class="r bad">High</td><td><code>why-host…</code>, <code>how-to-choose…</code>, <code>secure-room-blocks…</code> link to no service/contact page</td></tr>
+        <tr><td>Self-ranking listicle</td><td class="r bad">High</td><td><code>/top-event-planners-las-vegas/</code> ranks itself #1 — circular authority</td></tr>
+        <tr><td>Near-duplicate intros</td><td class="r warn">Med</td><td><code>corporate-event-ideas</code> &amp; <code>corporate-events-guide-2026</code> open identically — cannibalization</td></tr>
+        <tr><td>Strengths</td><td class="r ok">—</td><td>Genuine freshness (Jan–May 2026), Article+date schema, og:image, SSR; later posts have 5–7 service links</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="sxo">
+    <div class="sec-title">Conversion &amp; Experience (SXO)</div>
+    <div class="panel">
+      <div class="tag high">● Conversion audit — the binding constraint</div>
+      <p>Primary paths: <code>tel:702.816.9570</code> (untracked static link) + one CF7
+        form on <code>/contact-us/</code> only. The funnel leaks <b>before</b> traffic
+        volume is the constraint — do not recommend ad spend until these are fixed.</p>
+      <table class="kv">
+        <tr><th>Blocker</th><th class="r">Sev.</th><th>Evidence</th></tr>
+        <tr><td>No inline lead form on any service page</td><td class="r bad">Critical</td><td>9 service pages, <code>forms:0</code> — every conversion needs a click away to <code>/contact-us/</code></td></tr>
+        <tr><td>Zero conversion tracking</td><td class="r bad">Critical</td><td>GA4 installed but <b>0</b> <code>gtag('event')</code> calls; tel/form unmeasured</td></tr>
+        <tr><td>High-intent posts route nowhere</td><td class="r bad">High</td><td>3 posts carry 0 in-body links to service/contact</td></tr>
+        <tr><td>Highest-revenue page is thinnest</td><td class="r warn">Med</td><td><code>/meeting-procurement…/</code> ~485–562 w for the RFP-driven convention persona</td></tr>
+      </table>
+      <table class="kv">
+        <tr><th>Dual-surface scorecard</th><th class="r">Score</th></tr>
+        <tr><td>Traditional search</td><td class="r warn">~42</td></tr>
+        <tr><td>AI-assisted discovery</td><td class="r bad">~38</td></tr>
+        <tr><td>Conversion-readiness</td><td class="r bad">~22 — the binding constraint</td></tr>
+      </table>
+      <div class="fix"><b>Top 3 —</b> 1) Instrument GA4 lead/call events (makes
+        everything else measurable). 2) Add inline lead forms to the top 5 service
+        pages (removes the forced navigation step). 3) In-body link the 3 dead-end
+        posts to money pages.</div>
+    </div>
+  </section>
+
+  <section id="find">
+    <div class="sec-title">Find — Intent &amp; Cannibalization</div>
+    <div class="panel">
+      <div class="tag note">● Cannibalization map — assign one canonical owner per intent</div>
+      <table class="kv">
+        <tr><th>Query cluster</th><th>Competing URLs</th><th>Canonical owner</th></tr>
+        <tr><td>“event planning services LV”</td><td><code>/event-planning-services/</code> · <code>/las-vegas-event-planning-services-2/</code> · <code>/top-event-planners-las-vegas/</code></td><td class="ok">/event-planning-services/ — <b>301 the <code>-2</code> in</b></td></tr>
+        <tr><td>“corporate event planning LV”</td><td><code>/corporate-event-planning/</code> + 6 corporate-* posts</td><td class="warn">/corporate-event-planning/ (expand; posts link up)</td></tr>
+        <tr><td>“LV room blocks / venue selection”</td><td><code>/meeting-procurement…/</code> · <code>/secure-room-blocks…/</code> · <code>/party-venues…/</code></td><td class="warn">/meeting-procurement…/ (expand; guide must link to it)</td></tr>
+        <tr><td>“wedding planner LV”</td><td><code>/wedding-planning-services/</code> · <code>/wedding-concierge/</code></td><td class="ok">/wedding-planning-services/ (clean — distinct intents)</td></tr>
+      </table>
+      <p><b>Personas</b> (from observed evidence; confirm vs CRM): <b>Corporate/HR event
+        manager</b> → corporate + meeting-procurement (thin, under-served). <b>Engaged
+        couple (destination wedding)</b> → wedding pages (no portfolio/testimonials).
+        <b>Convention / meeting planner</b> → <code>/meeting-procurement…/</code> —
+        thinnest page for the highest-value, RFP-driven audience: the biggest gap.</p>
+      <div class="limit" style="margin-top:14px"><h3>Hard limit — no keyword tool this run</h3>
+        <p>Search volume / difficulty are <b>unknown</b> (no DataForSEO/GSC). Intent was
+          mapped qualitatively from observed URL/title/structure — nothing invented.
+          Prioritization is strategic and must be re-ranked once GSC/keyword data exists.</p></div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap — Deduplicated, Phased</div>
+    <div class="sec-sub">Every finding above, merged and traced to the analyses that flagged it. Phase 0 gates block dependent work.</div>
+    <div class="plan">
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--ink)"></span>Phase 0 — Verify first (owner input)</div>
+        <p class="gs">Do not publish changes built on unverified data.</p>
+        <ul class="ol">
+          <li><b>V1</b><span>Address vs geo — is 655 S Fort Apache Rd the real operating address? (~12 km coord error; blocks P1-5, P2-12)</span><span class="src">Local·Schema</span></li>
+          <li><b>V2</b><span>Real author identity + credentials — Sheila Dizon-Burns or who? (blocks P2-9)</span><span class="src">Content·Schema·GEO·SXO</span></li>
+          <li><b>V3</b><span>“Top 10 / award” — any genuine third-party recognition? (blocks P1-4)</span><span class="src">Content·Local</span></li>
+          <li><b>V4</b><span>LV-specific social profiles — do LV LinkedIn/FB/Yelp exist? (blocks P1-2)</span><span class="src">Schema·Local·GEO</span></li>
+          <li><b>V5</b><span>Genuine review data before any <code>AggregateRating</code></span><span class="src">Local·Schema</span></li>
+          <li><b>V6</b><span>Access for re-scoring: GBP, GA4/GSC, keyword tool, Moz/DataForSEO</span><span class="src">All</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Phase 1 — This week · high impact, low risk</div>
+        <ul class="ol">
+          <li><b>1</b><span>Fix Rank Math sitemap (re-save permalinks → verify 200 → add <code>Sitemap:</code> → submit GSC)</span><span class="ef">30 min</span><span class="src">Tech·Sitemap·GEO</span></li>
+          <li><b>2</b><span>Correct cross-site identity <i>(after V4)</i> — strip SF <code>sameAs</code>/Yelp/FB/LinkedIn</span><span class="ef">1–2 hr</span><span class="src">Schema·Local·GEO</span></li>
+          <li><b>3</b><span>Unblock GPTBot/ClaudeBot/CCBot in ModSecurity + explicit robots policy</span><span class="ef">15 min</span><span class="src">Tech·GEO</span></li>
+          <li><b>4</b><span>Resolve the self-award <i>(after V3)</i> — remove or relabel the self-ranked Top-10</span><span class="ef">30 min</span><span class="src">Content·Local</span></li>
+          <li><b>5</b><span>Publish privacy policy + terms + footer legal links</span><span class="ef">2 hr</span><span class="src">Content·Tech</span></li>
+          <li><b>6</b><span>Add branded <code>og:image</code> (Home, /blogs/, /wedding-concierge/) + key heroes</span><span class="ef">30 min</span><span class="src">Tech</span></li>
+          <li><b>7</b><span>Add security headers in <code>.htaccess</code></span><span class="ef">20 min</span><span class="src">Tech</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Phase 2 — This month · entity + authority + content hygiene</div>
+        <ul class="ol">
+          <li><b>8</b><span>Unify schema: <code>@id</code>, <code>EventPlanner</code>, link into <code>@graph</code>, fix <code>&amp;amp;</code>, drop <code>BlogPosting</code> from Home/service, add <code>Service</code> per service page</span><span class="ef">3–4 hr</span><span class="src">Schema·Local·GEO</span></li>
+          <li><b>9</b><span><b>Named author</b> <i>(after V2)</i> + bio + <code>Person</code> schema; re-attribute all 16 posts</span><span class="ef">3–5 hr</span><span class="src">All five</span></li>
+          <li><b>10</b><span>Pick one canonical name; align footer/schema/GBP</span><span class="ef">1 hr</span><span class="src">Local·Schema</span></li>
+          <li><b>11</b><span>301 <code>/…-services-2/</code> → <code>/event-planning-services/</code>; resolve cannibalization; assign canonical owners</span><span class="ef">3 hr</span><span class="src">SXO·Local·Tech</span></li>
+          <li><b>12</b><span>Render street address (footer + contact) <i>(after V1)</i> or declare SAB</span><span class="ef">1 hr</span><span class="src">Local</span></li>
+          <li><b>13</b><span><b>Instrument GA4</b> — <code>generate_lead</code> on form + <code>phone_call_click</code> on <code>tel:</code></span><span class="ef">1 hr</span><span class="src">SXO</span></li>
+          <li><b>14</b><span><b>Add inline lead forms</b> to the top 5 service pages</span><span class="ef">1 day</span><span class="src">SXO</span></li>
+          <li><b>15</b><span>Fix homepage H1 (service+geo first); rewrite 10 titles + 11 meta descriptions; fix generic H1s</span><span class="ef">2 hr</span><span class="src">Content·Tech</span></li>
+          <li><b>16</b><span>Add 2–4 contextual in-body links → money pages on the 3 dead-end posts + all posts</span><span class="ef">3–4 hr</span><span class="src">SXO·Content</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 3 — This quarter · depth, differentiation, GEO</div>
+        <ul class="ol">
+          <li><b>17</b><span>Expand <code>/graphic-design/</code> (62 w) + 6 thin service pages to 800+ w; <code>/meeting-procurement…/</code> to 1,500 w for the convention persona</span><span class="ef">2–3 d</span><span class="src">Content·SXO</span></li>
+          <li><b>18</b><span>Install <code>/llms.txt</code> (money pages + Key Facts; draft in GEO report)</span><span class="ef">1 hr</span><span class="src">GEO</span></li>
+          <li><b>19</b><span>Self-contained 134–167 w answer blocks + ~30% question headings + one data table per pillar post</span><span class="ef">1–2 d</span><span class="src">GEO·Content</span></li>
+          <li><b>20</b><span>Build review acquisition + on-site display + <code>aggregateRating</code> <i>(after V5)</i></span><span class="ef">ongoing</span><span class="src">Local</span></li>
+          <li><b>21</b><span>reCAPTCHA only on /contact-us/; native lazy-load; WOFF2 preload; dedupe GTM; enable IndexNow</span><span class="ef">½ d</span><span class="src">Tech</span></li>
+          <li><b>22</b><span>Update stale “2025” year refs (blog index title, <code>why-host</code> H1)</span><span class="ef">30 min</span><span class="src">Content</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--sub)"></span>Phase 4 — Backlog · longer-term ceiling</div>
+        <ul class="ol">
+          <li><b>23</b><span>LV YouTube + Reddit/Wikidata entity presence; original first-party LV data asset (real event-cost or venue-capacity guide)</span><span class="src">GEO·Content</span></li>
+          <li><b>24</b><span>Backlink / off-site assessment (needs Moz/DataForSEO) → FLOW Leverage; remaining redirect/WAF hygiene; measured CWV pass</span><span class="src">Tech·FLOW</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <div class="panel">
+      <p><b>Instrument before judging.</b> Add GA4 <code>generate_lead</code> +
+        <code>phone_call_click</code> events <i>today</i>, segmented by landing-page
+        type (blog vs service vs location), before any other change.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Method</th><th>When</th></tr>
+        <tr><td>Sitemap fix</td><td>GSC → Sitemaps: “Discovered URLs” should reach ~30</td><td>Immediately after Phase 1.1</td></tr>
+        <tr><td>Entity / identity</td><td>Re-test AI answers (“best event planners Las Vegas”, “who runs Event Solutions Las Vegas”) for LV (not SF) attribution</td><td>Baseline now → +4 wks after P1-2/P2-9</td></tr>
+        <tr><td>AI crawler access</td><td>Re-curl GPTBot/ClaudeBot canonical UAs → expect 200</td><td>After P1-3</td></tr>
+        <tr><td>Conversion routing</td><td>tel/form GA4 events by landing-page type; inline-form submit rate</td><td>30 days after P2-13/14</td></tr>
+        <tr><td>Overall</td><td>Re-run audit · GEO · Local · (Leverage once tooling exists)</td><td>Quarterly</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <div class="limit">
+      <h3>Limits of this run</h3>
+      <p><b>No Core Web Vitals measurement</b> — no Google API/CrUX/GSC/browser; CWV is inferred (marked <code>55*</code>). <b>No keyword/SERP tool</b> — intent mapped qualitatively; nothing invented; re-rank once GSC data exists. <b>No GBP/Maps access</b> — GBP state, review velocity, citation presence not assessed; checklist provided instead. <b>No backlink tooling</b> — deferred to FLOW Leverage (backlog).</p>
+      <p><b>One phase-agent error corrected:</b> the GEO report's AI-crawler table (“GPTBot/ClaudeBot 200”) was wrong; the orchestrator re-verified with canonical UAs — GPTBot, ClaudeBot and CCBot are all 406-blocked. All other phase findings cross-checked and consistent. Static-HTML basis: dynamic states and actual image content not evaluated.</p>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · eventsolutions-lv.com · 19 May 2026 · 30 URLs · 7 phase analyses consolidated
+  </footer>
+
+</div>
+</body>
+</html>

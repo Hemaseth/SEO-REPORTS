@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Verducci Event Productions</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06);
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  .hero{text-align:center;padding:104px 0 56px}
+  .eyebrow{font-size:15px;font-weight:600;color:var(--blue);letter-spacing:.02em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+  .hero .sub{font-size:21px;color:var(--sub);margin-top:20px;font-weight:400;max-width:720px;margin-left:auto;margin-right:auto}
+  .hero .meta{font-size:14px;color:var(--sub);margin-top:28px}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .nav a{font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:980px}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:34px 0 18px}
+  .gauge{--val:64;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:26px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:720px;text-align:center;color:var(--sub);font-size:18px;margin:18px auto 0}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:14px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;text-align:center}
+  .sec-sub{font-size:14px;color:var(--sub);text-align:center;max-width:640px;margin:0 auto 26px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:var(--radius);padding:28px 26px;box-shadow:var(--shadow)}
+  .card h3{font-size:15px;color:var(--sub);font-weight:600}
+  .card .v{font-size:44px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px}
+  .card .w{font-size:13px;color:var(--sub)}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:870px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px}
+  .item .body p{font-size:14.5px;color:var(--sub)}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:38px 40px;margin-top:20px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .panel .tag{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .panel p{color:#3a3a3c;font-size:15.5px;margin-bottom:13px}
+  .panel p:last-child{margin-bottom:0}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  .kv td,.kv th{padding:10px 13px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .bad{color:var(--red)}.ok{color:var(--green)}.warn{color:#b26a00}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13.5px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f}
+  .fix b{color:var(--blue)}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:36px 40px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+  .callout p{font-size:16.5px;color:#3a3a3c}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:30px 34px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:880px;margin:0 auto}
+  .plan .group{margin-bottom:28px}
+  .plan .gh{font-size:18px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:11px}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:15px;display:flex;gap:13px;align-items:flex-start}
+  .ol li b{color:var(--blue);flex:none;min-width:22px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:92px;padding-top:40px;border-top:1px solid var(--line)}
+  @media(max-width:640px){
+    body{font-size:16px}.hero{padding:60px 0 32px}
+    .panel,.limit,.callout{padding:24px 20px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report — Fully Consolidated</div>
+    <h1>Verducci Event Productions</h1>
+    <p class="sub">A 17-year Bay Area event-production firm presenting clearly to humans and ambiguously to machines — the gap, and the work to close it.</p>
+    <p class="meta">
+      <b>wearevep.com</b> &nbsp;·&nbsp; San Francisco Bay Area · Event Production
+      &nbsp;·&nbsp; WordPress + Yoast SEO &nbsp;·&nbsp; 8 pages parsed, ~30 service URLs + 34 posts + 33 team profiles in scope &nbsp;·&nbsp; <b>25 May 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#scores">Scores</a><a href="#first">Start Here</a><a href="#critical">Critical</a>
+      <a href="#tech">Technical</a><a href="#eeat">Content / E-E-A-T</a><a href="#geo">GEO</a>
+      <a href="#local">Local</a><a href="#pages">Pages</a><a href="#schema">Schema</a>
+      <a href="#blog">Blog</a><a href="#roadmap">Roadmap</a>
+      <a href="#measure">Measure</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:64"><div class="inner"><div class="num">64</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Fair&nbsp;·&nbsp;C</span></div>
+    <p class="lead">A solid technical base, real authored content, a named team and a 17-year history — held back by a small cluster of high-impact, low-effort defects clustered in the schema and on-page identity layers, plus image and conversion-page hygiene.</p>
+  </div>
+
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <div class="sec-sub">Each lens scored independently from primary evidence. Differences are reconciled in-section, not averaged away.</div>
+    <div class="grid">
+      <div class="card a"><h3>SEO Health</h3><div class="v">64</div><div class="w">Overall · Fair (C)</div><div class="bar"><i style="width:64%"></i></div></div>
+      <div class="card a"><h3>Technical SEO</h3><div class="v">70</div><div class="w">Strong base, redirect chain, image format</div><div class="bar"><i style="width:70%"></i></div></div>
+      <div class="card a"><h3>Content Quality</h3><div class="v">64</div><div class="w">Named author; conversion page thin</div><div class="bar"><i style="width:64%"></i></div></div>
+      <div class="card a"><h3>On-Page SEO</h3><div class="v">62</div><div class="w">Brand-first titles; vague H1</div><div class="bar"><i style="width:62%"></i></div></div>
+      <div class="card r"><h3>Schema / Structured Data</h3><div class="v">55</div><div class="w">Org missing NAP; no LocalBusiness</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card r"><h3>Performance (CWV)</h3><div class="v">55*</div><div class="w">Not measured — inferred</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card a"><h3>AI Search (GEO)</h3><div class="v">60</div><div class="w">Crawlers OK; llms.txt incomplete</div><div class="bar"><i style="width:60%"></i></div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <table class="kv">
+        <tr><th>Audit category</th><th class="r">Score</th><th>Weight</th></tr>
+        <tr><td>Technical SEO</td><td class="r warn">70</td><td>22%</td></tr>
+        <tr><td>Content Quality</td><td class="r warn">64</td><td>23%</td></tr>
+        <tr><td>On-Page SEO</td><td class="r warn">62</td><td>20%</td></tr>
+        <tr><td>Schema / Structured Data</td><td class="r bad">55</td><td>10%</td></tr>
+        <tr><td>Performance (CWV)</td><td class="r bad">55*</td><td>10% — not measured</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r warn">60</td><td>10%</td></tr>
+        <tr><td>Images</td><td class="r bad">50</td><td>5%</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">Schema and Images carry the highest improvement-per-hour ratios. Performance is a placeholder pending real Core Web Vitals field data — the score will move once measured.</p>
+    </div>
+  </section>
+
+  <section id="first">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <div class="callout">
+      <div class="tag">● Flagged independently by Schema, Local, On-Page and GEO lenses</div>
+      <h3>The machine layer doesn't know who you are</h3>
+      <p>The site presents as a 17-year-old Bay Area production firm to humans — phone, email, team, portfolio, awards all visible. To machines it presents as a generic WordPress site. <code>Organization.telephone</code> is <code>null</code>. <code>Organization.address</code> is <code>null</code>. No <code>LocalBusiness</code> node anywhere. No <code>Service</code> schema on any service page. One body of structured-data work — populate the existing Yoast graph and add LocalBusiness + Service — moves the Schema, Local, On-Page and AI-search lenses simultaneously. Everything else is sequenced around it.</p>
+    </div>
+  </section>
+
+  <section id="critical">
+    <div class="sec-title">Critical &amp; High Findings</div>
+
+    <div class="panel">
+      <div class="tag high">● High · Schema / Local / AI-Search</div>
+      <h3>Organization schema has no telephone or address</h3>
+      <table class="kv">
+        <tr><td>Visible phone (footer, every page)</td><td class="r ok">(415) 545-8635</td></tr>
+        <tr><td><code>tel:</code> link</td><td class="r ok">+1-415-545-8635</td></tr>
+        <tr><td><code>Organization.telephone</code></td><td class="r bad">null ✕</td></tr>
+        <tr><td><code>Organization.address</code></td><td class="r bad">null ✕</td></tr>
+        <tr><td><code>LocalBusiness</code> node</td><td class="r bad">absent ✕</td></tr>
+      </table>
+      <p>The Yoast <code>@graph</code> ships WebPage, WebSite, Organization, ImageObject, BreadcrumbList with six valid <code>sameAs</code> profiles including YouTube. It does not ship the two fields that turn a brand into a callable local business. The phone is visible to a person reading the footer; it is invisible to a model summarising "who do I call for AV in San Francisco."</p>
+      <div class="fix"><b>Fix —</b> populate <code>Organization.telephone</code> and <code>Organization.address</code>; insert a <code>LocalBusiness</code> (or <code>EventPlanning</code> subtype) node with <code>@id</code>, <code>priceRange</code>, <code>areaServed</code>, <code>geo</code>, opening hours. 1–2 hours via Yoast Local SEO plugin or a custom snippet.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Trust / Compliance</div>
+      <h3>Privacy &amp; Terms exist — but are not in the footer</h3>
+      <p>Both <code>/privacy-policy/</code> and <code>/terms-and-conditions/</code> return 200 and appear in the page sitemap. Neither is linked from the global footer. The site runs <b>four</b> form-bearing pages (Contact, Sales Questionnaire, Virtual Event Inquiry, newsletter signup) collecting personal data. A direct Trustworthiness gap and a CCPA notice-at-collection exposure.</p>
+      <div class="fix"><b>Fix —</b> add Privacy + Terms links to the existing global footer; add "By submitting, you agree to our Privacy Policy" microcopy beneath every form's submit button. 15 minutes.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page · Discovery</div>
+      <h3>Homepage title &amp; H1 don't compete for service intent</h3>
+      <table class="kv">
+        <tr><th>Surface</th><th>Current</th><th class="r">Issue</th></tr>
+        <tr><td><code>&lt;title&gt;</code></td><td>San Francisco, Bay Area | Verducci Event Productions <i>(52 chars)</i></td><td class="r warn">Brand-first; geo precedes service</td></tr>
+        <tr><td><code>&lt;h1&gt;</code></td><td>Your Vision, Amplified.</td><td class="r bad">Tagline — no keyword, no geo, no service</td></tr>
+        <tr><td>Meta description</td><td>Event production company offering audio visual, lighting, DJ photo booth, video production &amp; live streaming services. Serving the Bay Area. <i>(143)</i></td><td class="r ok">Adequate</td></tr>
+      </table>
+      <p>A brand tagline as the single H1 is a defensible visual choice that costs the strongest on-page ranking signal. "Your Vision, Amplified." cannot rank for a query a customer types.</p>
+      <div class="fix"><b>Fix —</b> rework H1 to "Bay Area Event Production · Audio Visual, Lighting, Live Streaming" (or similar service-first wording); move the tagline to a stylised eyebrow above. Rewrite <code>&lt;title&gt;</code> to lead with service: <i>Bay Area Event Production &amp; Audio Visual | Verducci</i>.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page</div>
+      <h3>Audio Visual page meta description over-length · slug defect</h3>
+      <p>The <code>/audio-visual-production-2/</code> meta description ships <b>282 characters</b>. Google truncates at ~155 on desktop, ~120 on mobile, and the current snippet cuts mid-sentence. The URL slug itself carries a defect marker: the trailing <code>-2</code> indicates an earlier <code>/audio-visual-production/</code> was replaced and inherited an automatic WordPress suffix.</p>
+      <div class="fix"><b>Fix —</b> rewrite to 140–155 chars, leading with service + area. Decide canonical URL — see next finding.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Cannibalisation</div>
+      <h3>Two Audio Visual pages competing for the same intent</h3>
+      <p><code>/audio-visual/</code> (slug-clean) and <code>/audio-visual-production-2/</code> both return 200, both appear in the page sitemap, both target audio-visual rental intent. Link equity divides, neither ranks fully, both surface in autocomplete and confuse internal nav.</p>
+      <div class="fix"><b>Fix —</b> decide one canonical owner (<code>/audio-visual/</code> is the cleaner URL); 301 the other; rebuild internal links and the Yoast canonical. 1 hour including cache flush.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Conversion</div>
+      <h3>Contact Us is 179 words on a lead-capture site</h3>
+      <p>The page that exists to convert is the thinnest service-level page audited: <b>179 words</b>. No process explanation, no response-time commitment, no team faces, no FAQ, no third-party proof, no map. The schema on this page does not include <code>ContactPage</code> or <code>LocalBusiness</code>. Every other money page routes traffic to a page where the offer is barely articulated.</p>
+      <div class="fix"><b>Fix —</b> rebuild to ~500 words: what happens after submit, typical reply window, named producer who reads inquiries, 3–4 testimonial pulls, an FAQ block (area served, lead time, deposit, what AV is supplied vs rented), embedded office map. Add <code>ContactPage</code> schema.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">● Medium-High · GEO</div>
+      <h3>llms.txt exists — but omits every primary money page</h3>
+      <p>The Yoast-generated <code>/llms.txt</code> lists 5 pages, 1 post, 5 portfolios, 5 testimonials, 5 team members. The 5 pages are Hybrid Events, Webcast Production, Digital Media, Virtual Meetings &amp; Conferences, Video Production. <b>Excluded</b>: Audio Visual, Live Streaming, Weddings, Corporate Events, Lighting, DJ Entertainment, Event Photography, Contact Us, Resources. An AI agent reading the file alone will conclude VEP is a virtual-events specialist — a 2020/2021 truth the rest of the site has moved past.</p>
+      <div class="fix"><b>Fix —</b> regenerate <code>llms.txt</code> with the full service list and a "Key Facts" header: founded, area served, services, phone, email, distinguishing claim. Drop thin taxonomies; keep the curated portfolio + team selections.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">● Medium · Technical</div>
+      <h3>Two-hop HTTPS redirect on the apex</h3>
+      <table class="kv">
+        <tr><th>Hop</th><th>Location</th><th class="r">Status</th></tr>
+        <tr><td><code>http://wearevep.com/</code></td><td>https://wearevep.com/</td><td class="r warn">301</td></tr>
+        <tr><td><code>https://wearevep.com/</code></td><td>https://www.wearevep.com/</td><td class="r warn">301</td></tr>
+        <tr><td><code>https://www.wearevep.com/</code></td><td>—</td><td class="r ok">200</td></tr>
+      </table>
+      <p>Not an indexing risk — Google follows both — but a tax on link equity from older inbound references and a measurable extra round-trip for first visits.</p>
+      <div class="fix"><b>Fix —</b> collapse to one hop at nginx: <code>http://(www.)?wearevep.com → https://www.wearevep.com</code>. 10–30 minutes if you own the server.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">● Medium · Images</div>
+      <h3>63 of 95 homepage images use empty <code>alt=""</code></h3>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Images</th><th class="r">Empty alt</th><th class="r">No alt at all</th></tr>
+        <tr><td>Home</td><td class="r">95</td><td class="r warn">63</td><td class="r ok">3</td></tr>
+        <tr><td>Corporate Events</td><td class="r">106</td><td class="r warn">63</td><td class="r ok">0</td></tr>
+        <tr><td>Weddings</td><td class="r">73</td><td class="r ok">1</td><td class="r ok">0</td></tr>
+        <tr><td>Audio Visual</td><td class="r">24</td><td class="r ok">0</td><td class="r ok">0</td></tr>
+        <tr><td>VEP Difference</td><td class="r">20</td><td class="r ok">0</td><td class="r ok">0</td></tr>
+      </table>
+      <p>Decorative empty alts are correct for purely decorative images — but on a portfolio-driven event site the gallery thumbnails of real shoots <i>are</i> content. The Weddings page (1/73 empty) proves the team can do this; it just hasn't been applied across the home and corporate galleries.</p>
+      <div class="fix"><b>Fix —</b> populate alts for portfolio thumbnails sitewide. Use the existing portfolio post titles (e.g. "Stanford Alumni gala stage", "Coca-Cola Reyes Bottling AV"). WordPress media library bulk-edit gets this done in 2–3 hours.</div>
+    </div>
+
+  </section>
+
+  <section id="tech">
+    <div class="sec-title">Technical SEO · 70 / 100</div>
+    <div class="panel">
+      <div class="tag ok">● Strengths</div>
+      <p>HTTPS enforced; valid <code>robots.txt</code> declaring the Yoast sitemap index; 14 child sitemaps with fresh <code>lastmod</code> (most recent 2026-05-12 for Team); server-side rendering confirmed; Googlebot, Bingbot, GPTBot, ClaudeBot, PerplexityBot and OAI-SearchBot all return 200; <code>lang</code>, viewport, charset, favicon present; no <code>noindex</code> accidents on money pages; 42 of ~41 external scripts use <code>async</code> or <code>defer</code>.</p>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>HTTPS redirect chain</td><td class="r warn">Med</td><td>2 hops on apex; collapse at edge</td></tr>
+        <tr><td>Page weight</td><td class="r warn">Med</td><td>220–380 KB raw HTML per page; 41 external scripts; 26 external stylesheets</td></tr>
+        <tr><td>No image optimisation</td><td class="r warn">Med</td><td>Zero WebP/AVIF; zero <code>loading="lazy"</code>; JPEG-only across the audited pages</td></tr>
+        <tr><td>Two AV URLs indexed</td><td class="r bad">High</td><td>Cannibalisation — see Critical</td></tr>
+        <tr><td>Attachment sitemaps</td><td class="r note">Low-Med</td><td>Two <code>attachment-sitemap*.xml</code> indexed; redirect attachments to file</td></tr>
+        <tr><td>No <code>preconnect</code></td><td class="r note">Low</td><td>3 <code>preload</code> hints; 0 <code>preconnect</code>; one-line LCP win</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="eeat">
+    <div class="sec-title">Content Quality &amp; E-E-A-T · 64 / 51</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Factor</th><th class="r">Score</th><th>Key signals</th></tr>
+        <tr><td>Experience</td><td class="r warn">16/25</td><td>✅ 19+ named portfolio entries (Stanford, Asana, Zendesk, Michelin, Coca-Cola, East Bay SPCA, Alzheimer's Association) · ✅ 33 team members with profile pages · ❌ no in-post case studies linking process to outcome</td></tr>
+        <tr><td>Expertise</td><td class="r warn">14/25</td><td>✅ Real author "Andrew Verducci" on blog with <code>Person</code> schema, <code>meta name="author"</code>, named byline in JSON-LD · ⚠️ no visible bio block on individual posts · ❌ no credentialled specialist called out by service line</td></tr>
+        <tr><td>Authoritativeness</td><td class="r warn">11/25</td><td>✅ 6 <code>sameAs</code> profiles incl. YouTube · ✅ "17+ Years Experience" on home · ⚠️ "Top Wedding Awards" blog post exists but home + about pages don't substantiate which awards · ❌ no press / inbound media surfaced</td></tr>
+        <tr><td>Trustworthiness</td><td class="r bad">10/25</td><td>✅ HTTPS · ✅ NAP visible · ✅ privacy + terms exist · ❌ privacy/terms not in footer · ❌ contact page 179 words · ❌ no first-party data / metrics</td></tr>
+        <tr><td class="r"><b>Total</b></td><td class="r"><b>51</b></td><td>Trust drags. Experience is the strongest pillar; expertise needs the bio + per-service authors</td></tr>
+      </table>
+      <p><b>Page-type coverage</b> (against typical floors, not targets):</p>
+      <table class="kv">
+        <tr><th>Page type</th><th class="r">Floor</th><th class="r">Observed</th><th>Verdict</th></tr>
+        <tr><td>Homepage</td><td class="r">500</td><td class="r">631</td><td>Meets floor</td></tr>
+        <tr><td>Service — AV</td><td class="r">800</td><td class="r">1,232</td><td>Strong</td></tr>
+        <tr><td>Service — Weddings</td><td class="r">800</td><td class="r">1,369</td><td>Strong</td></tr>
+        <tr><td>Service — Corporate Events</td><td class="r">800</td><td class="r bad">642</td><td>Thin for a money page</td></tr>
+        <tr><td>Resources hub</td><td class="r">600</td><td class="r warn">430</td><td>Thin</td></tr>
+        <tr><td>About — Who Is VEP</td><td class="r">600</td><td class="r ok">1,196</td><td>Strong</td></tr>
+        <tr><td>About — VEP Difference</td><td class="r">600</td><td class="r ok">1,718</td><td>Strong</td></tr>
+        <tr><td>Contact Us</td><td class="r">400</td><td class="r bad">179</td><td>Critically thin — conversion page</td></tr>
+      </table>
+      <div class="fix"><b>Top fixes —</b> link privacy/terms in footer · rebuild Contact Us · add one-paragraph author bio on every post · substantiate the wedding-awards implication on the home/about pages · expand Corporate Events to ~1,000w with named case studies.</div>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">GEO / AI-Search · 60 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Criterion</th><th class="r">Score</th><th>Note</th></tr>
+        <tr><td>Citability (25%)</td><td class="r warn">50</td><td>Service pages prose-led; no self-contained 130–170w answer/definition blocks</td></tr>
+        <tr><td>Structural readability (20%)</td><td class="r warn">65</td><td>Clean Yoast hierarchy; only AV &amp; Corporate Events use H3 lists liberally; ~10% question-style headings</td></tr>
+        <tr><td>Multi-modal (15%)</td><td class="r ok">70</td><td>Image-rich; one CAD-to-video MP4 embedded; no charts/tools/diagrams</td></tr>
+        <tr><td>Authority &amp; brand (20%)</td><td class="r warn">55</td><td>Named author + sameAs ✅ · Org missing NAP · "award-winning" unspecified</td></tr>
+        <tr><td>Technical access (20%)</td><td class="r ok">80</td><td>SSR · all AI crawlers 200 · llms.txt present (incomplete)</td></tr>
+      </table>
+      <p><b>Platform estimates:</b> Google AIO ~58 · ChatGPT ~52 · Perplexity ~50 · Bing Copilot ~60.</p>
+      <table class="kv">
+        <tr><th>Brand presence (<code>sameAs</code>)</th><th class="r">Status</th><th>AI weight</th></tr>
+        <tr><td>Facebook · Instagram · LinkedIn · Pinterest · X</td><td class="r ok">present</td><td>Low–Moderate</td></tr>
+        <tr><td>YouTube</td><td class="r ok">present</td><td>~0.737 — strongest single-signal weight</td></tr>
+        <tr><td>Yelp / The Knot / WeddingWire / GBP profile URL</td><td class="r bad">not in graph</td><td>High for local + wedding intent</td></tr>
+        <tr><td>Reddit</td><td class="r bad">absent</td><td>High (Perplexity / ChatGPT)</td></tr>
+        <tr><td>Wikipedia / Wikidata</td><td class="r bad">absent</td><td>High (ChatGPT)</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)"><i>YouTube in-graph is a real differentiator vs peers who skip it. Yelp + Google Business Profile URLs likely exist for a 17-year SF firm — link them via schema <code>sameAs</code> to reinforce the local entity.</i></p>
+      <div class="fix"><b>Schema recs —</b> unify Yoast graph with a <code>LocalBusiness</code> via <code>@id</code> · add <code>Service</code> per service page (provider linked) · add <code>Person</code> for the principal on About · keep FAQ as on-page content (Aug 2023 FAQPage rich-result restriction excludes commercial sites) · add <code>AggregateRating</code> only if a verified review aggregate exists.</div>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="sec-title">Local SEO Deep-Dive</div>
+    <div class="panel">
+      <p><b>NAP:</b> phone <code>(415) 545-8635</code> · <code>tel:+1-415-545-8635</code> · email <code>info@wearevep.com</code> — consistent sitewide. <b>Address: not surfaced on any audited page.</b> A San Francisco event-production firm without a publicly listed office reads as either a service-area / mobile business or as withholding. The Contact Us page (179 words) does not include one.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th class="r">State</th><th>Action</th></tr>
+        <tr><td><code>LocalBusiness</code> schema</td><td class="r bad">absent</td><td>Add — see Critical above</td></tr>
+        <tr><td><code>areaServed</code> in schema</td><td class="r bad">absent</td><td>Add "San Francisco Bay Area"; consider per-region pages for East Bay / Peninsula / Wine Country if servicing distinctly</td></tr>
+        <tr><td>Office address on site</td><td class="r warn">not surfaced</td><td>Decide SAB vs storefront; either way, add to Contact + LocalBusiness</td></tr>
+        <tr><td>Google Business Profile</td><td class="r bad">not assessed</td><td>Verify category (<i>Event Production Service</i> or <i>Audio Visual Equipment Rental</i>), photos, services, Q&amp;A, review velocity, website link</td></tr>
+        <tr><td>Citations (Yelp, The Knot, WeddingWire, Eventective)</td><td class="r bad">not assessed</td><td>NAP consistency pass; phone format <code>(415) 545-8635</code> everywhere</td></tr>
+        <tr><td>Reviews surfaced on site</td><td class="r warn">testimonials only</td><td>If GBP has ≥30 reviews + ≥4.5 avg, surface count + rating on home (verified, never fabricated)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="pages">
+    <div class="sec-title">Money-Page Inventory · Spot Audit</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Words</th><th>H1</th><th class="r">Meta length</th><th>Primary issue</th></tr>
+        <tr><td><code>/</code> (home)</td><td class="r">631</td><td>Your Vision, Amplified.</td><td class="r ok">143</td><td>Tagline H1; geo-only title</td></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r">1,232</td><td>Audio Visual Events</td><td class="r bad">282</td><td>Description over-length; slug <code>-2</code> defect</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r">—</td><td>—</td><td class="r">—</td><td>Cannibalises the URL above</td></tr>
+        <tr><td><code>/weddings/</code></td><td class="r">1,369</td><td>WEDDINGS</td><td class="r ok">132</td><td>All-caps H1; otherwise strongest service page</td></tr>
+        <tr><td><code>/corporate-events/</code></td><td class="r bad">642</td><td>Corporate Events</td><td class="r ok">140</td><td>Thin for a primary revenue channel</td></tr>
+        <tr><td><code>/contact-us/</code></td><td class="r bad">179</td><td>Contact Us</td><td class="r ok">110</td><td>Critically thin — see Critical</td></tr>
+        <tr><td><code>/vep-difference/</code></td><td class="r ok">1,718</td><td>VEP Difference</td><td class="r ok">131</td><td>Best about page; bury-the-lede on awards</td></tr>
+        <tr><td><code>/whoisvep/</code></td><td class="r ok">1,196</td><td>Who Is VEP</td><td class="r ok">129</td><td>Solid; 33 team profiles linked</td></tr>
+        <tr><td><code>/resources/</code></td><td class="r warn">430</td><td>Resources</td><td class="r ok">135</td><td>Thin top-of-funnel hub</td></tr>
+      </table>
+      <p><b>Pattern observation.</b> The sitemap reveals a 2020/2021 push into virtual events that left durable artifacts: <code>/virtual-events/</code>, <code>/virtual-meetings-conferences/</code>, <code>/virtual-event-inquiry/</code>, <code>/virtual-fundraisers-galas/</code>, <code>/virtual-event-gallery/</code>, <code>/webcast-production/</code>, <code>/hybrid-events/</code>, <code>/digital-media-content/</code>. Peer firms have collapsed these into one Hybrid + one Webcast page. The long tail dilutes topical authority on the core in-person services that are the present revenue base.</p>
+      <div class="fix"><b>Action —</b> consolidate to 2–3 surviving virtual URLs (Hybrid, Webcast, Virtual Meetings); 301 the rest; rebuild internal links.</div>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="sec-title">Schema / Structured Data · 55 / 100</div>
+    <div class="panel">
+      <p><b>Present (Yoast <code>@graph</code>):</b> WebPage, WebSite, Organization, ImageObject, BreadcrumbList sitewide. Blog posts additionally ship Article + Person.</p>
+      <table class="kv">
+        <tr><th>Type</th><th>Where it belongs</th><th class="r">Impact</th></tr>
+        <tr><td><code>LocalBusiness</code> (or <code>EventPlanning</code> subtype)</td><td>Homepage + Contact + global graph</td><td class="r bad">High — local pack, Maps, "near me" AI</td></tr>
+        <tr><td><code>Service</code></td><td>Each AV / Weddings / Lighting / DJ / Live Streaming / Video / Photography page</td><td class="r bad">High — rich service listings, AI citation</td></tr>
+        <tr><td><code>Person</code></td><td>About page for Andrew Verducci; per-profile for 33 team pages</td><td class="r warn">Medium — E-E-A-T, knowledge panel</td></tr>
+        <tr><td><code>FAQPage</code> (on-page content only)</td><td><code>/faqs/</code> + bottom of service pages</td><td class="r warn">Medium — AI citation only (no Google rich result for commercial)</td></tr>
+        <tr><td><code>Event</code></td><td>Portfolio entries documenting real events</td><td class="r note">Medium — historic discovery</td></tr>
+        <tr><td><code>AggregateRating</code></td><td>Homepage — <b>only</b> if verified aggregate exists</td><td class="r warn">High — never fabricate</td></tr>
+      </table>
+      <p><b>Defects in existing schema:</b> <code>Organization.telephone</code> is null; <code>Organization.address</code> is null; no <code>@id</code> cross-reference (none needed yet — required when LocalBusiness is added).</p>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="sec-title">Blog Deep-Dive · 34 Posts</div>
+    <div class="grid">
+      <div class="card g"><h3>Named author</h3><div class="v">✓</div><div class="w">Andrew Verducci · Person schema · author meta</div><div class="bar"><i style="width:90%"></i></div></div>
+      <div class="card g"><h3>Categories</h3><div class="v">5+</div><div class="w">Lighting · DJ · Audio Visual · Informative · etc</div><div class="bar"><i style="width:80%"></i></div></div>
+      <div class="card a"><h3>Post depth</h3><div class="v">mixed</div><div class="w">Spot-check needed across 34 posts</div><div class="bar"><i style="width:50%"></i></div></div>
+      <div class="card a"><h3>Visible dates</h3><div class="v">verify</div><div class="w">Recommend theme audit for publish + last-updated render</div><div class="bar"><i style="width:50%"></i></div></div>
+    </div>
+    <div class="panel">
+      <p><b>Strong post to elevate:</b> <code>/celebrating-success-our-journey-to-winning-top-wedding-awards/</code> substantiates an otherwise unverified "award-winning" implication. Link from the homepage and About pages with the actual award names, year and issuer (this audit cannot identify which awards from the slug alone — see V2 below).</p>
+      <p><b>Recommended sample-post check (not run this audit):</b> open 5 posts at random and confirm visible publish date + last-updated date. Yoast renders these — theme overrides sometimes suppress them. AI summarisers prefer dated material.</p>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap — 22 Actions, Deduplicated</div>
+    <div class="sec-sub">Every finding above, merged and traced to the lenses that flagged it. Phase 0 gates block dependent work.</div>
+    <div class="plan">
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--ink)"></span>Phase 0 — Verify first (owner input)</div>
+        <p class="gs">Do not publish changes built on unverified data.</p>
+        <ul class="ol">
+          <li><b>V1</b><span>Confirm office address — service-area / mobile vs storefront — for <code>LocalBusiness</code> + Contact page (blocks P1-1, P2-8)</span><span class="src">Schema · Local</span></li>
+          <li><b>V2</b><span>Compile actual wedding awards — name, issuer, year (blocks P2-11)</span><span class="src">E-E-A-T</span></li>
+          <li><b>V3</b><span>Decide canonical AV URL — <code>/audio-visual/</code> vs <code>/audio-visual-production-2/</code> (blocks P1-5)</span><span class="src">On-Page · Find</span></li>
+          <li><b>V4</b><span>Pull Google Business Profile review count + average (blocks P2-10)</span><span class="src">Local · E-E-A-T</span></li>
+          <li><b>V5</b><span>Access: GBP, GSC, GA4, PSI, keyword tool</span><span class="src">All</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Phase 1 — This week · high impact, low risk</div>
+        <ul class="ol">
+          <li><b>1</b><span>Add <code>telephone</code> + <code>address</code> to <code>Organization</code>; insert <code>LocalBusiness</code> node into Yoast <code>@graph</code> <i>(after V1)</i></span><span class="ef">1–2 hr</span><span class="src">Schema · Local · GEO</span></li>
+          <li><b>2</b><span>Link Privacy + Terms in global footer; add "agree to privacy" microcopy to all 4 form pages</span><span class="ef">15 min</span><span class="src">Trust</span></li>
+          <li><b>3</b><span>Rewrite over-length meta description on <code>/audio-visual-production-2/</code> to 140–155 chars</span><span class="ef">5 min</span><span class="src">On-Page</span></li>
+          <li><b>4</b><span>Regenerate <code>llms.txt</code>: add all service URLs + Contact + Resources; add a "Key Facts" header block</span><span class="ef">20 min</span><span class="src">GEO</span></li>
+          <li><b>5</b><span>Decide canonical AV URL; 301 the other; rebuild internal links + Yoast canonical <i>(after V3)</i></span><span class="ef">1 hr</span><span class="src">On-Page · Find</span></li>
+          <li><b>6</b><span>Yoast → redirect attachment URLs to file; drop attachment sitemaps from index</span><span class="ef">5 min</span><span class="src">Technical</span></li>
+          <li><b>7</b><span>Collapse HTTPS redirect chain to one hop at nginx</span><span class="ef">10–30 min</span><span class="src">Technical</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Phase 2 — This month · authority + on-page</div>
+        <ul class="ol">
+          <li><b>8</b><span>Rebuild Contact Us from 179 → ~500w (process, response time, FAQ, map, named producer, testimonials) + add <code>ContactPage</code> schema</span><span class="ef">½ day</span><span class="src">Content · Win</span></li>
+          <li><b>9</b><span>Rewrite homepage <code>&lt;title&gt;</code> to lead with service+geo; secondary visible H1 with "Bay Area Event Production" wording</span><span class="ef">30 min</span><span class="src">On-Page</span></li>
+          <li><b>10</b><span>Surface Google review count + rating on homepage if ≥30 reviews + ≥4.5 avg <i>(after V4)</i></span><span class="ef">1 hr</span><span class="src">Trust · Local</span></li>
+          <li><b>11</b><span>Substantiate the "awards" implication on home + About — name, issuer, year <i>(after V2)</i></span><span class="ef">1 hr</span><span class="src">E-E-A-T</span></li>
+          <li><b>12</b><span>Expand Corporate Events from 642 → ~1,000w; add 3–5 case studies with measurable outcomes</span><span class="ef">½ day</span><span class="src">Content</span></li>
+          <li><b>13</b><span>Add <code>Service</code> schema per service page (AV, Weddings, Lighting, DJ, Live Streaming, Video, Photography)</span><span class="ef">2–3 hr</span><span class="src">Schema · GEO</span></li>
+          <li><b>14</b><span>Add <code>Person</code> schema for the principal on About + author footer block on every blog post</span><span class="ef">1–2 hr</span><span class="src">E-E-A-T · GEO</span></li>
+          <li><b>15</b><span>Populate empty <code>alt=""</code> on portfolio thumbnails sitewide (~150 images)</span><span class="ef">2–3 hr</span><span class="src">Images · GEO</span></li>
+          <li><b>16</b><span>Audit <code>/faqs/</code>; add on-page FAQ blocks to service pages (no FAQPage schema for Google)</span><span class="ef">½ day</span><span class="src">GEO · Content</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 3 — This quarter · depth, performance, entity</div>
+        <ul class="ol">
+          <li><b>17</b><span>Image pipeline: WebP/AVIF converter (ShortPixel / Imagify / Cloudflare Polish); <code>loading="lazy"</code> on non-hero imagery; 1 <code>preconnect</code> to CDN</span><span class="ef">1–2 hr setup + 1d backfill</span><span class="src">Performance · Images</span></li>
+          <li><b>18</b><span>Consolidate virtual-event URL cluster: pick 2–3 survivors (Hybrid, Webcast, Virtual Meetings); 301 the rest</span><span class="ef">1 day</span><span class="src">Find · Technical</span></li>
+          <li><b>19</b><span>Self-contained 130–170w answer blocks ("What is event production?", "How does AV rental work in San Francisco?") on service pages — ~30% question-style headings</span><span class="ef">1–2 days</span><span class="src">GEO · Content</span></li>
+          <li><b>20</b><span>Citation + NAP consistency pass: Yelp, The Knot, WeddingWire, Eventective, Google Business Profile</span><span class="ef">½ day</span><span class="src">Local</span></li>
+          <li><b>21</b><span>Measure Core Web Vitals: PSI API + GSC CrUX baseline; rerun after image pipeline lands</span><span class="ef">setup</span><span class="src">Performance</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--sub)"></span>Phase 4 — Backlog · entity ceiling</div>
+        <ul class="ol">
+          <li><b>22</b><span>Build the missing entity surfaces: Reddit / Wikidata / Google Knowledge Panel ownership; surface the YouTube channel into a Resources sub-page; original first-party data asset (e.g. real Bay Area event-cost guide)</span><span class="src">GEO · Content</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <div class="panel">
+      <p><b>Instrument before judging.</b> Confirm GA4 events for <code>tel:</code> click and contact-form submit — segmented by landing-page type (service / portfolio / blog) — <i>today</i>, before any change.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Method</th><th>When</th></tr>
+        <tr><td>Local entity recognition</td><td>Re-test AI answers ("event production San Francisco", "AV rental Bay Area", "who runs Verducci Event Productions") for brand mention + correct NAP</td><td>Baseline now → +4 wks after Phase 1</td></tr>
+        <tr><td>Schema validation</td><td>Google Rich Results Test on home + 3 service pages</td><td>Before &amp; after Phase 1</td></tr>
+        <tr><td>Cannibalisation</td><td>GSC impressions/position for <code>/audio-visual/</code> vs <code>/audio-visual-production-2/</code></td><td>After action #5</td></tr>
+        <tr><td>Conversion routing</td><td>Form submit rate by landing-page type; <code>tel:</code> click rate from blog vs service</td><td>30 days after #8 and #19</td></tr>
+        <tr><td>Core Web Vitals</td><td>PSI field + lab on home, 1 service, 1 blog</td><td>Before &amp; after #17</td></tr>
+        <tr><td>Overall</td><td>Re-run audit</td><td>Quarterly</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <div class="sec-title">Limits of This Run</div>
+    <div class="limit">
+      <h3>What this audit can and cannot say</h3>
+      <p><b>No GSC / GA4 access</b> — search-volume, ranking, click and conversion data are absent. Prioritisation here is strategic, not numeric. Re-rank once GSC data exists.</p>
+      <p><b>No CWV field data</b> — PSI / CrUX not pulled. Performance score is on-page inference (script count, image format, lazy hints). The number will move once real LCP/INP/CLS land.</p>
+      <p><b>No Google Business Profile / Maps audit</b> — DataForSEO Maps not available. GBP category, photos, Q&amp;A, review velocity and geo-grid rank are unmeasured.</p>
+      <p><b>No citation audit</b> — Yelp / The Knot / WeddingWire NAP consistency not checked.</p>
+      <p><b>No backlink data</b> — Moz / DataForSEO / Bing Webmaster not connected. The off-site authority pillar is genuinely unmeasured.</p>
+      <p><b>Blog spot-checked, not exhaustive</b> — 2 of 34 posts parsed individually; remaining 32 inferred from sitemap structure and Yoast defaults.</p>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · wearevep.com · 25 May 2026
+  </footer>
+
+</div>
+</body>
+</html>

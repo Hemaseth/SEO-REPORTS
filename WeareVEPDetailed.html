@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Verducci Event Productions</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06); --code-bg:#f5f5f7;
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .hero{text-align:center;padding:96px 0 48px}
+  .eyebrow{font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-.035em;line-height:1.04}
+  .hero .sub{font-size:21px;color:var(--sub);margin:22px auto 0;font-weight:400;max-width:780px}
+  .hero .meta{font-size:13.5px;color:var(--sub);margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:36px;max-width:920px;margin-left:auto;margin-right:auto}
+  .nav a{font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:980px;background:var(--card)}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:30px 0 18px}
+  .gauge{--val:55;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:24px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:760px;text-align:center;color:var(--sub);font-size:17.5px;margin:18px auto 0;line-height:1.6}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:13.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;text-align:center}
+  .sec-h1{font-size:36px;font-weight:700;letter-spacing:-.025em;text-align:center;margin-bottom:14px;line-height:1.1}
+  .sec-sub{font-size:15.5px;color:var(--sub);text-align:center;max-width:680px;margin:0 auto 32px;line-height:1.55}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow)}
+  .card h3{font-size:14.5px;color:var(--sub);font-weight:600}
+  .card .v{font-size:42px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px;line-height:1}
+  .card .w{font-size:13px;color:var(--sub);line-height:1.4}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:14px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:920px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .p-low{background:rgba(110,110,115,.12);color:var(--sub)}
+  .p-win{background:rgba(52,199,89,.14);color:#1f7a3e}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+  .item .body p{font-size:14.5px;color:var(--sub);line-height:1.55}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 38px;margin-top:18px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;line-height:1.25}
+  .panel h4{font-size:16px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+  .panel .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .tag.win{color:#1f7a3e}
+  .panel p{color:#3a3a3c;font-size:15px;margin-bottom:12px;line-height:1.6}
+  .panel p:last-child{margin-bottom:0}
+  .panel ul, .panel ol{padding-left:22px;margin-bottom:12px;color:#3a3a3c;font-size:15px;line-height:1.65}
+  .panel li{margin-bottom:4px}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  .kv td,.kv th{padding:10px 12px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700;background:rgba(0,0,0,.012)}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .kv td.c,.kv th.c{text-align:center}
+  .bad{color:var(--red);font-weight:600}.ok{color:var(--green);font-weight:600}.warn{color:#b26a00;font-weight:600}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:14px;padding:20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;margin:14px 0}
+  pre code{background:transparent;padding:0;font-size:12.5px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f;line-height:1.55}
+  .fix b{color:var(--blue)}
+  .effort-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--sub)}
+  .effort-row b{color:var(--ink);font-weight:600}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:34px 38px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;line-height:1.25}
+  .callout p{font-size:16px;color:#3a3a3c;line-height:1.65}
+  .callout.danger{background:linear-gradient(135deg,#fff,#fff6f4);border-color:rgba(255,59,48,.35)}
+  .callout.danger .tag{color:var(--red)}
+  .callout.warn{background:linear-gradient(135deg,#fff,#fffaef);border-color:rgba(255,159,10,.35)}
+  .callout.warn .tag{color:#b26a00}
+  .callout.win{background:linear-gradient(135deg,#fff,#f3fbf3);border-color:rgba(52,199,89,.35)}
+  .callout.win .tag{color:#1f7a3e}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:28px 32px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px;line-height:1.6}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:920px;margin:0 auto}
+  .plan .group{margin-bottom:30px}
+  .plan .gh{font-size:19px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:14.5px;display:flex;gap:13px;align-items:flex-start;line-height:1.5}
+  .ol li b{color:var(--blue);flex:none;min-width:30px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:18px}
+  .stat-strip{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .stat{background:var(--card);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);text-align:center;min-width:130px}
+  .stat .n{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:96px;padding-top:38px;border-top:1px solid var(--line);line-height:1.7}
+  footer code{font-size:11.5px}
+  @media(max-width:680px){
+    body{font-size:16px;padding:0 16px 80px}.hero{padding:56px 0 32px}
+    .panel,.callout,.limit{padding:24px 22px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+    .sec-h1{font-size:28px}
+    pre{font-size:11.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report · Fully Consolidated</div>
+    <h1>Verducci Event<br>Productions</h1>
+    <p class="sub">A 17-year Bay Area event production company that presents clearly to humans and ambiguously to machines — the gap, the evidence, and the work to close it.</p>
+    <p class="meta">
+      <b>wearevep.com</b> &nbsp;·&nbsp; San Francisco Bay Area · Event Production &nbsp;·&nbsp;
+      WordPress + Yoast SEO &nbsp;·&nbsp; <b>119 URLs audited</b> · competitor benchmark · paste-ready content briefs &amp; outreach kit &nbsp;·&nbsp;
+      <b>25 May 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#exec">Summary</a><a href="#method">Methodology</a><a href="#scores">Scorecard</a><a href="#convergent">Start Here</a>
+      <a href="#critical">Critical</a><a href="#competitor">Competitor</a><a href="#high">High</a>
+      <a href="#technical">Technical</a><a href="#content">Content</a><a href="#schema">Schema</a>
+      <a href="#geo">GEO</a><a href="#local">Local</a><a href="#perf">Perf</a>
+      <a href="#sxo">SXO</a><a href="#programmatic">Uniqueness</a><a href="#linkgraph">Link Graph</a><a href="#anchors">Anchor Text</a>
+      <a href="#ai-baseline">AI Baseline</a><a href="#wayback">Wayback</a>
+      <a href="#pages">Pages</a><a href="#blog">Blog</a><a href="#portfolio">Portfolio</a><a href="#team">Team</a>
+      <a href="#roadmap">Roadmap</a><a href="#content-briefs">Content Briefs</a><a href="#deliverables">Phase 1 Assets</a>
+      <a href="#measure">Measure</a><a href="#verify">Verify</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:55"><div class="inner"><div class="num">55</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Moderate · C&minus;</span></div>
+    <p class="lead">A solid technical base, real authored blog content, named enterprise client work, and a 17-year operating history — held back by a small cluster of high-impact defects in the machine-readable identity layer, an active staging-domain redirect leak on a 32-link URL, six primary money pages with zero in-content inbound links, a blog that is a structural conversion dead-end, and an off-site NAP defect that suppresses local-pack eligibility independently of any on-site fix.</p>
+    <div class="stat-strip">
+      <div class="stat"><div class="n">119</div><div class="l">URLs audited</div></div>
+      <div class="stat"><div class="n">610</div><div class="l">internal links mapped</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">research waves</div></div>
+      <div class="stat"><div class="n">63</div><div class="l">roadmap actions</div></div>
+      <div class="stat"><div class="n">15</div><div class="l">SERP queries verified</div></div>
+    </div>
+  </div>
+
+  <section id="exec">
+    <div class="sec-title">Executive Summary</div>
+    <h2 class="sec-h1">The one-page picture</h2>
+    <p class="sec-sub">For a 90-second read before the meeting.</p>
+
+    <div class="panel">
+      <h3>What's working</h3>
+      <ul>
+        <li>Ranks <b>#1 on Google</b> for the brand query "Verducci Event Productions" and the exact phrase "event production San Francisco."</li>
+        <li><b>WeddingWire</b>: 5/5 with 187 verified reviews. <b>Yelp</b>: 346 reviews. Both above the floor to surface as a verified AggregateRating on the homepage.</li>
+        <li>Real bylined author (Andrew Verducci) on the blog with valid <code>Person</code> schema, <code>meta name="author"</code>, and named byline in JSON-LD.</li>
+        <li>Six valid <code>sameAs</code> social profiles in the homepage schema — including YouTube, which carries the strongest single-signal weight in AI search.</li>
+        <li>HTTPS enforced, valid Yoast sitemap index, server-side rendering confirmed, all AI crawlers (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot) return 200.</li>
+        <li>17+ years operating history, 33 team members on profile pages, 19 named portfolio entries (including AVEVA, Michelin Guide, Coca-Cola/Reyes, Stanford Alumni, Asana, Zendesk, East Bay SPCA, Alzheimer's Association).</li>
+      </ul>
+
+      <h3 style="margin-top:24px">What's holding the site back</h3>
+      <ul>
+        <li>The structured-data identity is anonymous. <code>Organization.telephone</code> and <code>address</code> are both <code>null</code>. No <code>LocalBusiness</code> node anywhere. No <code>Service</code> schema on any of 12 service pages. No <code>Person</code> schema across 32 team profiles. No <code>Event</code> schema across 19 portfolio entries.</li>
+        <li>An active staging-domain redirect leak on <code>/virtual-event-inquiry/</code> — a URL with 32 in-content inbound links sitewide.</li>
+        <li>Six money pages have zero in-content inbound links from the rest of the site (<code>/weddings/</code>, <code>/corporate-events/</code>, <code>/live-streaming/</code>, <code>/virtual-events/</code>, <code>/non-profit-events/</code>, <code>/social-events/</code>). Of 119 sitemap pages, <b>58 are total orphans</b>.</li>
+        <li>The blog is a conversion dead-end. <b>0 of 33 posts link to <code>/contact-us/</code> in-content.</b> Mean 0.9 outbound in-content links per post. 32 of 33 posts are under 1,000 words (mean 422).</li>
+        <li>An off-site NAP defect: Yelp lists the business in Berkeley, The Knot lists it in San Francisco. This single inconsistency suppresses Local Pack eligibility regardless of on-site work.</li>
+        <li>Yelp primary category is <i>DJs</i> — not <i>Event Production Companies</i>. A one-field owner change unlocks Yelp SF category ranking on the existing 346-review base.</li>
+        <li>VEP is invisible in 12 of 15 SERPs queried — including all four highest-revenue page targets (AV rental, corporate events, weddings, DJ entertainment). For the high-value queries, Google's SERP wants directories and listicles; single-vendor service pages can't satisfy that intent.</li>
+        <li>16 of 19 portfolio entries are 157-word empty shells indexed under named-client URLs. Three have real case-study depth.</li>
+        <li>11.4 MB of mobile page weight is recoverable in one image-pipeline pass (Beaver Builder portfolio PNGs served at 1,600&thinsp;px wide for ~375&thinsp;px mobile display).</li>
+      </ul>
+
+      <h3 style="margin-top:24px">If you do five things this week</h3>
+      <ol>
+        <li><b>Fix the staging-domain redirect</b> on <code>/virtual-event-inquiry/</code> — single direct 301 to <code>/contact-us/</code> at nginx. 15 minutes once located. Highest-severity defect in the audit.</li>
+        <li><b>Change the Yelp primary category</b> from <i>DJs</i> to <i>Event Production Companies</i>. Owner-only, free, five minutes. Single most leveraged earned-signal change available.</li>
+        <li><b>Deploy the unified <code>@graph</code></b> (paste-ready in this report). Adds <code>LocalBusiness</code> with NAP + <code>Service</code> per service page + <code>Person</code> for Andrew Verducci. Two hours of dev work; moves Schema, Local, On-Page and AI-search lenses simultaneously.</li>
+        <li><b>Fix the <code>/weddings/</code> og:image</b> — replace the 500&times;500 square crop with a 1200&times;630 horizontal hero. Every Facebook, LinkedIn and iMessage share of the highest-traffic service page currently renders a thumbnail, not a preview card. Fifteen minutes in the media library.</li>
+        <li><b>Wrap the visible homepage phone in a <code>tel:</code> link</b>. The phone <code>(415) 545-8635</code> currently appears as static text only on <code>/</code>. Five-minute template change.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="method">
+    <div class="sec-title">Methodology · How this report was built</div>
+    <h2 class="sec-h1">The work behind the findings</h2>
+    <p class="sec-sub">This audit was assembled across six sequenced research waves. Every claim in this report traces to a primary-evidence source: an HTTP request and parsed response, a parsed schema graph, a captured SERP, a measured pairwise content overlap, a verified Wayback snapshot, or a REST API namespace enumeration. No inference is presented as observation. Where measurement was blocked (credentialed APIs, rate limits), it is flagged in the Limits section rather than substituted with estimates.</p>
+
+    <div class="panel">
+      <h3>Coverage at a glance</h3>
+      <div class="grid">
+        <div class="card b"><h3>URLs audited</h3><div class="v">119</div><div class="w">All sitemap URLs in scope</div><div class="bar"><i style="width:100%"></i></div></div>
+        <div class="card b"><h3>Internal links mapped</h3><div class="v">610</div><div class="w">In-content; nav and footer stripped</div><div class="bar"><i style="width:100%"></i></div></div>
+        <div class="card b"><h3>Live SERPs captured</h3><div class="v">15</div><div class="w">Per-money-page intent verification</div><div class="bar"><i style="width:100%"></i></div></div>
+        <div class="card b"><h3>Competitors benchmarked</h3><div class="v">5</div><div class="w">Trademark · Elev8 · ABCey · MEGA · orange-events</div><div class="bar"><i style="width:100%"></i></div></div>
+        <div class="card b"><h3>Research waves</h3><div class="v">6</div><div class="w">Sequenced, deduplicated</div><div class="bar"><i style="width:100%"></i></div></div>
+        <div class="card b"><h3>Companion documents</h3><div class="v">17</div><div class="w">Per-section primary evidence</div><div class="bar"><i style="width:100%"></i></div></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h3>The six sequenced waves</h3>
+      <table class="kv">
+        <tr><th>Wave</th><th>Scope</th><th>What was measured</th><th>Companion file</th></tr>
+        <tr><td><b>1 · Foundation</b></td><td>8 deep-audited URLs (home + 7 service / about / contact)</td><td>Server-side rendering, Yoast schema graph, on-page hierarchy, meta tags, alt-text coverage, robots.txt + sitemap_index.xml, bot-access (Google / Bing / GPTBot / ClaudeBot / PerplexityBot / OAI-SearchBot), redirect chain detection</td><td><code>wearevep-master-report-2026-05-25.md</code></td></tr>
+        <tr><td><b>2 · Exhaustive crawl</b></td><td>109 additional URLs (25 service + 33 blog + 19 portfolio + 32 team)</td><td>Per-URL title, meta description, H-hierarchy, word count, schema types, image-alt coverage, internal link count, page kind classification; verification of <code>Person</code> schema, visible publish dates, and in-content money-page routing</td><td><code>wearevep-master-report-appendix-2026-05-25.md</code> · <code>-service-pages.md</code> · <code>-blog-audit.md</code> · <code>-portfolio-team-audit.md</code></td></tr>
+        <tr><td><b>3 · Strategic lenses</b></td><td>18 cluster pages + 287 unique internal targets</td><td>Pairwise Jaccard 8-gram similarity within three content clusters; full internal link graph with nav/footer stripped; 80-target HEAD sweep for non-200 / staging-domain redirects; SXO page-type vs SERP-intent synthesis; FLOW Find / Leverage / Optimize / Win mapping</td><td><code>wearevep-strategic-findings-2026-05-25.md</code> · <code>-link-graph.md</code></td></tr>
+        <tr><td><b>4 · Deep verification</b></td><td>15 live SERPs + 17 FLOW research queries + formal schema validation + image-file audit + Wayback timeline</td><td>Per-page live SERP capture (dominant page-type, AI Overview, PAA, Local Pack); fresh editorial-listicle and trade-press outreach target research; JSON-LD validation against schema.org spec; 29 image files HEAD-audited for size and format; 4 Wayback snapshots compared (2018 / 2020 / 2022 / 2026)</td><td><code>wearevep-sxo-deep-2026-05-25.md</code> · <code>-flow-deep.md</code> · <code>-deliverables.md</code> · <code>-measurement-gaps.md</code> · <code>-ai-citation-baseline.md</code></td></tr>
+        <tr><td><b>5 · Competitive &amp; production</b></td><td>5 competitor domains · 6 technical surfaces · 6 content briefs &amp; outreach drafts</td><td>Side-by-side competitor benchmark (schema depth, word count, reviews surface, TTFB, image format); HTTP security headers scorecard; Open Graph live validation; 14-child-sitemap inventory; 85-URL extended redirect sweep; YouTube channel snapshot; anchor-text classification (brand / generic / keyword-rich); community-signal scan; ship-ready content briefs and outreach drafts</td><td><code>wearevep-competitor-benchmark-2026-05-25.md</code> · <code>-technical-finisher.md</code> · <code>-content-briefs-outreach.md</code></td></tr>
+        <tr><td><b>6 · Deep verification</b></td><td>WP plugin layer · legal compliance · boilerplate extraction · competitor structural analysis</td><td>REST API namespace enumeration (17 plugins identified; CVSS 9.9/10.0/9.8 CVE surface confirmed); TTFB root cause identified (FormLift sitewide cookie bypasses Pressable Batcache; Jetpack 6+ active modules); full Privacy Policy + T&amp;C text retrieved via JS rendering (1,193w + 1,738w); per-form CPRA compliance audit (§1798.100(b) + §1798.135 violations confirmed); 30-word rolling-window verbatim boilerplate extraction across virtual cluster (three stamps; three pages 0–2% unique); ABCey section-by-section structural analysis (FAQ depth, sub-service architecture, schema gap)</td><td><code>wearevep-wp-fingerprint-2026-05-25.md</code> · <code>wearevep-legal-compliance-2026-05-25.md</code> · <code>wearevep-boilerplate-extraction-2026-05-25.md</code> · <code>wearevep-abcey-blueprint-2026-05-25.md</code></td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Measurement techniques</h3>
+      <table class="kv">
+        <tr><th>Technique</th><th>What it produced</th></tr>
+        <tr><td>HTTP HEAD &amp; GET with crawler-equivalent user-agents</td><td>Server-rendered HTML, redirect chains, status codes, content lengths, security headers, cookie flags, OG/Twitter image dimensions, bot-specific responses</td></tr>
+        <tr><td>JSON-LD extraction + schema.org property validation</td><td>Per-node defect map (BreadcrumbList <code>item</code> missing, Organization NAP <code>null</code>, WebSite description stale, ImageObject <code>license</code> missing)</td></tr>
+        <tr><td>Jaccard 8-gram shingle similarity</td><td>Pairwise content overlap across 18 cluster pages; per-page boilerplate ratio; doorway-page risk scoring</td></tr>
+        <tr><td>Directed link graph (nav/footer stripped)</td><td>610 in-content link relationships; 287 unique targets; inbound count per money page; orphan inventory (58 of 119); PageRank dead-end detection on <code>/contact-us/</code></td></tr>
+        <tr><td>Live SERP capture (Google) per-query</td><td>Top-10 page-type distribution; AI Overview presence and citation sources; People Also Ask; Local Pack composition; competitor identification</td></tr>
+        <tr><td>Wayback historical snapshot diffing</td><td>Homepage H1 evolution; virtual-cluster origination date; brand-domain migration trail (<code>verduccies.com</code> → <code>wearevep.com</code>); <code>tel:</code> link regression detection</td></tr>
+        <tr><td>Image file inspection (Content-Length + Accept negotiation)</td><td>Per-image actual bytes, served format, WebP/AVIF availability, oversize ratio (display-px vs source-px); cumulative addressable savings per mobile pageload</td></tr>
+        <tr><td>Competitor side-by-side benchmark</td><td>Direct measurement of competitor schema depth, service-page word count, visible review surfacing, TTFB, image pipeline — same techniques applied to a controlled competitor set</td></tr>
+        <tr><td>Anchor-text classification</td><td>Per-money-page inbound anchors classified brand-only / generic / keyword-rich; identifies anchor diversity and gap pages</td></tr>
+        <tr><td>Community &amp; entity-signal scan</td><td>Reddit + Quora <code>site:</code> operator search; Wikipedia / Wikidata entity presence check; press archive search (SF Chronicle, SF Gate, Event Marketer, BizBash); review aggregate enumeration across Yelp / The Knot / WeddingWire</td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h3>Evidence standard</h3>
+      <p>Three rules govern every finding in this report:</p>
+      <ol>
+        <li><b>Primary observation, not inference.</b> A claim like "Organization.telephone is null" cites a parsed JSON-LD node; a claim like "6 money pages have zero in-content inbound links" cites a directed link graph built from 610 measured links. Synthesis is labelled as such.</li>
+        <li><b>If it can't be measured, it's listed as a Limit.</b> Real Core Web Vitals field data, Google Business Profile internals, Search Console impressions, paid backlink data — every gap is named in the Limits section rather than estimated. The <code>55*</code> performance score is held with an explicit asterisk pending real measurement.</li>
+        <li><b>Verify before publish.</b> The Owner Verification Checklist (Section 23) lists 15 items that require client input before any block in the Deliverables section ships. Address, founding year, business hours, price range, and the review-aggregate confirmation gate the schema deployment.</li>
+      </ol>
+    </div>
+
+    <div class="panel">
+      <h3>Companion document index</h3>
+      <p>Each section of this report distils evidence from one or more companion markdown files in the same folder. Open them to inspect raw findings, per-URL tables, JSON-LD blocks, anchor-text counts, SERP snapshots, and pitch drafts.</p>
+      <table class="kv">
+        <tr><th>Companion file</th><th>What's inside</th></tr>
+        <tr><td><code>wearevep-master-report-2026-05-25.md</code></td><td>Wave 1 foundation report — first-pass findings and the original 22-action roadmap</td></tr>
+        <tr><td><code>wearevep-master-report-appendix-2026-05-25.md</code></td><td>Wave 2 exhaustive crawl — 13 new high-severity findings, score revisions, 15 added actions</td></tr>
+        <tr><td><code>wearevep-service-pages-2026-05-25.md</code></td><td>Per-URL audit of 25 service / virtual / legal / utility pages</td></tr>
+        <tr><td><code>wearevep-blog-audit-2026-05-25.md</code></td><td>Per-post audit of 33 blog URLs — bylines, dates, in-content money-page routing</td></tr>
+        <tr><td><code>wearevep-portfolio-team-audit-2026-05-25.md</code></td><td>19 portfolio entries + 32 team profiles — schema coverage, image alts, empty-shell detection</td></tr>
+        <tr><td><code>wearevep-strategic-findings-2026-05-25.md</code></td><td>Wave 3 link-graph + uniqueness + SXO + FLOW synthesis · 12-action strategic roadmap</td></tr>
+        <tr><td><code>wearevep-link-graph-2026-05-25.md</code></td><td>Full 119-URL graph · orphan inventory · redirect map</td></tr>
+        <tr><td><code>wearevep-ai-citation-baseline-2026-05-25.md</code></td><td>Live AI / SERP / reviews baseline — the before-snapshot for the measurement plan</td></tr>
+        <tr><td><code>wearevep-sxo-deep-2026-05-25.md</code></td><td>15-query per-money-page live SERP capture · persona scorecards · user stories</td></tr>
+        <tr><td><code>wearevep-flow-deep-2026-05-25.md</code></td><td>10 intent-gap queries verified · 7 LEVERAGE outreach targets with specific URLs and angles</td></tr>
+        <tr><td>Phase 1 implementation assets</td><td>Paste-ready JSON-LD blocks, regenerated llms.txt, and Owner Verification Checklist — supplied with the engagement</td></tr>
+        <tr><td><code>wearevep-measurement-gaps-2026-05-25.md</code></td><td>Image file audit (11.4 MB savings finding) · Wayback timeline · PSI attempt log</td></tr>
+        <tr><td><code>wearevep-competitor-benchmark-2026-05-25.md</code></td><td>Side-by-side benchmark across 5 competitors · schema gap matrix · pattern-match target identification</td></tr>
+        <tr><td><code>wearevep-technical-finisher-2026-05-25.md</code></td><td>Security headers · OG/Twitter validation · sitemap inventory · 85-URL redirect sweep · YouTube snapshot · anchor classification</td></tr>
+        <tr><td><code>wearevep-content-briefs-outreach-2026-05-25.md</code></td><td>4 content briefs (intent gaps) + Top 10 Venues listicle brief + 5 outreach drafts + 90-day production schedule</td></tr>
+        <tr><td><code>wearevep-wp-fingerprint-2026-05-25.md</code></td><td>Wave 6 · REST API namespace enumeration · 17-plugin inventory · Formidable Forms CVE table · Jetpack namespace map · TTFB root-cause analysis · Pressable/Batcache/FormLift cookie diagnosis</td></tr>
+        <tr><td><code>wearevep-legal-compliance-2026-05-25.md</code></td><td>Wave 6 · Full Privacy Policy + T&amp;C text (JS-rendered) · CPRA §1798.100(b) + §1798.135 per-form audit · T&amp;C completeness checklist (deposits, cancellation, force majeure, equipment damage)</td></tr>
+        <tr><td><code>wearevep-boilerplate-extraction-2026-05-25.md</code></td><td>Wave 6 · 30-word rolling-window verbatim boilerplate extraction across 7 virtual-cluster pages · three stamp identification · per-page unique% table · 301 consolidation confirmation</td></tr>
+        <tr><td><code>wearevep-abcey-blueprint-2026-05-25.md</code></td><td>Wave 6 · ABCey <code>/corporate-events/</code> section-by-section structural map · FAQ gap analysis (11 items, ~1,300 words) · sub-service architecture · VEP vs ABCey gap table · rebuild word-count targets</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <h2 class="sec-h1">Where the site stands</h2>
+    <p class="sec-sub">Each lens scored independently from primary evidence across six audit waves. Differences are reconciled in-section, not averaged away.</p>
+    <div class="grid">
+      <div class="card a"><h3>SEO Health</h3><div class="v">55</div><div class="w">Overall · Moderate (C&minus;)</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card a"><h3>Technical SEO</h3><div class="v">58</div><div class="w">HTTPS + sitemap OK · staging redirect · 6 orphan money pages · 2-hop redirect chain · 2/8 security headers · active plugin CVEs · Batcache bypassed sitewide</div><div class="bar"><i style="width:58%"></i></div></div>
+      <div class="card r"><h3>Content Quality</h3><div class="v">52</div><div class="w">Blog mean 422w · J=0.623 near-duplicate · 16/19 portfolios empty</div><div class="bar"><i style="width:52%"></i></div></div>
+      <div class="card r"><h3>On-Page SEO</h3><div class="v">52</div><div class="w">Vague H1 · AV cannibalisation · 2 pages with no H1 · 8 all-caps H1s</div><div class="bar"><i style="width:52%"></i></div></div>
+      <div class="card r"><h3>Schema / Structured Data</h3><div class="v">45</div><div class="w">Org NAP null · no LocalBusiness · 0 Person on team · 0 Event on portfolio</div><div class="bar"><i style="width:45%"></i></div></div>
+      <div class="card r"><h3>Performance (CWV)</h3><div class="v">55*</div><div class="w">PSI quota exhausted · TTFB 2.7–3.5s (Poor) · 11 MB image weight recoverable</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card r"><h3>AI Search (GEO)</h3><div class="v">55</div><div class="w">#1 brand · invisible on category · llms.txt omits all money pages</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card r"><h3>Images</h3><div class="v">42</div><div class="w">63 of 95 home images empty alt · 29 of 32 team headshots no alt · zero WebP/AVIF</div><div class="bar"><i style="width:42%"></i></div></div>
+    </div>
+    <div class="panel">
+      <h4>Weighted composite</h4>
+      <table class="kv">
+        <tr><th>Audit category</th><th class="r">Score</th><th>Weight</th><th>Notes</th></tr>
+        <tr><td>Technical SEO</td><td class="r warn">58</td><td>22%</td><td>Pressable hosting confirmed; plugin CVEs + Batcache bypass add to defect count</td></tr>
+        <tr><td>Content Quality</td><td class="r bad">52</td><td>23%</td><td>Blog dead-end is structural</td></tr>
+        <tr><td>On-Page SEO</td><td class="r bad">52</td><td>20%</td><td>AV cannibalisation now data-backed</td></tr>
+        <tr><td>Schema / Structured Data</td><td class="r bad">45</td><td>10%</td><td>Lowest single-lens score; highest fix leverage</td></tr>
+        <tr><td>Performance (CWV)</td><td class="r bad">55*</td><td>10% — not measured</td><td>Real field data still pending</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r bad">55</td><td>10%</td><td>Page-type mismatch on 4 queries can't be fixed with content alone</td></tr>
+        <tr><td>Images</td><td class="r bad">42</td><td>5%</td><td>Largest single perf win lives here</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">Across three score revisions (initial spot-check 64 → exhaustive crawl 58 → strategic lenses 55), each wave surfaced material that warranted a downward adjustment. The score will likely move <i>up</i> rather than down on the next pass — most of the remaining gap is hygiene the team can ship in 4–6 weeks.</p>
+    </div>
+  </section>
+
+  <section id="convergent">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <h2 class="sec-h1">Two failures, one body of work</h2>
+    <p class="sec-sub">Flagged independently by Schema, Local, On-Page, GEO, and SXO lenses across all four audit waves.</p>
+    <div class="callout">
+      <div class="tag">● The convergent finding</div>
+      <h3>The machine layer doesn't know who you are — and the blog doesn't route to where you do business</h3>
+      <p>Two convergent failures, exposed in different lenses but solved by the same kind of work.</p>
+      <p><b>One:</b> the structured-data identity is anonymous. <code>Organization.telephone</code> is <code>null</code>. <code>Organization.address</code> is <code>null</code>. No <code>LocalBusiness</code> node anywhere. No <code>Service</code> schema on any of 12 service pages. No <code>Person</code> schema across 32 team profile pages. No <code>Event</code> schema across 19 portfolio entries. <code>BreadcrumbList[0].item</code> is missing on the homepage, making the breadcrumb rich result ineligible. The <code>WebSite.description</code> still describes the brand as "Live Stream, Webcast, Video Production, Digital Media Content" — a 2020/2021 virtual-event-era positioning the rest of the site has moved past.</p>
+      <p><b>Two:</b> the blog is a conversion dead-end. <b>0 of 33 posts link to <code>/contact-us/</code> in-content.</b> Mean 0.9 outbound in-content links per post (excluding nav/footer). 32 of 33 posts are under 1,000 words (mean 422). Six money pages — weddings, corporate, live streaming, virtual, non-profit, social — receive zero in-content inbound links from the rest of the site. <code>/contact-us/</code> itself has 35 inbound links and zero outbound: once a user or crawler lands there, no path back into the service pages.</p>
+      <p>Closing the schema gap (a single Phase 1 dev sprint) and adding one templated in-content CTA paragraph to every post (a single DB UPDATE or block re-use) are the two highest-impact, lowest-effort moves available. Everything else in the 49-action roadmap is sequenced around them.</p>
+    </div>
+  </section>
+
+  <section id="critical">
+    <div class="sec-title">Critical Findings · Top 14</div>
+    <h2 class="sec-h1">Fix before everything else</h2>
+    <p class="sec-sub">Each finding includes the on-site evidence, the recommended fix, an effort estimate, and the lens(es) that flagged it.</p>
+
+    <!-- C1 — NEW: Formidable Forms vulnerability -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Security · Lead-Capture Surface</div>
+      <h3>1. Formidable Forms vulnerability surface — active breach risk pending version verification</h3>
+      <p>The site's primary lead-capture layer runs on Formidable Forms (confirmed via REST API namespace <code>frm-admin/v1</code>). The public WPScan vulnerability database records three Critical-tier CVEs against this plugin:</p>
+      <table class="kv">
+        <tr><th>CVE Type</th><th class="r">CVSS</th><th>Fixed in version</th><th>Risk if outdated</th></tr>
+        <tr><td>Subscriber+ Remote Code Execution</td><td class="r bad">9.9</td><td>6.3.1</td><td>Subscriber-level user achieves full server access</td></tr>
+        <tr><td>Arbitrary File Upload (Pro)</td><td class="r bad">10.0</td><td>Pre-4.02.01</td><td>Unauthenticated file write to server</td></tr>
+        <tr><td>Unsafe Deserialization</td><td class="r bad">9.8</td><td>Pre-4.02.01</td><td>Remote code execution via crafted payload</td></tr>
+        <tr><td>Payment Integrity Bypass</td><td class="r warn">7.5</td><td>6.29</td><td>Payment amount manipulation</td></tr>
+      </table>
+      <p>The site strips <code>?ver=</code> parameters from public pages — a correct security hygiene practice — but it means the installed version of Formidable Forms <b>cannot be verified externally</b>. The current latest release is <b>6.30</b>. If the installed version predates 6.3.1, any authenticated user (or anyone who registers a subscriber account) can achieve remote code execution on a live lead-capture site.</p>
+      <p>This is classified Critical rather than informational because: (a) the site runs four public-facing forms collecting commercial inquiry data (event type, venue, budget, full contact details) that feed directly into Keap CRM; (b) the site has no visible WAF or brute-force protection on the WP login; and (c) the vulnerability history includes a CVSS 10.0 — the maximum severity score.</p>
+      <div class="callout danger">
+        <div class="tag">● Immediate action required</div>
+        <h3>Verify Formidable Forms version in WP Admin now</h3>
+        <p>Log into WordPress → Plugins → Installed Plugins → confirm Formidable Forms version is ≥ 6.30. If below 6.3.1, update immediately before any other work proceeds. This is a single-click update in WP Admin — it takes three minutes. Do not defer.</p>
+      </div>
+      <div class="fix"><b>Fix —</b> verify Formidable Forms ≥ 6.30 in WP Admin (V16 in the verification checklist). Also verify Beaver Builder Pro ≥ 2.10.1.5 (SQL injection fixed), Yoast SEO ≥ 27.6 (Stored XSS fixed), and Jetpack ≥ 15.8 (121 historical CVEs). Full plugin priority table is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 3 min to verify · immediate if update needed</span><span><b>Impact:</b> Closes CVSS 9.9/10.0 RCE surface on a live lead-capture site</span><span><b>Source:</b> Wave 6 WP fingerprint</span></div>
+    </div>
+
+    <!-- C2 — NEW: CPRA violations -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Legal / Compliance</div>
+      <h3>2. Active CPRA compliance violations on every form</h3>
+      <p>Wave 6 legal compliance audit retrieved the full Privacy Policy and Terms of Service text (both hosted via Termageddon — JS-rendered, so the earlier Wave 1 static crawl saw only loading placeholders). The policies are substantive documents:</p>
+      <table class="kv">
+        <tr><th>Document</th><th class="r">Word count</th><th>Source</th><th>Last updated</th></tr>
+        <tr><td>Privacy Policy</td><td class="r">1,193 words</td><td>Termageddon (JS-rendered)</td><td>Aug 21, 2025</td></tr>
+        <tr><td>Terms &amp; Conditions</td><td class="r">1,738 words</td><td>Termageddon (JS-rendered)</td><td>Not displayed on page</td></tr>
+      </table>
+      <p>However, despite the policies existing, two CPRA violations are active on every form-bearing page and cannot be solved within the existing policy text:</p>
+      <p><b>Violation 1 — No Notice at Collection (Cal. Civ. Code §1798.100(b)):</b> None of the four forms (Contact Us, Newsletter, Virtual Event Inquiry, Sales Questionnaire) displays a Notice at Collection adjacent to the submit button. The privacy policy link exists only in the site-wide footer — not in form context. At the point data is collected (name, phone, email, event budget, venue), no disclosure of data categories, purpose, or third-party transmission (Keap CRM) appears. This is a per-form violation on every submission.</p>
+      <p><b>Violation 2 — No "Do Not Sell or Share My Personal Information" link (§1798.135):</b> The site footer contains Privacy Policy and Terms &amp; Conditions links. The required opt-out link for CPRA §1798.135 is absent entirely. The Privacy Policy acknowledges targeted advertising (Google Analytics) and third-party sharing — uses that trigger the sharing opt-out requirement regardless of whether data is sold for money.</p>
+      <p>A California-incorporated event company collecting PI via commercial web forms almost certainly meets at least one CPRA threshold (gross revenue or PI volume). Both violations are currently active on the live site.</p>
+      <div class="fix"><b>Fix scope —</b> (1) Add "Notice at Collection" microcopy adjacent to each form's submit button — the required language and form-by-form placement plan are part of the engagement deliverables. (2) Add a "Do Not Sell or Share My Personal Information" footer link pointing to a preference-management mechanism. Both fixes require legal counsel review before deployment; the engagement scope includes the copy framework. Additionally: the Terms &amp; Conditions are silent on event-services contract terms — there are no provisions for deposits, cancellation, force majeure for events, equipment damage, or performance refunds. For a company whose core business is paid event contracts, this is a material gap (see H1 below).</div>
+      <div class="effort-row"><span><b>Effort:</b> Form microcopy: 30 min per form + legal review · Footer link: 15 min · T&amp;C rewrite: 1–2 days + legal counsel</span><span><b>Impact:</b> Closes active statutory violations on every form submission</span><span><b>Source:</b> Wave 6 legal compliance audit · Cal. Civ. Code §1798.100(b), §1798.135</span></div>
+    </div>
+
+    <!-- C3 (was C1) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Highest severity in the audit</div>
+      <h3>3. Staging-domain redirect leak on a URL with 32 inbound links</h3>
+      <p><code>/virtual-event-inquiry/</code> is referenced by 32 in-content links across the site. Its 301 chain currently routes through a staging domain before reaching production:</p>
+      <table class="kv">
+        <tr><th>Hop</th><th>From</th><th>To</th><th class="r">Status</th></tr>
+        <tr><td>1</td><td><code>https://www.wearevep.com/virtual-event-inquiry/</code></td><td><code>https://wearevep.mystagingwebsite.com/contact-us/</code></td><td class="r bad">301 — STAGING DOMAIN</td></tr>
+        <tr><td>2</td><td><code>https://wearevep.mystagingwebsite.com/contact-us/</code></td><td><code>https://www.wearevep.com/contact-us/</code></td><td class="r warn">301</td></tr>
+        <tr><td>3</td><td><code>https://www.wearevep.com/contact-us/</code></td><td>—</td><td class="r ok">200</td></tr>
+      </table>
+      <p>Three hops. Hop 2 exposes the <code>wearevep.mystagingwebsite.com</code> hostname in the user's browser address bar mid-redirect. Search engines may index the staging URL. Any link equity flowing through the path is dampened. Verified by direct curl this audit.</p>
+      <div class="fix"><b>Fix —</b> at the server / nginx / WordPress redirect-plugin layer, rewrite the <code>/virtual-event-inquiry/</code> rule to a single direct 301 to <code>https://www.wearevep.com/contact-us/</code>. Then audit DNS and the WordPress <code>siteurl</code> for any other rules pointing at the staging domain.</div>
+      <div class="effort-row"><span><b>Effort:</b> 15 min once located</span><span><b>Impact:</b> Stops a public staging-domain leak; recovers 32 link-equity paths</span><span><b>Source:</b> Link-graph + 404 sweep</span></div>
+    </div>
+
+    <!-- C4 (was C2) -->
+    <div class="panel">
+      <div class="tag win">● Critical · The one-field owner fix</div>
+      <h3>4. Yelp primary category is "DJs" — not "Event Production Companies"</h3>
+      <p>VEP's Yelp profile sits on 346 reviews — a stronger Yelp review base than the top-ranked competitors in the SF "Event Production Companies" category. But the profile's primary category is <i>DJs</i>. The 346-review base is being applied to the wrong category leaderboard.</p>
+      <p>Changing the primary Yelp category from <i>DJs</i> to <i>Event Production Companies</i> (or <i>Audio Visual Equipment Rental</i>, depending on which competitive set is more lucrative) unlocks Yelp's SF category ranking on that 346-review base immediately. Yelp re-indexes category position within days of a category change.</p>
+      <div class="fix"><b>Fix —</b> log into Yelp Business → Account → Edit Business Info → Category. Change primary to <i>Event Production Companies</i>. Add <i>DJs</i> as a secondary if VEP wants to stay listed there. Owner-only action.</div>
+      <div class="effort-row"><span><b>Effort:</b> 5 min · owner</span><span><b>Impact:</b> Largest unmonetised earned-signal asset on the site</span><span><b>Source:</b> FLOW Leverage deep research</span></div>
+    </div>
+
+    <!-- C5 (was C3) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Schema · Local · GEO</div>
+      <h3>5. Organization schema has no telephone, no address, no LocalBusiness node</h3>
+      <table class="kv">
+        <tr><th>Surface</th><th>Value</th></tr>
+        <tr><td>Visible phone (footer, every page)</td><td class="ok">(415) 545-8635</td></tr>
+        <tr><td><code>tel:</code> link on <code>/contact-us/</code></td><td class="ok">+1-415-545-8635</td></tr>
+        <tr><td><code>Organization.telephone</code> in JSON-LD</td><td class="bad">null ✕</td></tr>
+        <tr><td><code>Organization.address</code> in JSON-LD</td><td class="bad">null ✕</td></tr>
+        <tr><td><code>LocalBusiness</code> node anywhere</td><td class="bad">absent ✕</td></tr>
+        <tr><td><code>Service</code> schema on 12 service pages</td><td class="bad">absent ✕ (only FAQPage on /hybrid-events/ and /faqs/)</td></tr>
+        <tr><td><code>Person</code> schema on 32 team profiles</td><td class="bad">absent ✕ (Person exists on blog posts only)</td></tr>
+        <tr><td><code>Event</code> schema on 19 portfolio entries</td><td class="bad">absent ✕</td></tr>
+      </table>
+      <p>The Yoast <code>@graph</code> ships WebPage, WebSite, Organization, ImageObject, BreadcrumbList with six valid <code>sameAs</code> profiles. It does not ship the two fields that turn a brand into a callable local business. A San Francisco service business with a verified phone, a service area, and 17 years of history is invisible as a local entity to the machine layer.</p>
+      <div class="fix"><b>Direction —</b> deploy a unified <code>@graph</code> on the homepage that populates the missing <code>LocalBusiness</code> identity (NAP, area served, hours, price tier), then layer <code>Service</code>, <code>Person</code>, and <code>Event</code> schema across the appropriate page types. The schema-rebuild package is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2 hr LocalBusiness + 2 hr Service rollout + 1 hr Person template</span><span><b>Impact:</b> Schema + Local + GEO + On-Page lenses move simultaneously</span><span><b>Source:</b> Wave 1, 2, 3, 4 (all)</span></div>
+    </div>
+
+    <!-- C6 (was C4) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Off-site NAP</div>
+      <h3>6. Yelp lists Berkeley · The Knot lists San Francisco</h3>
+      <p>Discovered in the Wave 3 live AI citation baseline. The two largest third-party profiles surfaced by category search disagree on the primary city:</p>
+      <table class="kv">
+        <tr><th>Source</th><th>Listed city</th><th>Review base</th></tr>
+        <tr><td>Yelp</td><td class="bad">Berkeley, CA</td><td>346 reviews</td></tr>
+        <tr><td>The Knot</td><td class="ok">San Francisco, CA</td><td>Profile present</td></tr>
+        <tr><td>WeddingWire</td><td class="warn">VERIFY with owner</td><td>5/5 · 187 reviews</td></tr>
+        <tr><td>Google Business Profile</td><td class="warn">Not audited (Maps API required)</td><td>Not audited</td></tr>
+      </table>
+      <p>Google ingests both Yelp and The Knot. Conflicting locality data suppresses Local Pack eligibility independently of any on-site fix. The on-site copy ("Bay Area") accommodates either interpretation; the off-site sources do not.</p>
+      <div class="fix"><b>Fix —</b> (1) Verify the correct primary location with the owner. (2) Reconcile Yelp / The Knot / WeddingWire / Google Business Profile to all match. (3) Update the schema <code>address</code> to match. (4) Run a 10-citation NAP consistency sweep after (Yelp, The Knot, WeddingWire, Eventective, BizBash, Thumbtack, GBP, Facebook, LinkedIn, Pinterest).</div>
+      <div class="effort-row"><span><b>Effort:</b> 30 min once verified</span><span><b>Impact:</b> Unblocks Local Pack ranking</span><span><b>Source:</b> Wave 3 AI baseline</span></div>
+    </div>
+
+    <!-- C7 (was C5) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Discovery · Internal Links</div>
+      <h3>7. Six money pages have zero in-content inbound links</h3>
+      <p>From 26 pages crawled in the link-graph pass (610 in-content links total, 287 unique targets, nav and footer stripped):</p>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Inbound (in-content)</th><th>Status</th></tr>
+        <tr><td><code>/event-photography/</code></td><td class="r ok">32</td><td>Hub</td></tr>
+        <tr><td><code>/lighting/</code></td><td class="r ok">24</td><td>Hub</td></tr>
+        <tr><td><code>/dj-entertainment/</code></td><td class="r ok">23</td><td>Hub</td></tr>
+        <tr><td><code>/contact-us/</code></td><td class="r ok">20</td><td>Hub — but 0 outbound (dead-end)</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r ok">19</td><td>De-facto canonical AV</td></tr>
+        <tr><td><code>/video-production/</code></td><td class="r ok">18</td><td>Hub</td></tr>
+        <tr><td><code>/event-planning/</code></td><td class="r ok">16</td><td>Hub</td></tr>
+        <tr><td><code>/hybrid-events/</code></td><td class="r warn">1</td><td>Near-orphan</td></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r bad">0</td><td><b>Orphan</b> — the slug-<code>-2</code> page</td></tr>
+        <tr><td><code>/weddings/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+        <tr><td><code>/corporate-events/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+        <tr><td><code>/live-streaming/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+        <tr><td><code>/virtual-events/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+        <tr><td><code>/non-profit-events/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+        <tr><td><code>/social-events/</code></td><td class="r bad">0</td><td><b>Orphan</b></td></tr>
+      </table>
+      <p>Six primary money pages receive no in-content inbound links from the rest of the site. They are reachable only via the global nav. Across the full 119-URL site, <b>58 pages are total orphans</b> (most are team profiles, portfolio entries, and virtual cluster stubs). Equity does not flow.</p>
+      <div class="fix"><b>Direction —</b> introduce a Related Services block on service pages, a contextual in-content CTA on every blog post, and a forward-linking block on <code>/contact-us/</code> to close the PageRank dead-end. The link-curation maps are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> ½ day for related-services block + 2 hr for blog CTA</span><span><b>Impact:</b> 6 orphan money pages get equity routing</span><span><b>Source:</b> Wave 3 link graph</span></div>
+    </div>
+
+    <!-- C8 (was C6) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Conversion</div>
+      <h3>8. Blog is a conversion dead-end — 0 of 33 posts link to /contact-us/ in-content</h3>
+      <p>The strongest pattern in the entire audit. Every traffic-acquiring asset on the site captures intent and then has no in-content path to the converting page. Quantified:</p>
+      <table class="kv">
+        <tr><th>Metric</th><th class="r">Value</th></tr>
+        <tr><td>Blog posts in sitemap</td><td class="r">34</td></tr>
+        <tr><td>Posts audited</td><td class="r">33</td></tr>
+        <tr><td>Posts linking to <code>/contact-us/</code> in-content</td><td class="r bad">0</td></tr>
+        <tr><td>Posts linking to <b>any</b> service page in-content</td><td class="r bad">12 (21 link to none)</td></tr>
+        <tr><td>Mean outbound in-content links per post</td><td class="r bad">0.9</td></tr>
+        <tr><td>Posts under 1,000 words</td><td class="r warn">32</td></tr>
+        <tr><td>Mean post word count</td><td class="r warn">422</td></tr>
+      </table>
+      <p>At a mean of 422 words, 32 of 33 posts can't rank for competitive terms anyway — but even when they do, the funnel terminates at the post. The site captures search intent and abandons it.</p>
+      <p>Three confirmed cannibalising pairs compound the problem: two holiday-party posts targeting the same intent, two "why hire a wedding DJ" posts, two "how to pick an AV vendor" posts. Each pair splits authority with itself.</p>
+      <div class="fix"><b>Direction —</b> template a contextual CTA paragraph linking each post to <code>/contact-us/</code> plus the topically-relevant service page; deploy once across all 33 posts. Expand the top trafficked posts to competitive depth. Consolidate the cannibalising pairs. The CTA template, expansion plan, and consolidation map are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2 hr template + 3 hr consolidation + 2 day depth expansion</span><span><b>Impact:</b> Activates the existing blog as a conversion channel</span><span><b>Source:</b> Wave 2 blog audit + Wave 3 link graph</span></div>
+    </div>
+
+    <!-- C9 (was C7) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · On-Page · Mobile</div>
+      <h3>9. No clickable <code>tel:</code> link on the homepage</h3>
+      <p>Verified by curl this audit: the phone <code>(415) 545-8635</code> appears once as static text on the homepage. There is <b>no <code>tel:</code> link anywhere on <code>/</code></b>. The contact page has <code>tel:+1-415-545-8635</code> — but the homepage, which ranks #1 for "event production San Francisco" and receives the most organic traffic, ships its primary conversion datum as inert text.</p>
+      <p>Combined with <code>Organization.telephone</code> being <code>null</code> in JSON-LD (Critical 3), the homepage has no machine-callable phone surface and no one-tap-call surface on mobile. Wayback confirms the previous (2018–2022) homepage did have <code>tel:</code> — this is a regression introduced during a later theme update.</p>
+      <div class="fix"><b>Direction —</b> wrap every visible phone surface (homepage, header, footer, hero, contact widgets) in a <code>tel:</code> link. The template audit and rollout plan are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 5 min template edit + 30 min sitewide audit</span><span><b>Impact:</b> Restores one-tap mobile call + machine readability</span><span><b>Source:</b> Wave 4 measurement + verification</span></div>
+    </div>
+
+    <!-- C10 (was C8) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Performance</div>
+      <h3>10. 11.4 MB of mobile page weight is recoverable in one pass — and TTFB has a confirmed server-side root cause</h3>
+      <p>Eight Beaver Builder portfolio cache PNGs on the homepage are served at <b>1,600 px wide</b> (≈2.4 MB each / ≈0.9 MB after gzip) while displaying at ~375 px on mobile — an 18× oversize ratio. The 8 files together total <b>11.4 MB</b>.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Value</th><th>Threshold</th></tr>
+        <tr><td>WebP / AVIF images served</td><td class="bad">0 (server ignores <code>Accept: image/webp</code>)</td><td>Should be default</td></tr>
+        <tr><td><code>loading="lazy"</code> images</td><td class="bad">0</td><td>Recommended on non-hero</td></tr>
+        <tr><td>Server TTFB (5 pages sampled)</td><td class="bad">2.69 – 3.53 s</td><td>1.8 s = Poor threshold</td></tr>
+        <tr><td>Render-blocking stylesheets per page</td><td class="warn">20 – 27</td><td>Per-page penalty</td></tr>
+        <tr><td>Non-deferred scripts in <code>&lt;head&gt;</code></td><td class="warn">2 per page</td><td>Should be 0</td></tr>
+        <tr><td>Raw HTML size per page</td><td class="warn">215 – 373 KB</td><td>Heavy before any asset loads</td></tr>
+      </table>
+      <p>With WebP conversion plus correct <code>srcset</code> responsive sizing, the same homepage image surface comes in under 500 KB combined — a <b>95% reduction</b>. Sitewide addressable savings across 29 audited images: <b>10.5 – 11.5 MB per mobile pageload</b>.</p>
+      <p>The PSI free-tier quota was exhausted during this run, so Core Web Vitals could not be measured directly. Proxy metrics from curl timing are above. Once the image pipeline lands, run PSI on home + 1 service + 1 blog post to capture before/after LCP.</p>
+      <p><b>TTFB root cause — confirmed via Wave 6 WP fingerprint:</b> The site runs on <b>Pressable</b> (Automattic-managed hosting, confirmed via <code>a8c-cdn</code> response header). Pressable uses Batcache (a Memcached-based full-page cache) which is highly effective — but a <code>FORMLIFT_ID</code> cookie is being set sitewide. When any cookie is present on the request, Batcache cannot serve a cached response: <b>every page load becomes a cold PHP/WordPress execution</b>. The FormLift plugin (Keap/Infusionsoft integration) is responsible. Additionally, the Jetpack plugin is running with 6+ active module namespaces (<code>jetpack/v4</code> and five sub-namespaces), adding 200–500 ms PHP execution overhead on cold loads. The combination — Batcache bypassed on every request + Jetpack 6× module overhead — is the direct cause of the 2.7–3.5 s TTFB on an otherwise capable hosting platform.</p>
+      <div class="fix"><b>Fix direction —</b> (1) Image pipeline: install a WebP/AVIF converter plugin (ShortPixel, Imagify, or Cloudflare Polish), configure responsive <code>srcset</code>, add <code>loading="lazy"</code> to non-hero images, add one <code>preconnect</code> hint — the Beaver Builder portfolio cache is the largest single target. (2) TTFB: the cookie scope and Jetpack module configuration need investigation before remediation — the engagement scope includes a Pressable/WordPress performance audit to identify which Jetpack modules are active and required, and whether the FormLift cookie can be restricted to form-bearing pages only rather than set sitewide.</div>
+      <div class="effort-row"><span><b>Effort:</b> Image pipeline: 1–2 hr setup + 1 day backfill · TTFB: 1 day investigation + remediation</span><span><b>Impact:</b> Largest realistic CWV wins available; TTFB fix alone could move from 3.5 s to &lt;1 s on cached pages</span><span><b>Source:</b> Wave 4 image file audit · Wave 6 WP fingerprint</span></div>
+    </div>
+
+    <!-- C11 (was C9) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Cannibalisation · Data-Backed</div>
+      <h3>11. /audio-visual/ vs /audio-visual-production-2/ — the link graph resolves the winner</h3>
+      <p>The original audit suspected cannibalisation; the exhaustive crawl confirmed both pages set their canonical to themselves; the link graph now resolves which one to keep:</p>
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Body words</th><th class="r">In-content inbound</th><th class="r">Schema uniqueness</th></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r">1,054</td><td class="r ok">19</td><td class="r ok">94.4%</td></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r">774</td><td class="r bad">0</td><td class="r ok">96.3%</td></tr>
+      </table>
+      <p>Pairwise content similarity: J=0.282 (28% shared 8-gram shingles). Both pages target the same intent. The team has been linking to <code>/audio-visual/</code> in body content; the <code>-2</code> page is the orphan despite having more body content. <b>Keep <code>/audio-visual/</code></b> — cleaner URL, all the existing equity. Migrate the <code>-2</code> page's deeper body content into it before 301-ing.</p>
+      <div class="fix"><b>Direction —</b> consolidate the two AV pages onto <code>/audio-visual/</code> (the deeper-linked URL), preserving the longer body content from the duplicate before 301-ing. The full migration and cache-rebuild sequence is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2 hr including cache flush</span><span><b>Impact:</b> Consolidates AV ranking signals</span><span><b>Source:</b> Wave 1 + Wave 2 + Wave 3 link graph</span></div>
+    </div>
+
+    <!-- C12 (was C10) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Content Quality</div>
+      <h3>12. Two pages share 62% of their content shingles</h3>
+      <p>Jaccard 8-gram similarity analysis across 18 cluster pages found one near-duplicate pair:</p>
+      <table class="kv">
+        <tr><th>Pair</th><th class="r">Jaccard</th><th>Verdict</th></tr>
+        <tr><td><code>/non-profit-events/</code> &harr; <code>/social-events/</code></td><td class="r bad">0.623</td><td>Near-duplicate — doorway-page risk</td></tr>
+        <tr><td><code>/audio-visual/</code> &harr; <code>/event-photography/</code></td><td class="r warn">0.320</td><td>Heavy "About VEP" boilerplate shared</td></tr>
+        <tr><td><code>/audio-visual/</code> &harr; <code>/audio-visual-production-2/</code></td><td class="r warn">0.282</td><td>Confirms cannibalisation (Critical 9)</td></tr>
+        <tr><td><code>/virtual-meetings-conferences/</code> &harr; <code>/digital-media-content/</code></td><td class="r warn">0.279</td><td>Virtual cluster boilerplate</td></tr>
+        <tr><td><code>/digital-media-content/</code> &harr; <code>/hybrid-events/</code></td><td class="r warn">0.246</td><td>Virtual cluster boilerplate</td></tr>
+      </table>
+      <p>The 0.623 similarity between <code>/non-profit-events/</code> and <code>/social-events/</code> represents near-identical templates with surface keyword swaps. By Google's quality-rater standards this approaches doorway-page risk. Both pages also appear in the orphan-money-page list (Critical 5).</p>
+      <p>The full virtual cluster averages <b>72.9% unique</b> (27% shared boilerplate) vs the technical cluster's 90.6% — consolidation is warranted with hard numbers.</p>
+      <div class="fix"><b>Direction —</b> consolidate or differentiate the two near-duplicate pages. Genuine differentiation requires distinct audience evidence on each page; VEP's portfolio supports both directions. The decision rationale and rewrite brief are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 1 day</span><span><b>Impact:</b> Removes doorway-page risk</span><span><b>Source:</b> Wave 3 programmatic uniqueness</span></div>
+    </div>
+
+    <!-- C13 (was C11) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · Portfolio</div>
+      <h3>13. 16 of 19 portfolio entries are 157-word empty pages</h3>
+      <p>The Wave 2 exhaustive portfolio audit found only three real case studies (Aveva After Dark, Michelin Guide, Coca-Cola &amp; Reyes Bottling — each ~660–715 words with Challenge / Solution / Outcome). The other 16 average <b>157 words</b> — which is the nav + footer chrome with no body copy. They are blank pages indexed under named-client URLs.</p>
+      <p>Worse: <b>no <code>Event</code> or <code>CreativeWork</code> schema</b> exists anywhere in the portfolio section. A company whose competitive moat is "we produced Stanford / Asana / Zendesk / Michelin" has 16 indexed URLs that don't tell Google or any AI summariser that fact in structured form.</p>
+      <div class="fix"><b>Direction —</b> write substantive case studies for the top portfolio entries; <code>noindex</code> or consolidate the photo-only remainder; add <code>Event</code> schema to every rewritten entry. The case-study brief template and schema rollout plan are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2–3 days for 8 case studies</span><span><b>Impact:</b> Activates the strongest competitive moat as a citable surface</span><span><b>Source:</b> Wave 2 portfolio audit</span></div>
+    </div>
+
+    <!-- C14 (was C12) -->
+    <div class="panel">
+      <div class="tag crit">● Critical · SXO</div>
+      <h3>14. Page-type mismatch on 4 highest-revenue queries</h3>
+      <p>Live SERP capture (Wave 4) on 15 commercial queries confirmed VEP is invisible in 12 of 15 SERPs — and the four highest-revenue page targets all show the same pattern: the dominant SERP page-type is not a service page.</p>
+      <table class="kv">
+        <tr><th>Page</th><th>Target query</th><th>Dominant SERP type</th><th>VEP page-type</th><th>Verdict</th></tr>
+        <tr><td><code>/corporate-events/</code></td><td>"corporate event production San Francisco"</td><td>Listicle (Trademark's blog: <i>5 Best Corporate Event Production Companies in SF</i>)</td><td>Service (504w)</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/weddings/</code></td><td>"wedding event production San Francisco"</td><td>Directory (The Knot, WeddingWire) + listicle</td><td>Service (1,369w)</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/dj-entertainment/</code></td><td>"wedding DJ San Francisco"</td><td>Directory (The Knot) + listicle</td><td>Service</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td>"audio visual rental Bay Area"</td><td>Service + directory (Yelp, Thumbtack)</td><td>Service</td><td class="warn">Partial — claim aggregator profiles</td></tr>
+      </table>
+      <p>A single-vendor service page cannot satisfy "I want to compare several options" intent regardless of on-page quality. The required assets are listicle URLs <i>in addition to</i> the service pages — VEP has the portfolio evidence (Asana, Zendesk, Michelin, Stanford, Coca-Cola) to write them credibly.</p>
+      <div class="fix"><b>Fix —</b> publish three supplementary listicle URLs (not replacing the service pages):
+        <ul style="margin-top:8px">
+          <li><i>"Top 10 Corporate Event Venues in San Francisco — and what makes the AV work at each one"</i> — uses VEP's actual portfolio venues</li>
+          <li><i>"10 Bay Area Wedding Venues We've Produced At — and how AV differs at each"</i></li>
+          <li><i>"Best Bay Area DJ Music Selections for Corporate Sales Kickoffs"</i> — listicle that doubles as a DJ proof point</li>
+        </ul>
+        These satisfy the dominant SERP intent, internally link to the service pages, generate citation-eligible content for AI Overviews, and create a plausible reason for Trademark / BizBash / Elev8 to reference VEP back.
+      </div>
+      <div class="effort-row"><span><b>Effort:</b> 2 days per listicle</span><span><b>Impact:</b> Unlocks invisible SERPs that can't be won with service pages alone</span><span><b>Source:</b> Wave 4 SXO live capture</span></div>
+    </div>
+
+  </section>
+
+  <section id="competitor">
+    <div class="sec-title">Competitor Benchmark</div>
+    <h2 class="sec-h1">Where VEP stands against SF's five most-visible event producers</h2>
+    <p class="sec-sub">Live-captured May 2025. Competitors benchmarked: Trademark Event Group, ABCey Events, MEGA Event Productions, orange (SF/LA boutique), Elev8.la.</p>
+
+    <div class="panel">
+      <div class="tag crit">● Content Gap · Critical</div>
+      <h3>ABCey's Corporate Events page is nearly 6× longer than VEP's</h3>
+      <p>ABCey <code>/corporate-events/</code> runs <b>3,626 words</b>. VEP <code>/corporate-events/</code> runs <b>627 words</b>. Google's top-ranked pages for "corporate event production San Francisco" average 2,800 + words. Keyword density, topical depth and internal-link surface area all favour ABCey by the same ratio. This gap alone explains why VEP does not rank on page one for its highest-value query.</p>
+      <div class="callout warn"><b>Headline gap:</b> ABCey 3,626 w vs VEP 627 w on the same money page. Closing this gap is the single highest-leverage on-page action available.</div>
+      <div class="effort-row"><span><b>Effort:</b> 1–2 days copy + dev</span><span><b>Impact:</b> Page-one eligibility for primary commercial intent</span><span><b>Source:</b> Competitor benchmark</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Performance Gap · Critical</div>
+      <h3>VEP's server response time (TTFB) is 10× slower than the fastest competitor</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.5rem">
+        <thead><tr style="background:var(--bg2)"><th style="text-align:left;padding:6px 8px">Site</th><th style="text-align:right;padding:6px 8px">TTFB</th><th style="text-align:left;padding:6px 8px">Image Format</th><th style="text-align:left;padding:6px 8px">Note</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:6px 8px"><b>wearevep.com</b></td><td style="text-align:right;padding:6px 8px;color:var(--red)"><b>3.4 s</b></td><td style="padding:6px 8px">JPEG / PNG</td><td style="padding:6px 8px">Pressable (Automattic); Batcache bypassed sitewide by FormLift cookie; Jetpack 6+ active modules add PHP overhead — see Critical 10</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px">Trademark Event Group</td><td style="text-align:right;padding:6px 8px;color:var(--green)"><b>0.34 s</b></td><td style="padding:6px 8px">.webp</td><td style="padding:6px 8px">Fastest in set; CDN-served next-gen images</td></tr>
+          <tr><td style="padding:6px 8px">ABCey Events</td><td style="text-align:right;padding:6px 8px">1.1 s</td><td style="padding:6px 8px">JPEG / PNG</td><td style="padding:6px 8px">Mid-range; no next-gen format investment</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px">MEGA Event Productions</td><td style="text-align:right;padding:6px 8px">0.73 s</td><td style="padding:6px 8px">JPEG</td><td style="padding:6px 8px">Fast; lightweight pages</td></tr>
+          <tr><td style="padding:6px 8px">orange (SF/LA)</td><td style="text-align:right;padding:6px 8px">1.45 s</td><td style="padding:6px 8px">AVIF (Wix CDN)</td><td style="padding:6px 8px">Best image format in set; Wix auto-converts</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:.75rem">A 3.4 s TTFB puts VEP in the bottom decile of WordPress sites. Google's ranking systems use Core Web Vitals as a tiebreaker at comparable quality levels; VEP starts every tiebreaker at a 10-point disadvantage.</p>
+      <div class="effort-row"><span><b>Effort:</b> 4–8 h hosting / CDN migration</span><span><b>Impact:</b> CWV pass; removes ranking drag on all pages</span><span><b>Source:</b> Competitor benchmark</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● Schema Gap · High</div>
+      <h3>VEP has richer markup than most competitors — but is missing Review and AggregateRating</h3>
+      <table style="width:100%;border-collapse:collapse;font-size:.85rem;margin-top:.5rem">
+        <thead><tr style="background:var(--bg2)"><th style="text-align:left;padding:6px 8px">Site</th><th style="text-align:center;padding:6px 8px">LocalBusiness</th><th style="text-align:center;padding:6px 8px">Service</th><th style="text-align:center;padding:6px 8px">Person</th><th style="text-align:center;padding:6px 8px">Event</th><th style="text-align:center;padding:6px 8px">Review</th><th style="text-align:center;padding:6px 8px">AggregateRating</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:6px 8px"><b>wearevep.com</b></td><td style="text-align:center;padding:6px 8px">✓ (proposed)</td><td style="text-align:center;padding:6px 8px">✓ (proposed)</td><td style="text-align:center;padding:6px 8px">✓ (proposed)</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px;color:var(--red)">✗</td><td style="text-align:center;padding:6px 8px;color:var(--red)">✗</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px">Trademark Event Group</td><td style="text-align:center;padding:6px 8px">✓</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td></tr>
+          <tr><td style="padding:6px 8px">ABCey Events</td><td style="text-align:center;padding:6px 8px">✓</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px">MEGA Event Productions</td><td style="text-align:center;padding:6px 8px">✓</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td></tr>
+          <tr><td style="padding:6px 8px">orange (SF/LA)</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px">Elev8.la</td><td style="text-align:center;padding:6px 8px">✓</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td><td style="text-align:center;padding:6px 8px">—</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:.75rem">Every competitor deploys at most <code>LocalBusiness</code>. VEP's proposed <code>@graph</code> (detailed in the Critical section) already surpasses the entire competitive set. The remaining gap is <code>AggregateRating</code> — which requires on-page markup pointing at real review counts. VEP has the review inventory to do this; no competitor does.</p>
+      <div class="effort-row"><span><b>Effort:</b> 1 h markup once review import is complete</span><span><b>Impact:</b> Star-rating rich results; no competitor can match</span><span><b>Source:</b> Competitor benchmark</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="callout win"><b>Hidden asset — review inventory:</b> VEP holds <b>346 Yelp reviews</b> and <b>187 WeddingWire reviews</b> (533 total). Every competitor in the benchmark set shows <b>zero review signals</b> in their on-page markup. Surfacing even a subset of these via <code>AggregateRating</code> schema creates a differentiated SERP feature no SF competitor currently holds.</div>
+      <div class="tag win">● Opportunity · Competitive Advantage</div>
+      <h3>No SF competitor has deployed review schema — VEP can own this signal</h3>
+      <p>The 533 authentic reviews already exist. The implementation is a single schema block. This is a first-mover advantage that compounds: once Google indexes the aggregate rating, it appears in AI Overviews, knowledge panels, and organic listings simultaneously.</p>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">● Pattern match · ABCey</div>
+      <h3>ABCey's content strategy: the pattern worth copying selectively</h3>
+      <p>ABCey invests in long-form, keyword-dense service pages (3,000 + words) and ranks accordingly. Their corporate events and non-profit pages dominate the mid-funnel SERPs VEP is absent from. The strategic recommendation is not to copy their aesthetic but to match their content depth on the two or three highest-value service pages: <code>/corporate-events/</code>, <code>/non-profit-events/</code>, and <code>/weddings/</code>. Content briefs for each are included in this report.</p>
+      <div class="effort-row"><span><b>Effort:</b> 1–2 days per page</span><span><b>Impact:</b> Page-one eligibility on currently unranked commercial queries</span><span><b>Source:</b> Competitor benchmark · Content briefs</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● Structural gap · ABCey vs VEP · <code>/corporate-events/</code></div>
+      <h3>ABCey's structural advantage on the most valuable page</h3>
+      <p>A detailed section-by-section analysis of ABCey's <code>/corporate-events/</code> page reveals the specific structural elements that produce the word-count and ranking gap. This is not a surface-level length comparison — it is a difference in page architecture.</p>
+      <table class="kv">
+        <tr><th>Structural element</th><th>ABCey</th><th>VEP</th></tr>
+        <tr><td>FAQ section</td><td class="ok">11 Q&amp;A items (~1,300 words, 36% of page)</td><td class="bad">None</td></tr>
+        <tr><td>Sub-service coverage</td><td class="ok">11 named sub-services with individual H3 paragraphs (~1,320 words)</td><td class="bad">Flat bullet list — no depth per sub-service</td></tr>
+        <tr><td>Total page depth</td><td class="ok">3,626 words across 10 H2 sections</td><td class="bad">627 words total</td></tr>
+        <tr><td>FAQPage JSON-LD</td><td class="warn">FAQ content present but schema absent</td><td class="bad">No FAQ content, no schema</td></tr>
+      </table>
+      <p>The FAQ gap is the single most actionable structural delta: ABCey has the content but has not added FAQPage schema — a technical differentiation VEP could implement first. The rebuild brief for <code>/corporate-events/</code> is scoped in the implementation engagement; the work identified here defines <em>what</em> needs to exist, not the copy or outline.</p>
+      <div class="effort-row"><span><b>Effort:</b> 1–2 days copy + dev</span><span><b>Impact:</b> Closes the structural gap that explains VEP's absence from the primary commercial SERP</span><span><b>Source:</b> Wave 6 competitor structural analysis</span></div>
+    </div>
+
+  </section>
+
+  <section id="high">
+    <div class="sec-title">High Findings · Next Tier</div>
+    <h2 class="sec-h1">Fix in the first month</h2>
+    <p class="sec-sub">Each of these is significant but lower-effort or lower-amplitude than the Critical tier. Grouped by lens.</p>
+
+    <div class="panel">
+      <div class="tag high">● High · Trust / Compliance</div>
+      <h3>H1. Privacy &amp; Terms exist but are not in the footer · and the Terms are silent on event-services contract terms</h3>
+      <p>Wave 6 legal compliance audit retrieved the full text of both pages (both are Termageddon-hosted and JS-rendered — the earlier Wave 1 static crawl saw only loading placeholders). The policies are substantive documents: Privacy Policy is 1,193 words (last updated Aug 21, 2025); Terms &amp; Conditions is 1,738 words. The "150-word stub" reading in Wave 1 was a static-crawl artefact, not the real content.</p>
+      <p>However, neither is linked from the global footer — a trust and compliance gap regardless of word count. And the Terms &amp; Conditions are materially incomplete for an event-services business: there are no provisions for deposits or payment schedule, cancellation terms, force majeure for live events, equipment damage liability, or performance refunds. For a company whose core business is paid event production contracts, this is a legal gap the current Termageddon-generated document does not address.</p>
+      <div class="fix"><b>Fix direction —</b> (1) Link Privacy Policy and Terms in the global footer (15 min). (2) The Terms require a rewrite by legal counsel familiar with event-services contracts — the coverage gaps are substantive and cannot be addressed by a standard Termageddon template. The engagement scope includes identifying the specific clauses needed; drafting requires counsel.</div>
+      <div class="effort-row"><span><b>Effort:</b> 15 min footer · T&amp;C rewrite: 1–2 days + legal counsel</span><span><b>Source:</b> Wave 1 + Wave 6 legal compliance audit</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page · Discovery</div>
+      <h3>H2. Homepage title and H1 don't compete for service intent</h3>
+      <table class="kv">
+        <tr><th>Surface</th><th>Current</th><th class="r">Issue</th></tr>
+        <tr><td><code>&lt;title&gt;</code></td><td>San Francisco, Bay Area | Verducci Event Productions <i>(52)</i></td><td class="r warn">Brand-first; geo precedes service</td></tr>
+        <tr><td><code>&lt;h1&gt;</code></td><td>Your Vision, Amplified.</td><td class="r bad">Tagline only — no keyword, no geo, no service</td></tr>
+        <tr><td>Historical H1 (2018–2022, Wayback)</td><td>The right event production company can make any event a success</td><td class="r ok">Service-keyword led</td></tr>
+        <tr><td>Meta description</td><td>Event production company offering audio visual, lighting, DJ photo booth, video production &amp; live streaming services. Serving the Bay Area. <i>(143)</i></td><td class="r ok">Adequate</td></tr>
+      </table>
+      <p>The brand tagline as the single H1 is a defensible visual choice that costs the strongest on-page ranking signal. "Your Vision, Amplified." cannot rank for any query a customer types. The Wayback timeline confirms the previous H1 was meaningfully more keyword-rich.</p>
+      <div class="fix"><b>Direction —</b> rework the H1 to lead with service + geo language; demote the tagline to a stylised eyebrow above the H1 to preserve brand voice. Rewrite the <code>&lt;title&gt;</code> to lead with service before brand. Specific copy is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 30 min</span><span><b>Source:</b> Wave 1 + Wave 4 Wayback</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page · Quality</div>
+      <h3>H3. Two pages have no H1 · eight have ALL-CAPS H1s · one page renders the wrong person</h3>
+      <table class="kv">
+        <tr><th>Defect</th><th>Pages affected</th></tr>
+        <tr><td>No H1 at all</td><td><code>/virtual-events/</code>, <code>/virtual-event-gallery/</code></td></tr>
+        <tr><td>ALL-CAPS H1</td><td>8 service pages including <code>/weddings/</code> (renders "WEDDINGS")</td></tr>
+        <tr><td>Title / H1 mismatch</td><td><code>/team/scott-oatman/</code> renders "Carla Andrade-Perez"</td></tr>
+        <tr><td>5 empty-shell team pages</td><td>Jesse Rosen, Dylan Feldman, Reiko Simmons, Enrique Cuellar, Gerard Fancuberta — return 200 with nav-only content</td></tr>
+        <tr><td>Duplicate self-canonical team profile pairs</td><td>Andrew Verducci (×2), Lawrence Arevalo (×2) — each pair splits author authority</td></tr>
+      </table>
+      <p>All-caps in HTML survives screen readers as letter-by-letter reading and weakens the keyword signal. The Scott Oatman / Carla Andrade-Perez mismatch is a copy-paste defect: either two team members were merged in the CMS or the slug was renamed without updating content. Critical for trust if a referral following "Scott Oatman" lands on a different person.</p>
+      <div class="fix"><b>Direction —</b> add H1 to the two no-H1 pages; convert ALL-CAPS H1s to sentence case in markup (CSS handles the visual); verify the Scott Oatman page content with the owner; populate or consolidate the 5 empty team profiles; consolidate the duplicate team-profile pairs. The specific sequence and consolidation map are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 30 min H1s + ½ day team bios + 30 min 301s</span><span><b>Source:</b> Wave 2 service + team audit</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Schema</div>
+      <h3>H4. 0 Person schema across 32 team profiles — anonymous to machines</h3>
+      <p>Wave 1 confirmed <code>Person</code> schema on blog posts. Wave 2 confirmed it does NOT exist on the 32 team profile pages themselves. Combined with H5 (29 of 32 headshots have missing <code>alt</code>), the team — the strongest evidence of operating expertise behind the brand — is essentially anonymous in the machine layer.</p>
+      <div class="fix"><b>Direction —</b> deploy <code>Person</code> schema across the 32 team pages, cross-linked to the homepage <code>LocalBusiness</code> entity. Per-page property values and the deployment template are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2–3 hr (template + per-page fill)</span><span><b>Source:</b> Wave 2 team audit</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Images</div>
+      <h3>H5. 29 of 32 team headshots have no <code>alt</code> attribute</h3>
+      <p>Headshot filenames like <code>TN-back.jpg</code> and <code>Umami-front.jpg</code> are the only metadata. Accessibility violation (WCAG 1.1.1) and a missed entity signal. On the homepage and Corporate Events pages, 63 of 95 and 63 of 106 images respectively use empty <code>alt=""</code> — decorative empty alts are correct for purely decorative images, but on a portfolio-driven event site the gallery thumbnails of real shoots <i>are</i> content. The Weddings page (1 of 73 empty) proves the team can do this consistently — it just hasn't been applied across home and corporate.</p>
+      <div class="fix"><b>Direction —</b> populate descriptive <code>alt</code> attributes on team headshots and gallery thumbnails. Existing portfolio post titles already supply the underlying descriptors. The bulk-edit plan is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 1 hr team + 2–3 hr galleries</span><span><b>Source:</b> Wave 1 + Wave 2</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Technical · Meta descriptions</div>
+      <h3>H6. 3 missing meta descriptions · 1 over-length</h3>
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Issue</th><th class="r">Current length</th></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r bad">Over-length — Google truncates mid-sentence</td><td class="r">282</td></tr>
+        <tr><td><code>/sales-questionnaire/</code></td><td class="r warn">Missing — Google fabricates the snippet</td><td class="r">0</td></tr>
+        <tr><td><code>/privacy-policy/</code></td><td class="r warn">Missing</td><td class="r">0</td></tr>
+        <tr><td><code>/terms-and-conditions/</code></td><td class="r warn">Missing</td><td class="r">0</td></tr>
+      </table>
+      <div class="fix"><b>Fix —</b> rewrite the AV description to 140–155 chars; write 140–155 char descriptions for the three missing pages. 20 min total in Yoast.</div>
+      <div class="effort-row"><span><b>Effort:</b> 20 min</span><span><b>Source:</b> Wave 1 + Wave 2</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Technical</div>
+      <h3>H7. <code>/virtual-event-inquiry/</code> ghost URL · <code>/virtual-skos-ckos/</code> 404</h3>
+      <p><code>/virtual-event-inquiry/</code> is the page behind Critical 1 — its canonical points to <code>/contact-us/</code>, it's served, and it appears in the page sitemap. After the staging-redirect fix, 301 it directly and remove from the sitemap. <code>/virtual-skos-ckos/</code> returns a 404 with 1 in-content inbound link — a defunct sales-kickoff page (likely related to the <code>/sales-kickoff-season-a-virtual-playground/</code> blog post). Either restore the page or fix the linking page.</p>
+      <div class="effort-row"><span><b>Effort:</b> 10 min ghost 301 + 5 min broken link</span><span><b>Source:</b> Wave 3 + Wave 3</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · GEO</div>
+      <h3>H8. <code>llms.txt</code> exists but omits every primary money page</h3>
+      <p>The current Yoast-generated <code>/llms.txt</code> lists 5 pages (Hybrid Events, Webcast Production, Digital Media Content, Virtual Meetings, Video Production), 1 blog post, 5 portfolios, 5 testimonials, 5 team. <b>Excluded:</b> Audio Visual, Live Streaming, Weddings, Corporate Events, Lighting, DJ Entertainment, Event Photography, Contact Us, Resources. An AI agent reading the file alone concludes VEP is a virtual-events specialist — a 2020/2021 truth the rest of the site has moved past.</p>
+      <div class="fix"><b>Direction —</b> deploy a regenerated <code>llms.txt</code> that surfaces the full service catalogue and a Key Facts header per the <code>llmstxt.org</code> spec. The rewritten file is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 20 min (paste-ready)</span><span><b>Source:</b> Wave 1 + Wave 4 deliverables</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Technical</div>
+      <h3>H9. Two-hop HTTPS redirect on the apex</h3>
+      <table class="kv">
+        <tr><th>Hop</th><th>Location</th><th class="r">Status</th></tr>
+        <tr><td><code>http://wearevep.com/</code></td><td>https://wearevep.com/</td><td class="r warn">301</td></tr>
+        <tr><td><code>https://wearevep.com/</code></td><td>https://www.wearevep.com/</td><td class="r warn">301</td></tr>
+        <tr><td><code>https://www.wearevep.com/</code></td><td>—</td><td class="r ok">200</td></tr>
+      </table>
+      <p>Not an indexing risk — Google follows both — but a tax on link equity from older inbound references and a measurable extra round-trip for first visits.</p>
+      <div class="fix"><b>Fix —</b> collapse to one hop at nginx: <code>http://(www.)?wearevep.com → https://www.wearevep.com</code>.</div>
+      <div class="effort-row"><span><b>Effort:</b> 10–30 min</span><span><b>Source:</b> Wave 1</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Technical · Indexing hygiene</div>
+      <h3>H10. Attachment sitemaps indexed · 58 of 119 pages are orphans</h3>
+      <p>Yoast publishes <code>attachment-sitemap.xml</code> and <code>attachment-sitemap2.xml</code>. WordPress attachment pages are auto-generated, content-light wrappers around media files — Google de-prioritises them but they consume crawl budget. <b>58 of 119 sitemap pages are total orphans</b> (no in-content inbound from anywhere) — most are team profiles, portfolio entries, and virtual cluster stubs. The Wave 3 link graph identified the full list.</p>
+      <div class="fix"><b>Fix —</b> in Yoast, set Media (attachments) → "Redirect attachment URLs to file" (the Yoast default recommendation). Audit tag archives — keep only those with ≥5 posts and a real description; <code>noindex</code> the rest. For orphan team / portfolio pages, fix via the related-services + case-study expansion work (Critical 5 + Critical 11).</div>
+      <div class="effort-row"><span><b>Effort:</b> 5 min Yoast toggle + ongoing as content lands</span><span><b>Source:</b> Wave 1 + Wave 3</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · LEVERAGE / Earned</div>
+      <h3>H11. Excluded from every editorial listicle ranking "best event production SF"</h3>
+      <p>Wave 4 FLOW research identified specific outreach targets. Most valuable, in priority order:</p>
+      <table class="kv">
+        <tr><th>Target</th><th>Why it matters</th><th>Angle</th></tr>
+        <tr><td><b>Elev8.la</b> SF top-4 listicle</td><td>Page 1 of Google for the query. LA publisher, no SF competitive conflict.</td><td>17-year tenure + named enterprise clients + the currently-absent full-service mid-market position</td></tr>
+        <tr><td><b>Clutch.co</b> Top 70 Live Events Production SF</td><td>Updates monthly on verified client reviews. 5 reviews would likely qualify.</td><td>Drive 5 happy clients to leave Clutch reviews</td></tr>
+        <tr><td><b>Trademark</b> 5 Best Corporate Event Production Companies SF</td><td>Listicle currently dominating the corporate SERP (Critical 12)</td><td>Pitch with the AVEVA / Michelin / Coca-Cola case studies once they're written</td></tr>
+        <tr><td><b>BizBash</b> SF event production coverage</td><td>Industry trade press</td><td>"Behind the scenes" pitch on a named client gala</td></tr>
+        <tr><td><b>Cater+Event</b> (specialevents.com)</td><td>Successor to Special Events Magazine (ceased Nov 2025)</td><td>Production-side case study angle</td></tr>
+      </table>
+      <p><b>Note:</b> WeddingWire ranking is primarily spend-driven (paid tier), NOT profile-completeness driven. The lever there is subscription upgrade, not optimisation. This corrects the original audit's recommendation.</p>
+      <div class="effort-row"><span><b>Effort:</b> Ongoing — 1 pitch / week</span><span><b>Source:</b> Wave 4 FLOW deep</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Discovery / Virtual cluster</div>
+      <h3>H12. Virtual cluster averages 72.9% unique — consolidation now data-backed</h3>
+      <table class="kv">
+        <tr><th>Cluster</th><th class="r">Pages</th><th class="r">Avg unique %</th><th class="r">Avg words</th></tr>
+        <tr><td>Technical (AV, lighting, DJ, etc.)</td><td class="r">7</td><td class="r ok">90.6%</td><td class="r ok">2,418</td></tr>
+        <tr><td>Event-type (corp, weddings, etc.)</td><td class="r">4</td><td class="r warn">79.4%</td><td class="r warn">749</td></tr>
+        <tr><td>Virtual</td><td class="r">7</td><td class="r bad">72.9%</td><td class="r warn">1,183</td></tr>
+      </table>
+      <p>The virtual cluster's 27% shared boilerplate ratio is the highest in the audit. <code>/digital-media-content/</code> alone is 60.8% unique (39% boilerplate). The original Wave 1 recommendation to consolidate is now backed by hard numbers.</p>
+      <div class="fix"><b>Recommended consolidation —</b>
+        <ul style="margin-top:8px">
+          <li><b>Keep distinct:</b> <code>/virtual-events/</code>, <code>/virtual-meetings-conferences/</code>, <code>/virtual-fundraisers-galas/</code>, <code>/hybrid-events/</code></li>
+          <li><b>301 to <code>/virtual-events/</code>:</b> <code>/digital-media-content/</code>, <code>/webcast-production/</code>, <code>/virtual-event-gallery/</code></li>
+        </ul>
+      </div>
+      <div class="effort-row"><span><b>Effort:</b> ½ day including redirects + internal-link rebuild</span><span><b>Source:</b> Wave 3 programmatic uniqueness</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Security</div>
+      <h3>H13. Security headers — 2 of 8 present sitewide</h3>
+      <p>Five spot-checked URLs (<code>/</code>, <code>/corporate-events/</code>, <code>/weddings/</code>, <code>/virtual-events/</code>, <code>/contact-us/</code>) all return the same two headers: <code>Strict-Transport-Security</code> and <code>Set-Cookie: SameSite</code>. Six headers are absent across the entire site:</p>
+      <ul style="margin:.5rem 0 .5rem 1.2rem;line-height:1.8">
+        <li><code>Content-Security-Policy</code> — absent (XSS vector open)</li>
+        <li><code>X-Frame-Options</code> — absent (clickjacking possible)</li>
+        <li><code>X-Content-Type-Options</code> — absent (MIME-sniffing attacks possible)</li>
+        <li><code>Referrer-Policy</code> — absent (referrer data leaks to third parties)</li>
+        <li><code>Permissions-Policy</code> — absent (camera/mic/geolocation not scoped)</li>
+        <li><code>Cache-Control</code> — absent on HTML responses (stale-content risk)</li>
+      </ul>
+      <p>Modern browsers and Google's Safe Browsing crawler flag sites missing CSP and X-Frame-Options. The fix is a single <code>.htaccess</code> or nginx snippet; it does not require a developer to touch theme files.</p>
+      <div class="effort-row"><span><b>Effort:</b> 1 h server config</span><span><b>Impact:</b> Removes trust-signal deficit; security scanner tools (Qualys, securityheaders.com) flip green</span><span><b>Source:</b> Technical finisher</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Social / Open Graph</div>
+      <h3>H14. OG image dimensions and <code>og:type</code> errors on service and portfolio pages</h3>
+      <p>Four distinct problems found in the Open Graph layer:</p>
+      <ul style="margin:.5rem 0 .5rem 1.2rem;line-height:1.8">
+        <li><b><code>/weddings/</code></b> — <code>og:image</code> is <b>500 × 500 px</b>. Facebook, LinkedIn, and iMessage all require ≥ 1200 × 630 px for a full preview card. A square thumbnail renders instead of a hero image — the highest-traffic service page produces no social previews.</li>
+        <li><b><code>/the-importance-of-rehearsals/</code></b> — <code>og:image</code> is <b>874 × 379 px</b> (below the 1200 px minimum width). Partial card on some platforms.</li>
+        <li><b>All service pages</b> — <code>og:type</code> is set to <code>article</code>. Service pages should be typed <code>website</code> (or <code>product</code> where applicable). The <code>article</code> type triggers a different card layout and suppresses the "Visit" CTA on LinkedIn.</li>
+        <li><b>Portfolio entries</b> — <code>og:description</code> is missing entirely on all portfolio entries crawled. Platforms fall back to body text, producing inconsistent and often truncated shares.</li>
+      </ul>
+      <div class="effort-row"><span><b>Effort:</b> 2 h media + Yoast config</span><span><b>Impact:</b> Full social preview cards on every platform; removes conversion drop at share stage</span><span><b>Source:</b> Technical finisher</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Crawl Efficiency</div>
+      <h3>H15. Sitemap bloat — 1,177 attachment URLs and ~110 thin archive pages indexed</h3>
+      <p>The XML sitemap submitted to Google Search Console includes pages that carry no ranking value and consume crawl budget:</p>
+      <ul style="margin:.5rem 0 .5rem 1.2rem;line-height:1.8">
+        <li><b>1,177 attachment URLs</b> — WordPress auto-generates a standalone page for every uploaded media file. These are thin single-image pages with no body copy. All 1,177 should be excluded from the sitemap and given <code>noindex</code> via Yoast's "Attachment redirect to parent post" setting.</li>
+        <li><b>~83 of 103 post_tag archives</b> — the vast majority of tag archives contain 1–2 posts. Archives with fewer than 3 substantive posts should be <code>noindex</code>. The 20 or so tags with genuine depth (3 + posts, 300 + words per post) can stay indexed.</li>
+        <li><b>~27 testimonial_tag archives</b> — all thin; all should be <code>noindex</code>.</li>
+      </ul>
+      <p>Total recommended sitemap reduction: from ~1,350 URLs to under 200 high-value URLs. This is a Yoast settings change, not a dev task.</p>
+      <div class="effort-row"><span><b>Effort:</b> 2 h Yoast configuration</span><span><b>Impact:</b> Crawl budget reallocated to money pages; cleaner Search Console coverage report</span><span><b>Source:</b> Technical finisher</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Off-Site Presence</div>
+      <h3>H16. YouTube channel is dormant and misconfigured</h3>
+      <p>The VEP YouTube channel (<code>@wearevep</code>) has <b>60 subscribers</b>. The channel description still reads "Verducci Entertainment Productions" — the former brand name — rather than "Vep" or "We Are Vep". The channel bio contains no link back to <code>wearevep.com</code>, which removes it as a referring domain and as a citation source for Google's entity disambiguation. Video titles and descriptions have not been updated since the rebrand.</p>
+      <p>YouTube is the second-largest search engine and a direct signal source for Google's entity graph. A dormant, mis-labelled channel with no website link is a missed NAP consistency point and a lost referral channel.</p>
+      <div class="effort-row"><span><b>Effort:</b> 1 h profile update</span><span><b>Impact:</b> Closes NAP gap; adds a referring domain; entity graph correctly resolves "We Are Vep" to wearevep.com</span><span><b>Source:</b> Technical finisher</span></div>
+    </div>
+
+  </section>
+
+  <section id="technical">
+    <div class="sec-title">Deep Dive · Technical SEO · 58 / 100</div>
+    <h2 class="sec-h1">Technical surface</h2>
+    <div class="panel">
+      <div class="tag ok">● Strengths</div>
+      <p>HTTPS enforced. Valid <code>robots.txt</code> declaring the Yoast sitemap index. 14 child sitemaps with fresh <code>lastmod</code> (most recent 2026-05-12 for Team). Server-side rendering confirmed. Googlebot, Bingbot, GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot all return 200. <code>lang</code>, viewport, charset, favicon present. No <code>noindex</code> accidents on money pages. 42 of ~41 external scripts use <code>async</code> or <code>defer</code> (defer discipline is good). Author meta present on blog posts.</p>
+    </div>
+    <div class="panel">
+      <div class="tag high">● Issues</div>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Staging-domain redirect leak</td><td class="r bad">Critical</td><td>Critical 1 — 32 inbound links route through <code>wearevep.mystagingwebsite.com</code></td></tr>
+        <tr><td>HTTPS redirect chain</td><td class="r warn">Med</td><td>2 hops on apex; collapse at edge (H9)</td></tr>
+        <tr><td>Page weight</td><td class="r warn">Med</td><td>215–373 KB raw HTML per page; 41 external scripts; 26 external stylesheets</td></tr>
+        <tr><td>No image optimisation</td><td class="r warn">Med</td><td>0 WebP/AVIF; 0 <code>loading="lazy"</code>; JPEG/PNG only (Critical 10)</td></tr>
+        <tr><td>Two AV URLs both self-canonical</td><td class="r bad">High</td><td>Cannibalisation confirmed (Critical 9)</td></tr>
+        <tr><td>Ghost URL <code>/virtual-event-inquiry/</code></td><td class="r warn">Med-High</td><td>Canonical → <code>/contact-us/</code>, still in sitemap (H7)</td></tr>
+        <tr><td>Broken internal link <code>/virtual-skos-ckos/</code></td><td class="r warn">Med</td><td>1 in-content inbound link → 404 (H7)</td></tr>
+        <tr><td>Attachment sitemaps indexed</td><td class="r note">Low-Med</td><td>Two <code>attachment-sitemap*.xml</code> files; Yoast toggle to fix (H10)</td></tr>
+        <tr><td>No <code>preconnect</code></td><td class="r note">Low</td><td>3 <code>preload</code> hints; 0 <code>preconnect</code>; one-line LCP win</td></tr>
+        <tr><td>Render-blocking stylesheets</td><td class="r warn">Med</td><td>20–27 per page (Critical 10)</td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● Technical · Hosting + Plugin Layer</div>
+      <h3>Plugin and infrastructure fingerprint</h3>
+      <p>Wave 6 REST API namespace enumeration identified the active plugin layer without requiring WP Admin access. This is relevant to both security posture (Critical 1) and performance diagnosis (Critical 10).</p>
+      <table class="kv">
+        <tr><th>Component</th><th>Evidence</th><th class="r">Relevance</th></tr>
+        <tr><td>Hosting: Pressable (Automattic)</td><td><code>a8c-cdn</code> response header; <code>wpcom/v2</code> + <code>wpcom/v3</code> REST namespaces (exclusive to Automattic-managed infrastructure)</td><td class="r ok">Capable hosting; performance issue is plugin-layer, not infrastructure</td></tr>
+        <tr><td>WordPress + Yoast SEO</td><td>Standard namespace enumeration</td><td class="r ok">Confirmed; Yoast schema graph confirmed</td></tr>
+        <tr><td>Beaver Builder Pro</td><td><code>fl-controls/v1</code> REST namespace; portfolio cache PNGs in <code>wp-content/cache/bb-plugin/</code></td><td class="r warn">Page-builder cache = source of 11 MB image weight finding (Critical 10)</td></tr>
+        <tr><td>Formidable Forms</td><td><code>frm-admin/v1</code> REST namespace</td><td class="r bad">CVSS 9.9/10.0/9.8 CVE surface — see Critical 1</td></tr>
+        <tr><td>FormLift (Keap/Infusionsoft integration)</td><td><code>FORMLIFT_ID</code> cookie set sitewide</td><td class="r bad">Sitewide cookie bypasses Pressable's Batcache on every request — see Critical 10</td></tr>
+        <tr><td>Jetpack</td><td>6+ active namespaces: <code>jetpack/v4</code>, <code>/v4/stats-app</code>, <code>/v4/import</code>, <code>/v4/explat</code>, <code>/v4/blaze-app</code>, <code>/v4/blaze</code></td><td class="r bad">6+ active modules add 200–500 ms PHP overhead per cold load; 121 historical CVEs — see Critical 10</td></tr>
+      </table>
+      <p>The engagement scope includes a plugin audit to determine which Jetpack modules are actively used vs simply enabled, and whether the FormLift cookie scope can be restricted to form-bearing pages. Both investigations are prerequisite to the TTFB remediation.</p>
+    </div>
+  </section>
+
+  <section id="content">
+    <div class="sec-title">Deep Dive · Content &amp; E-E-A-T · 52 / 100</div>
+    <h2 class="sec-h1">Trust signals and content depth</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Factor</th><th class="r">Score</th><th>Signals</th></tr>
+        <tr><td>Experience</td><td class="r warn">16/25</td><td>✅ 19+ named portfolio entries · ✅ 33 team profiles · ❌ no in-post case studies linking process to outcome · ❌ 16 of 19 portfolios indexed empty</td></tr>
+        <tr><td>Expertise</td><td class="r warn">14/25</td><td>✅ Real author Andrew Verducci on blog with <code>Person</code> schema · ⚠️ no visible bio block on individual posts · ❌ 0 <code>Person</code> schema on team pages · ❌ no credentialled specialist called out by service</td></tr>
+        <tr><td>Authoritativeness</td><td class="r warn">11/25</td><td>✅ 6 <code>sameAs</code> profiles incl. YouTube · ✅ "17+ Years" claim · ⚠️ "Top Wedding Awards" post exists but home + about don't substantiate · ❌ no press / inbound media · ❌ excluded from every editorial listicle</td></tr>
+        <tr><td>Trustworthiness</td><td class="r bad">10/25</td><td>✅ HTTPS · ✅ NAP visible · ✅ privacy + terms exist (substantive, JS-rendered) · ❌ not linked in footer · ❌ T&amp;C silent on event-services contract terms · ❌ active CPRA violations on all forms (Critical 2) · ❌ contact page 179w · ❌ no first-party data</td></tr>
+        <tr><td class="r"><b>Total</b></td><td class="r"><b>51 / 100</b></td><td>Trust drags; Experience is the strongest pillar but the empty portfolios cap it</td></tr>
+      </table>
+      <h4>Page-type coverage (against typical content floors, not targets)</h4>
+      <table class="kv">
+        <tr><th>Page type</th><th class="r">Floor</th><th class="r">Observed</th><th>Verdict</th></tr>
+        <tr><td>Homepage</td><td class="r">500</td><td class="r ok">631</td><td>Meets floor</td></tr>
+        <tr><td>Service — AV</td><td class="r">800</td><td class="r ok">1,232</td><td>Strong</td></tr>
+        <tr><td>Service — Weddings</td><td class="r">800</td><td class="r ok">1,369</td><td>Strong</td></tr>
+        <tr><td>Service — Corporate Events</td><td class="r">800</td><td class="r bad">642 (504 body-only)</td><td>Thin for primary revenue page</td></tr>
+        <tr><td>Resources hub</td><td class="r">600</td><td class="r warn">430</td><td>Thin</td></tr>
+        <tr><td>About — Who Is VEP</td><td class="r">600</td><td class="r ok">1,196</td><td>Strong</td></tr>
+        <tr><td>About — VEP Difference</td><td class="r">600</td><td class="r ok">1,718</td><td>Strong</td></tr>
+        <tr><td>Contact Us</td><td class="r">400</td><td class="r bad">179</td><td>Critically thin — conversion page</td></tr>
+        <tr><td>Blog posts (mean)</td><td class="r">1,200</td><td class="r bad">422</td><td>32 of 33 under 1,000w</td></tr>
+        <tr><td>Portfolio entries (mean)</td><td class="r">400</td><td class="r bad">157 (16 of 19)</td><td>Nav-only chrome</td></tr>
+        <tr><td>Team profiles (5 of 32)</td><td class="r">200</td><td class="r bad">empty shells</td><td>Jesse Rosen, Dylan Feldman, Reiko Simmons, Enrique Cuellar, Gerard Fancuberta</td></tr>
+        <tr><td>Privacy Policy</td><td class="r">1,500</td><td class="r ok">1,193 (JS-rendered)</td><td>Substantive — footer link missing; CPRA violation on forms (Critical 2)</td></tr>
+        <tr><td>Terms &amp; Conditions</td><td class="r">1,000</td><td class="r warn">1,738 (JS-rendered)</td><td>Word count adequate — but silent on event-services contract terms (H1)</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="sec-title">Deep Dive · Schema · 45 / 100</div>
+    <h2 class="sec-h1">Structured data</h2>
+    <div class="panel">
+      <h4>Present (Yoast <code>@graph</code>, sitewide):</h4>
+      <p>WebPage, WebSite, Organization, ImageObject, BreadcrumbList. Blog posts additionally ship Article + Person. <code>/hybrid-events/</code> and <code>/faqs/</code> additionally ship FAQPage. That's all.</p>
+
+      <h4>Defects in existing schema (formal validation, Wave 4):</h4>
+      <table class="kv">
+        <tr><th>Node</th><th>Property</th><th class="r">Status</th><th>Issue</th></tr>
+        <tr><td>BreadcrumbList</td><td><code>itemListElement[0].item</code></td><td class="r bad">MISSING</td><td>Breadcrumb rich result currently ineligible</td></tr>
+        <tr><td>Organization</td><td><code>telephone</code></td><td class="r bad">null</td><td>Visible in footer; absent from schema</td></tr>
+        <tr><td>Organization</td><td><code>address</code></td><td class="r bad">null</td><td>No PostalAddress anywhere</td></tr>
+        <tr><td>Organization</td><td><code>email</code></td><td class="r warn">missing</td><td>Visible sitewide; not in graph</td></tr>
+        <tr><td>Organization</td><td><code>foundingDate</code></td><td class="r warn">missing</td><td>"17+ years" claim has no machine-readable date</td></tr>
+        <tr><td>Organization</td><td><code>areaServed</code></td><td class="r warn">missing</td><td>"Bay Area" in copy only</td></tr>
+        <tr><td>Organization</td><td><code>priceRange</code></td><td class="r warn">missing</td><td>Required for LocalBusiness; VERIFY with owner</td></tr>
+        <tr><td>WebSite</td><td><code>description</code></td><td class="r warn">stale</td><td>"Live Stream, Webcast, Video Production, Digital Media Content" — narrows brand to 2020/2021 era</td></tr>
+        <tr><td>ImageObject (primaryimage)</td><td><code>license</code></td><td class="r note">missing</td><td>Recommended for Google Images</td></tr>
+      </table>
+
+      <h4>Missing types (entire site)</h4>
+      <table class="kv">
+        <tr><th>Type</th><th>Where it belongs</th><th class="r">Impact</th></tr>
+        <tr><td><code>LocalBusiness</code> (subtype <code>EventPlanning</code>)</td><td>Homepage + Contact, global graph</td><td class="r bad">Critical — Maps, Local Pack, "near me" AI</td></tr>
+        <tr><td><code>Service</code></td><td>12 service pages</td><td class="r bad">Critical — rich service listings, AI citation</td></tr>
+        <tr><td><code>Person</code></td><td>32 team profiles + Andrew on About</td><td class="r warn">High — E-E-A-T, knowledge panel</td></tr>
+        <tr><td><code>Event</code></td><td>Portfolio entries (8 case-study-depth ones)</td><td class="r warn">High — historic discovery</td></tr>
+        <tr><td><code>ContactPage</code></td><td><code>/contact-us/</code></td><td class="r note">Medium</td></tr>
+        <tr><td><code>FAQPage</code> (on-page content)</td><td>Service pages, <code>/faqs/</code></td><td class="r note">Medium — AI citation only (Aug 2023 restriction excludes commercial from Google rich results)</td></tr>
+        <tr><td><code>AggregateRating</code></td><td>Homepage <i>only if verified</i></td><td class="r warn">High — never fabricate; gated on owner</td></tr>
+      </table>
+
+      <p>The implementation engagement supplies a paste-ready unified <code>@graph</code> for the homepage, plus templates for the six missing schema types listed in <a href="#deliverables">Phase 1 Assets</a>.</p>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">Deep Dive · GEO / AI Search · 55 / 100</div>
+    <h2 class="sec-h1">Visibility in AI Overviews, ChatGPT, Perplexity, Bing Copilot</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Criterion</th><th class="r">Score</th><th>Note</th></tr>
+        <tr><td>Citability (25%)</td><td class="r warn">50</td><td>Service pages prose-led; no self-contained 130–170w answer blocks</td></tr>
+        <tr><td>Structural readability (20%)</td><td class="r warn">65</td><td>Clean Yoast hierarchy; only AV &amp; Corporate Events use H3 lists liberally; ~10% question-style headings</td></tr>
+        <tr><td>Multi-modal (15%)</td><td class="r ok">70</td><td>Image-rich; one CAD-to-video MP4 embedded; no charts/tools/diagrams</td></tr>
+        <tr><td>Authority &amp; brand (20%)</td><td class="r warn">55</td><td>Named author + sameAs ✅ · Org missing NAP · "award-winning" unspecified · 0 editorial citations</td></tr>
+        <tr><td>Technical access (20%)</td><td class="r ok">80</td><td>SSR · all AI crawlers 200 · llms.txt present (incomplete — H8)</td></tr>
+      </table>
+      <p><b>Platform estimates:</b> Google AIO ~58 · ChatGPT ~52 · Perplexity ~50 · Bing Copilot ~60.</p>
+      <h4>Brand presence in <code>sameAs</code></h4>
+      <table class="kv">
+        <tr><th>Property</th><th class="r">Status</th><th>AI weight</th></tr>
+        <tr><td>Facebook · Instagram · LinkedIn · Pinterest · X</td><td class="r ok">present</td><td>Low–Moderate</td></tr>
+        <tr><td>YouTube</td><td class="r ok">present</td><td>~0.737 — strongest single-signal weight</td></tr>
+        <tr><td>Yelp profile URL (in <code>sameAs</code>)</td><td class="r bad">not in graph</td><td>High for local — even though VEP has 346 reviews on Yelp</td></tr>
+        <tr><td>The Knot / WeddingWire profile URLs (in <code>sameAs</code>)</td><td class="r bad">not in graph</td><td>High for wedding intent</td></tr>
+        <tr><td>Reddit</td><td class="r bad">absent (no mentions found)</td><td>High (Perplexity / ChatGPT)</td></tr>
+        <tr><td>Wikipedia / Wikidata</td><td class="r bad">absent</td><td>High (ChatGPT)</td></tr>
+      </table>
+      <p>YouTube in-graph is a real differentiator vs peers who skip it. The Yelp, The Knot, and WeddingWire URLs likely exist for a 17-year SF firm — adding them to <code>sameAs</code> reinforces the entity. Reddit and Wikipedia/Wikidata are absent — the FLOW Leverage roadmap (Phase 4) addresses this.</p>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="sec-title">Deep Dive · Local SEO</div>
+    <h2 class="sec-h1">Local entity signals</h2>
+    <div class="panel">
+      <p><b>NAP (Name / Address / Phone):</b></p>
+      <table class="kv">
+        <tr><th>Surface</th><th>Value</th><th>Status</th></tr>
+        <tr><td>Phone — visible sitewide</td><td><code>(415) 545-8635</code></td><td class="ok">Consistent</td></tr>
+        <tr><td><code>tel:</code> link on <code>/contact-us/</code></td><td><code>+1-415-545-8635</code></td><td class="ok">Present</td></tr>
+        <tr><td><code>tel:</code> link on homepage</td><td>—</td><td class="bad">Missing (Critical 7)</td></tr>
+        <tr><td>Email</td><td><code>info@wearevep.com</code></td><td class="ok">Consistent</td></tr>
+        <tr><td>Office address on site</td><td>—</td><td class="bad">Not surfaced on any audited page</td></tr>
+        <tr><td>Yelp city</td><td>Berkeley, CA</td><td class="bad">Critical 4</td></tr>
+        <tr><td>The Knot city</td><td>San Francisco, CA</td><td class="bad">Critical 4 — conflicts with Yelp</td></tr>
+      </table>
+      <table class="kv">
+        <tr><th>Signal</th><th class="r">State</th><th>Action</th></tr>
+        <tr><td><code>LocalBusiness</code> schema</td><td class="r bad">absent</td><td>Critical 3 — paste-ready in Deliverables</td></tr>
+        <tr><td><code>areaServed</code> in schema</td><td class="r bad">absent</td><td>Add "San Francisco Bay Area"; consider per-region pages for East Bay / Peninsula / Wine Country</td></tr>
+        <tr><td>Yelp primary category</td><td class="r bad">DJs</td><td>Critical 2 — change to Event Production Companies</td></tr>
+        <tr><td>Google Business Profile</td><td class="r warn">not audited</td><td>Verify category, photos, services, Q&amp;A, review velocity, website link, NAP</td></tr>
+        <tr><td>Citations (Yelp, The Knot, WeddingWire, Eventective, Thumbtack)</td><td class="r warn">partially audited</td><td>NAP consistency pass after Critical 4 resolution</td></tr>
+        <tr><td>Reviews surfaced on site</td><td class="r warn">testimonials only</td><td>If WeddingWire 187 + Yelp 346 are current and verified, add as <code>AggregateRating</code> on homepage</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="perf">
+    <div class="sec-title">Deep Dive · Performance &amp; Images · 55* / 42</div>
+    <h2 class="sec-h1">Speed, weight, image pipeline</h2>
+    <div class="panel">
+      <h4>Server &amp; TTFB</h4>
+      <table class="kv">
+        <tr><th>URL</th><th class="r">TTFB</th><th class="r">Raw HTML</th><th>Render-blocking CSS</th></tr>
+        <tr><td><code>/</code></td><td class="r bad">2.69 – 3.53 s</td><td class="r warn">330 KB</td><td class="r warn">20+</td></tr>
+        <tr><td><code>/weddings/</code></td><td class="r bad">~3 s</td><td class="r warn">373 KB</td><td class="r warn">20+</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r bad">~3 s</td><td class="r warn">288 KB</td><td class="r warn">20+</td></tr>
+        <tr><td><code>/contact-us/</code></td><td class="r bad">~3 s</td><td class="r warn">221 KB</td><td class="r warn">20+</td></tr>
+        <tr><td><code>/the-importance-of-rehearsals/</code></td><td class="r bad">~3 s</td><td class="r warn">215 KB</td><td class="r warn">20+</td></tr>
+      </table>
+      <p>Google's "Good" TTFB threshold is 0.8 s; "Poor" begins at 1.8 s. Every page sampled is in Poor territory. Investigate origin server resources (CPU / RAM / DB queries) and the WordPress object cache — this is a server-side problem the image pipeline alone cannot fix.</p>
+
+      <h4>Image audit — top 10 largest by file size on homepage</h4>
+      <p>The Beaver Builder portfolio cache emits 1,600&thinsp;px-wide PNG/JPEG files for ~375&thinsp;px mobile display — an 18× oversize ratio. The 8 worst offenders total <b>11.4 MB</b>. None are served as WebP/AVIF (server ignores <code>Accept: image/webp</code>). None use <code>loading="lazy"</code>.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Value</th></tr>
+        <tr><td>WebP/AVIF available</td><td class="bad">No — server ignores Accept header</td></tr>
+        <tr><td><code>loading="lazy"</code> images</td><td class="bad">0</td></tr>
+        <tr><td>Total addressable savings on mobile</td><td class="ok"><b>10.5 – 11.5 MB / pageload</b></td></tr>
+        <tr><td>Expected mobile LCP improvement after fix</td><td class="ok">3–6 s on cellular (estimated)</td></tr>
+      </table>
+
+      <h4>Alt-text coverage by page</h4>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Images</th><th class="r">Empty alt</th><th class="r">No alt at all</th></tr>
+        <tr><td>Home</td><td class="r">95</td><td class="r warn">63</td><td class="r ok">3</td></tr>
+        <tr><td>Corporate Events</td><td class="r">106</td><td class="r warn">63</td><td class="r ok">0</td></tr>
+        <tr><td>Weddings</td><td class="r">73</td><td class="r ok">1</td><td class="r ok">0</td></tr>
+        <tr><td>Audio Visual</td><td class="r">24</td><td class="r ok">0</td><td class="r ok">0</td></tr>
+        <tr><td>VEP Difference</td><td class="r">20</td><td class="r ok">0</td><td class="r ok">0</td></tr>
+        <tr><td>Team headshots (32 profiles)</td><td class="r">32</td><td class="r bad">—</td><td class="r bad">29</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="sxo">
+    <div class="sec-title">Deep Dive · SXO / SERP Intent · per-page mismatch</div>
+    <h2 class="sec-h1">What the SERP wants vs what VEP ships</h2>
+    <p class="sec-sub">Live SERP capture across 15 commercial queries (Wave 4). VEP is invisible in 12 of 15.</p>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Page</th><th>Target query</th><th>Dominant SERP type</th><th>VEP position</th><th>Match?</th></tr>
+        <tr><td><code>/</code></td><td>event production San Francisco</td><td>Service + directory</td><td class="ok c">#1</td><td class="ok">Match</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td>audio visual rental Bay Area</td><td>Service + directory</td><td class="bad c">not top 10</td><td class="warn">Partial</td></tr>
+        <tr><td><code>/weddings/</code></td><td>wedding event production SF</td><td>Directory (Knot, WW) + listicle</td><td class="bad c">not top 10</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/corporate-events/</code></td><td>corporate event production SF</td><td>Listicle (Trademark blog)</td><td class="bad c">not top 10</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/live-streaming/</code></td><td>live streaming services SF</td><td>Service + guide</td><td class="bad c">not top 10</td><td class="warn">Match — needs depth</td></tr>
+        <tr><td><code>/lighting/</code></td><td>event lighting rental SF</td><td>Service + directory</td><td class="bad c">not top 10</td><td class="warn">Partial</td></tr>
+        <tr><td><code>/dj-entertainment/</code></td><td>wedding DJ SF</td><td>Directory + listicle</td><td class="bad c">not top 10</td><td class="bad">Mismatch</td></tr>
+        <tr><td><code>/video-production/</code></td><td>event video production SF</td><td>Service</td><td class="warn c">~#10</td><td class="ok">Match</td></tr>
+        <tr><td><code>/event-photography/</code></td><td>event photography SF</td><td>Directory + service</td><td class="bad c">not top 10</td><td class="warn">Partial</td></tr>
+        <tr><td><code>/hybrid-events/</code></td><td>hybrid event production SF</td><td>Service + guide</td><td class="bad c">not top 10</td><td class="ok">Match</td></tr>
+        <tr><td><code>/non-profit-events/</code></td><td>non profit event production SF</td><td>Service + directory</td><td class="bad c">not top 10</td><td class="ok">Match (Critical 10 differentiation needed)</td></tr>
+        <tr><td><code>/social-events/</code></td><td>social event production SF</td><td>Service</td><td class="warn c">~#6</td><td class="ok">Match</td></tr>
+      </table>
+      <h4>User stories (derived from observed customer evidence)</h4>
+      <ol>
+        <li><b>The Corporate Event Planner.</b> As a corporate-event planner at a 200–2,000-person SF tech company, I want a turnkey producer who can deliver AV, lighting, and stage for our annual sales kickoff so that I have a single point of accountability across vendors. (Personas mapped from Asana, Zendesk, Stanford Alumni evidence.)</li>
+        <li><b>The Non-Profit Director.</b> As a non-profit director planning a $50K–$500K gala, I want a production partner who understands 501(c)(3) budget constraints and can scale technical complexity up or down so that we maximise donation yield. (Mapped from Alzheimer's Association, East Bay SPCA, Students Rising Above.)</li>
+        <li><b>The Wedding Couple.</b> As a Bay Area couple planning a 150–250-guest wedding, I want one production company that handles AV + DJ + lighting + photography so that our day flows seamlessly and the vendors don't blame each other.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="programmatic">
+    <div class="sec-title">Deep Dive · Programmatic Uniqueness</div>
+    <h2 class="sec-h1">How templated is the content?</h2>
+    <p class="sec-sub">Jaccard 8-gram shingle analysis across 18 cluster pages. Higher % = more unique to that URL. Boilerplate threshold: any shingle on ≥4 sitewide pages.</p>
+    <div class="panel">
+      <h4>Per-page uniqueness</h4>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Body words</th><th class="r">Unique %</th><th>Verdict</th></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r">774</td><td class="r ok">96.3%</td><td>High unique content (compounding the orphan finding — wasted)</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r">1,054</td><td class="r ok">94.4%</td><td>High unique content</td></tr>
+        <tr><td><code>/event-photography/</code></td><td class="r">551</td><td class="r ok">92.3%</td><td>OK</td></tr>
+        <tr><td><code>/lighting/</code></td><td class="r">620</td><td class="r ok">92.2%</td><td>OK</td></tr>
+        <tr><td><code>/weddings/</code></td><td class="r">1,229</td><td class="r ok">91.4%</td><td>Excellent</td></tr>
+        <tr><td><code>/live-streaming/</code></td><td class="r">2,160</td><td class="r ok">85.3%</td><td>Strong</td></tr>
+        <tr><td><code>/virtual-fundraisers-galas/</code></td><td class="r">1,817</td><td class="r ok">83.2%</td><td>Strong</td></tr>
+        <tr><td><code>/virtual-events/</code></td><td class="r">1,031</td><td class="r ok">82.2%</td><td>Strong</td></tr>
+        <tr><td><code>/virtual-event-gallery/</code></td><td class="r">175</td><td class="r warn">80.4%</td><td>Unique but too thin (gallery)</td></tr>
+        <tr><td><code>/corporate-events/</code></td><td class="r warn">504</td><td class="r ok">80.2%</td><td>Thin</td></tr>
+        <tr><td><code>/non-profit-events/</code></td><td class="r">642</td><td class="r warn">73.5%</td><td>Bordering boilerplate (Critical 10)</td></tr>
+        <tr><td><code>/social-events/</code></td><td class="r">621</td><td class="r warn">72.5%</td><td>Bordering boilerplate (Critical 10)</td></tr>
+        <tr><td><code>/video-production/</code></td><td class="r">1,310</td><td class="r warn">73.6%</td><td>Heavy boilerplate share</td></tr>
+        <tr><td><code>/virtual-meetings-conferences/</code></td><td class="r">1,406</td><td class="r warn">69.9%</td><td>Heavy boilerplate</td></tr>
+        <tr><td><code>/hybrid-events/</code></td><td class="r">1,318</td><td class="r warn">69.5%</td><td>Heavy boilerplate</td></tr>
+        <tr><td><code>/webcast-production/</code></td><td class="r">1,104</td><td class="r bad">64.6%</td><td>Consolidation candidate</td></tr>
+        <tr><td><code>/digital-media-content/</code></td><td class="r">1,432</td><td class="r bad">60.8%</td><td><b>39% boilerplate</b> — doorway risk</td></tr>
+      </table>
+    </div>
+
+    <div class="panel">
+      <h4>Verbatim text analysis — three shared stamps in the virtual cluster</h4>
+      <p>A 30-word rolling-window substring analysis across the 7 virtual-cluster pages and 3 control pages (used to exclude site-wide chrome) identified three exact verbatim stamps. The Jaccard analysis above measures shingle overlap; this is stricter — exact text matches only.</p>
+      <table class="kv">
+        <tr><th>Stamp</th><th>Pages affected</th><th>Character count</th><th>Nature</th></tr>
+        <tr><td><b>Stamp A — Auctioneer testimonial</b></td><td><code>/digital-media-content/</code>, <code>/virtual-events/</code>, <code>/virtual-fundraisers-galas/</code></td><td class="r warn">~290 chars</td><td>Client testimonial replicated verbatim across three pages</td></tr>
+        <tr><td><b>Stamp B — Brand tagline + CTA</b></td><td><code>/hybrid-events/</code>, <code>/virtual-events/</code>, <code>/virtual-fundraisers-galas/</code></td><td class="r warn">~396 chars</td><td>Brand mission statement + REQUEST A QUOTE call-to-action</td></tr>
+        <tr><td><b>Stamp C — Service nav + form block</b></td><td><code>/digital-media-content/</code>, <code>/virtual-meetings-conferences/</code>, <code>/webcast-production/</code></td><td class="r bad">~7,000+ chars</td><td>Service navigation, Download Event Guide CTA, and FormLift form — with each service name duplicated in markup (rendering artefact). <b>This stamp is the dominant content on all three pages.</b></td></tr>
+      </table>
+      <p>Stamp C explains the 0% unique readings: the three pages it occupies contain effectively no content beyond this shared block.</p>
+      <table class="kv">
+        <tr><th>Page</th><th class="r">Body chars</th><th class="r">Boilerplate chars</th><th class="r">% Unique</th><th>Verdict</th></tr>
+        <tr><td><code>/webcast-production/</code></td><td class="r">7,029</td><td class="r bad">7,029</td><td class="r bad">0%</td><td>Entire body is shared boilerplate — 301 candidate</td></tr>
+        <tr><td><code>/digital-media-content/</code></td><td class="r">8,718</td><td class="r bad">8,718</td><td class="r bad">0%</td><td>Entire body is shared boilerplate — 301 candidate</td></tr>
+        <tr><td><code>/virtual-meetings-conferences/</code></td><td class="r">8,705</td><td class="r warn">8,501</td><td class="r warn">2.3%</td><td>Effectively boilerplate — migrate page-specific intro to <code>/virtual-events/</code> before 301</td></tr>
+        <tr><td><code>/virtual-events/</code></td><td class="r">6,330</td><td class="r ok">1,196</td><td class="r ok">81.1%</td><td>Mostly unique — canonical destination for the three 301s</td></tr>
+        <tr><td><code>/virtual-fundraisers-galas/</code></td><td class="r">11,153</td><td class="r ok">1,196</td><td class="r ok">89.3%</td><td>Strongly unique — keep distinct</td></tr>
+        <tr><td><code>/hybrid-events/</code></td><td class="r">8,408</td><td class="r ok">396</td><td class="r ok">95.3%</td><td>Strongly unique — keep distinct</td></tr>
+      </table>
+      <p>The three 301 candidates carry ≤3% page-specific content. The consolidation recommendation from the Jaccard analysis (roadmap item 36) is now supported by exact-match boilerplate measurement confirming there is nothing material to preserve before redirecting.</p>
+    </div>
+  </section>
+
+  <section id="linkgraph">
+    <div class="sec-title">Deep Dive · Internal Link Graph</div>
+    <h2 class="sec-h1">Where equity flows</h2>
+    <p class="sec-sub">26 audited pages, 610 in-content links, 287 unique internal targets. Nav and footer stripped. Headline pattern: 58 of 119 sitemap pages are total orphans.</p>
+    <div class="panel">
+      <h4>Inbound link counts to money pages</h4>
+      <p>Already enumerated in Critical 5. The pattern: service pages cross-link among themselves but the blog never closes the return circuit.</p>
+
+      <h4>PageRank dead-end on <code>/contact-us/</code></h4>
+      <p><code>/contact-us/</code> receives 35 in-content inbound links sitewide and emits <b>zero in-content outbound</b>. The page that exists to convert has no path back into the service catalogue. Once a user (or crawler) lands there, no in-content link forward.</p>
+      <div class="fix"><b>Direction —</b> add a forward-linking services block on <code>/contact-us/</code>, paired with the deeper rebuild called out in Critical findings. The link selection and content brief are part of the engagement scope.</div>
+
+      <h4>404 / redirect findings</h4>
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Status</th><th>Inbound</th><th>Resolution</th></tr>
+        <tr><td><code>/virtual-event-inquiry/</code></td><td class="r bad">301 chain through staging</td><td class="r">32</td><td>Critical 1 fix</td></tr>
+        <tr><td><code>/virtual-skos-ckos/</code></td><td class="r bad">404</td><td class="r">1</td><td>H7 — restore or fix the linking page</td></tr>
+        <tr><td><code>/virtual-fundraisers/</code></td><td class="r warn">301 → /virtual-fundraisers-galas/</td><td class="r">1</td><td>OK; one-hop redirect</td></tr>
+      </table>
+
+      <h4>Anchor text classification — see <a href="#anchors">Anchor Text Analysis</a> section</h4>
+      <p>Full anchor text classification for all 12 money pages is documented in the dedicated section below. Key finding: three money pages have <b>zero content inbound links</b> of any anchor type.</p>
+    </div>
+  </section>
+
+  <section id="anchors">
+    <div class="sec-title">Anchor Text Analysis</div>
+    <h2 class="sec-h1">How internal links describe the money pages</h2>
+    <p class="sec-sub">12 money pages classified across four anchor-text categories. "Content inbound" excludes nav and footer links — only in-body editorial links count.</p>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Three money pages have zero content inbound</div>
+      <h3>Three highest-potential pages are invisible to the internal link graph</h3>
+      <p><code>/live-streaming/</code>, <code>/virtual-events/</code>, and <code>/audio-visual-production-2/</code> receive <b>zero in-content internal links</b> from any page on the site. Nav and footer aside, no blog post, service page, or portfolio entry links to these pages in body copy. Google's PageRank passes zero content-link equity to them. They rank as if they were orphans — because, from a content-link perspective, they are.</p>
+      <div class="callout danger"><b>Impact:</b> These three pages target some of the highest-value commercial queries on the site (live streaming, virtual events, AV production). Zero content-link equity means Google has no editorial signal to elevate them. The fix is internal link insertion in existing blog posts and the homepage — not new content.</div>
+
+      <table style="width:100%;border-collapse:collapse;font-size:.83rem;margin-top:.75rem">
+        <thead>
+          <tr style="background:var(--bg2)">
+            <th style="text-align:left;padding:6px 8px">Money page</th>
+            <th style="text-align:right;padding:6px 8px">Total inbound</th>
+            <th style="text-align:right;padding:6px 8px">Content inbound</th>
+            <th style="text-align:right;padding:6px 8px">Brand</th>
+            <th style="text-align:right;padding:6px 8px">Generic</th>
+            <th style="text-align:right;padding:6px 8px">Keyword-rich</th>
+            <th style="text-align:right;padding:6px 8px">% keyword-rich</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding:6px 8px"><code>/corporate-events/</code></td><td style="text-align:right;padding:6px 8px">14</td><td style="text-align:right;padding:6px 8px">8</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px;color:var(--green)">5</td><td style="text-align:right;padding:6px 8px;color:var(--green)">63%</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/weddings/</code></td><td style="text-align:right;padding:6px 8px">11</td><td style="text-align:right;padding:6px 8px">6</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">33%</td></tr>
+          <tr><td style="padding:6px 8px"><code>/non-profit-events/</code></td><td style="text-align:right;padding:6px 8px">9</td><td style="text-align:right;padding:6px 8px">4</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">25%</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/audio-visual-production/</code></td><td style="text-align:right;padding:6px 8px">8</td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px;color:var(--red)">0%</td></tr>
+          <tr><td style="padding:6px 8px"><code>/event-lighting/</code></td><td style="text-align:right;padding:6px 8px">7</td><td style="text-align:right;padding:6px 8px">4</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px;color:var(--green)">75%</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/dj-services/</code></td><td style="text-align:right;padding:6px 8px">7</td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px;color:var(--red)">0%</td></tr>
+          <tr><td style="padding:6px 8px"><code>/photo-booth/</code></td><td style="text-align:right;padding:6px 8px">6</td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">33%</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/virtual-meetings-conferences/</code></td><td style="text-align:right;padding:6px 8px">5</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0%</td></tr>
+          <tr><td style="padding:6px 8px"><code>/hybrid-events/</code></td><td style="text-align:right;padding:6px 8px">4</td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">1</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0%</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/live-streaming/</code></td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px;color:var(--red)"><b>0</b></td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px;color:var(--red)">—</td></tr>
+          <tr><td style="padding:6px 8px"><code>/virtual-events/</code></td><td style="text-align:right;padding:6px 8px">3</td><td style="text-align:right;padding:6px 8px;color:var(--red)"><b>0</b></td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px;color:var(--red)">—</td></tr>
+          <tr style="background:var(--bg2)"><td style="padding:6px 8px"><code>/audio-visual-production-2/</code></td><td style="text-align:right;padding:6px 8px">2</td><td style="text-align:right;padding:6px 8px;color:var(--red)"><b>0</b></td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px">0</td><td style="text-align:right;padding:6px 8px;color:var(--red)">—</td></tr>
+        </tbody>
+      </table>
+
+      <div class="fix"><b>Direction —</b> add in-body links to the three zero-inbound money pages from the homepage services block and topically-relevant blog posts. Anchor mix and routing plan are part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> 2 h content editing across existing pages</span><span><b>Impact:</b> PageRank signal to three money pages that currently receive none</span><span><b>Source:</b> Technical finisher</span></div>
+    </div>
+  </section>
+
+  <section id="ai-baseline">
+    <div class="sec-title">Live AI Citation Baseline</div>
+    <h2 class="sec-h1">How AI &amp; search currently describe VEP</h2>
+    <p class="sec-sub">Captured Wave 3. Before-snapshot for the measurement plan.</p>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Query</th><th>VEP appears?</th><th class="r">Position</th><th>Notes</th></tr>
+        <tr><td>"Verducci Event Productions"</td><td class="ok c">✅</td><td class="r ok">#1</td><td>Brand query — owned</td></tr>
+        <tr><td>"event production San Francisco"</td><td class="ok c">✅</td><td class="r ok">#1</td><td>Strongest commercial result</td></tr>
+        <tr><td>"audio visual rental Bay Area"</td><td class="bad c">❌</td><td class="r bad">not top 10</td><td></td></tr>
+        <tr><td>"wedding DJ San Francisco"</td><td class="bad c">❌</td><td class="r bad">not top 10</td><td></td></tr>
+        <tr><td>"corporate event production SF"</td><td class="bad c">❌</td><td class="r bad">not top 10</td><td>Trademark listicle dominates</td></tr>
+        <tr><td>"live streaming services Bay Area events"</td><td class="bad c">❌</td><td class="r bad">not top 10</td><td></td></tr>
+        <tr><td>"best event production companies SF"</td><td class="bad c">❌</td><td class="r bad">not in any editorial listicle</td><td>Trademark + Elev8 dominate</td></tr>
+        <tr><td>"who runs Verducci Event Productions"</td><td class="warn c">⚠️</td><td class="r warn">—</td><td>No Knowledge Panel; entity not consolidated</td></tr>
+      </table>
+      <h4>Entity / press / community status</h4>
+      <ul>
+        <li><b>Knowledge Panel:</b> none</li>
+        <li><b>Wikipedia / Wikidata:</b> no entry</li>
+        <li><b>Press:</b> zero earned coverage in SF Chronicle, SF Gate, Event Marketer, BizBash, or any industry publication</li>
+        <li><b>Reddit:</b> no discussion of "Verducci Event Productions" or "wearevep"</li>
+        <li><b>Reviews:</b> Yelp 346 · WeddingWire 187 (5/5) · The Knot present · Google Business Profile unaudited</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="wayback">
+    <div class="sec-title">Wayback Historical Context</div>
+    <h2 class="sec-h1">What changed and when</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Snapshot</th><th>Homepage H1</th><th>Virtual services?</th><th>Email</th><th>Phone <code>tel:</code></th></tr>
+        <tr><td>2018</td><td>The right event production company can make any event a success</td><td class="bad c">No</td><td><code>info@verduccies.com</code></td><td class="ok c">Yes</td></tr>
+        <tr><td>2020 (Sept)</td><td>Same as 2018</td><td class="ok c">First appearance (COVID)</td><td><code>info@wearevep.com</code></td><td class="ok c">Yes</td></tr>
+        <tr><td>2022 (May)</td><td>Same as 2018</td><td class="warn c">Removed from primary nav</td><td><code>info@wearevep.com</code></td><td class="ok c">Yes</td></tr>
+        <tr><td>2026 (today)</td><td class="bad">Your Vision, Amplified.</td><td class="warn c">Cluster still indexed</td><td><code>info@wearevep.com</code></td><td class="bad c">No (Critical 7)</td></tr>
+      </table>
+      <p>The current H1 is the least keyword-rich in the site's recorded history. The previous 2018–2022 H1 was service-led; the 2026 rebuild traded ranking signal for brand voice. Wayback also confirms a brand-domain migration (<code>verduccies.com</code> → <code>wearevep.com</code>) between 2018 and 2020 — verify legacy domain redirects are still in place; older inbound links may still point at <code>verduccies.com</code>.</p>
+    </div>
+  </section>
+
+  <section id="pages">
+    <div class="sec-title">Money-Page Inventory</div>
+    <h2 class="sec-h1">Per-page audit (top revenue pages)</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Words</th><th>H1</th><th class="r">Meta length</th><th class="r">Inbound</th><th>Top issue</th></tr>
+        <tr><td><code>/</code></td><td class="r">631</td><td>Your Vision, Amplified.</td><td class="r ok">143</td><td class="r">—</td><td>Tagline H1; no <code>tel:</code> link</td></tr>
+        <tr><td><code>/audio-visual-production-2/</code></td><td class="r">1,232</td><td>Audio Visual Events</td><td class="r bad">282</td><td class="r bad">0</td><td>Cannibalises <code>/audio-visual/</code>; slug-<code>-2</code> defect; orphan</td></tr>
+        <tr><td><code>/audio-visual/</code></td><td class="r">1,054</td><td>—</td><td class="r warn">—</td><td class="r ok">19</td><td>Winner; rebuild meta + migrate <code>-2</code> body</td></tr>
+        <tr><td><code>/weddings/</code></td><td class="r ok">1,369</td><td class="warn">WEDDINGS</td><td class="r ok">132</td><td class="r bad">0</td><td>All-caps H1; orphan; SXO mismatch (directories win)</td></tr>
+        <tr><td><code>/corporate-events/</code></td><td class="r bad">642 (504 body)</td><td>Corporate Events</td><td class="r ok">140</td><td class="r bad">0</td><td>Thin; orphan; SXO mismatch (listicle wins)</td></tr>
+        <tr><td><code>/contact-us/</code></td><td class="r bad">179</td><td>Contact Us</td><td class="r ok">110</td><td class="r ok">35</td><td>Critically thin conversion page; PageRank dead-end</td></tr>
+        <tr><td><code>/live-streaming/</code></td><td class="r ok">2,160</td><td>—</td><td class="r warn">—</td><td class="r bad">0</td><td>Strong content; orphan</td></tr>
+        <tr><td><code>/lighting/</code></td><td class="r">620</td><td class="warn">LIGHTING</td><td class="r warn">—</td><td class="r ok">24</td><td>All-caps H1; otherwise hub</td></tr>
+        <tr><td><code>/dj-entertainment/</code></td><td class="r ok">10,454*</td><td>—</td><td class="r warn">—</td><td class="r ok">23</td><td>10K w from playlist embed; real content is shorter; SXO mismatch</td></tr>
+        <tr><td><code>/video-production/</code></td><td class="r">1,310</td><td>—</td><td class="r warn">—</td><td class="r ok">18</td><td>73.6% unique — boilerplate share high</td></tr>
+        <tr><td><code>/event-photography/</code></td><td class="r">551</td><td>—</td><td class="r warn">—</td><td class="r ok">32</td><td>Highest inbound; thin body</td></tr>
+        <tr><td><code>/event-planning/</code></td><td class="r warn">—</td><td>—</td><td class="r warn">—</td><td class="r ok">16</td><td>Hub; not deep-audited</td></tr>
+        <tr><td><code>/non-profit-events/</code></td><td class="r">642</td><td>—</td><td class="r warn">—</td><td class="r bad">0</td><td>J=0.623 near-duplicate of <code>/social-events/</code>; orphan</td></tr>
+        <tr><td><code>/social-events/</code></td><td class="r">621</td><td>—</td><td class="r warn">—</td><td class="r bad">0</td><td>Near-duplicate; orphan</td></tr>
+        <tr><td><code>/hybrid-events/</code></td><td class="r ok">1,318</td><td>—</td><td class="r warn">—</td><td class="r warn">1</td><td>69.5% unique; near-orphan</td></tr>
+        <tr><td><code>/virtual-events/</code></td><td class="r ok">1,031</td><td class="bad">none</td><td class="r warn">—</td><td class="r bad">0</td><td>No H1 at all; orphan</td></tr>
+        <tr><td><code>/virtual-event-gallery/</code></td><td class="r bad">175</td><td class="bad">none</td><td class="r warn">—</td><td class="r">—</td><td>Consolidation candidate — 301 to <code>/virtual-events/</code></td></tr>
+        <tr><td><code>/webcast-production/</code></td><td class="r">1,104</td><td>—</td><td class="r warn">—</td><td class="r">—</td><td>64.6% unique — consolidation candidate</td></tr>
+        <tr><td><code>/digital-media-content/</code></td><td class="r">1,432</td><td>—</td><td class="r warn">—</td><td class="r">—</td><td>60.8% unique — doorway risk; consolidation candidate</td></tr>
+        <tr><td><code>/whoisvep/</code></td><td class="r ok">1,196</td><td>Who Is VEP</td><td class="r ok">129</td><td class="r">—</td><td>Solid about page; 33 team profiles linked</td></tr>
+        <tr><td><code>/vep-difference/</code></td><td class="r ok">1,718</td><td>VEP Difference</td><td class="r ok">131</td><td class="r">—</td><td>Best about page; bury-the-lede on awards</td></tr>
+        <tr><td><code>/resources/</code></td><td class="r warn">430</td><td>Resources</td><td class="r ok">135</td><td class="r">—</td><td>Thin top-of-funnel hub</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="sec-title">Blog Deep-Dive · 33 of 34 posts audited</div>
+    <h2 class="sec-h1">Where the blog stands</h2>
+    <div class="grid">
+      <div class="card g"><h3>Named author</h3><div class="v">33/33</div><div class="w">Andrew Verducci · Person schema · author meta</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="card r"><h3>In-content links to <code>/contact-us/</code></h3><div class="v">0/33</div><div class="w">Conversion dead-end</div><div class="bar"><i style="width:0%"></i></div></div>
+      <div class="card r"><h3>Posts under 1,000 words</h3><div class="v">32/33</div><div class="w">Mean 422 words</div><div class="bar"><i style="width:97%"></i></div></div>
+      <div class="card a"><h3>Mean outbound links per post</h3><div class="v">0.9</div><div class="w">Excluding nav/footer</div><div class="bar"><i style="width:9%"></i></div></div>
+    </div>
+    <div class="panel">
+      <h4>Cannibalising blog pairs (3 confirmed)</h4>
+      <ul>
+        <li>Two holiday-party posts targeting the same intent</li>
+        <li>Two "why hire a wedding DJ" posts</li>
+        <li>Two "how to pick an AV vendor" posts</li>
+      </ul>
+      <p>For each pair: 301 the weaker / less linked post to the stronger. Combined editorial review surfaces 5–8 more loose duplicates worth consolidating.</p>
+      <h4>Top 5 posts to elevate (long-form, evergreen, well-linked)</h4>
+      <ol>
+        <li><code>/the-ultimate-av-equipment-checklist-essential-gear-for-every-event/</code> — only post over 1,000w</li>
+        <li><code>/celebrating-success-our-journey-to-winning-top-wedding-awards/</code> — substantiates the wedding-awards claim</li>
+        <li><code>/why-your-dj-is-your-most-important-wedding-vendor/</code> — high commercial intent</li>
+        <li><code>/the-importance-of-rehearsals/</code> — evergreen B2B</li>
+        <li><code>/wedding-songs-guaranteed-to-make-people-party/</code> — high engagement potential</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="sec-title">Portfolio Deep-Dive · 19 entries</div>
+    <h2 class="sec-h1">The competitive moat that isn't activated</h2>
+    <div class="grid">
+      <div class="card g"><h3>Real case studies</h3><div class="v">3/19</div><div class="w">Aveva · Michelin · Coca-Cola</div><div class="bar"><i style="width:16%"></i></div></div>
+      <div class="card r"><h3>Empty pages (~157w)</h3><div class="v">16/19</div><div class="w">Nav + footer only</div><div class="bar"><i style="width:84%"></i></div></div>
+      <div class="card r"><h3>Missing meta description</h3><div class="v">19/19</div><div class="w">Every portfolio entry</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="card r"><h3><code>Event</code> schema</h3><div class="v">0/19</div><div class="w">Type missing everywhere</div><div class="bar"><i style="width:0%"></i></div></div>
+    </div>
+    <div class="panel">
+      <h4>Strong entries to elevate (real case studies)</h4>
+      <ol>
+        <li><b>Aveva After Dark</b> — corporate gala, ~715w</li>
+        <li><b>Michelin Guide</b> — culinary event, ~680w</li>
+        <li><b>Coca-Cola &amp; Reyes Bottling</b> — corporate event, ~660w</li>
+      </ol>
+      <h4>High-priority portfolio rewrites (named clients, photo-only today)</h4>
+      <ol>
+        <li>Stanford Alumni</li>
+        <li>Asana Promo</li>
+        <li>Zendesk Countdown</li>
+        <li>Osisoft Exploratorium</li>
+        <li>Alzheimer's Association · ALZ Gala Mission</li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="sec-title">Team Deep-Dive · 32 profiles audited</div>
+    <h2 class="sec-h1">The named experts behind the brand</h2>
+    <div class="grid">
+      <div class="card g"><h3>Profile count</h3><div class="v">33</div><div class="w">Listed in team sitemap</div><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="card r"><h3>Empty shells</h3><div class="v">5</div><div class="w">Jesse Rosen, Dylan Feldman, Reiko Simmons, Enrique Cuellar, Gerard Fancuberta</div><div class="bar"><i style="width:15%"></i></div></div>
+      <div class="card r"><h3><code>Person</code> schema</h3><div class="v">0/32</div><div class="w">Anonymous to machines</div><div class="bar"><i style="width:0%"></i></div></div>
+      <div class="card r"><h3>Headshots missing alt</h3><div class="v">29/32</div><div class="w">Filenames like <code>TN-back.jpg</code></div><div class="bar"><i style="width:91%"></i></div></div>
+    </div>
+    <div class="panel">
+      <p><b>Defects:</b></p>
+      <ul>
+        <li>Title/H1 mismatch: <code>/team/scott-oatman/</code> renders "Carla Andrade-Perez" — copy-paste defect in CMS</li>
+        <li>Two duplicate self-canonical pairs: Andrew Verducci × 2, Lawrence Arevalo × 2</li>
+        <li>Team bios link to services only through sitewide nav — no in-body editorial links to money pages</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap · 63 Actions</div>
+    <h2 class="sec-h1">Sequenced work plan</h2>
+    <p class="sec-sub">Every finding above, merged and traced to the lens(es) that flagged it. Phase 0 gates block dependent work — do not publish changes built on unverified data.</p>
+    <div class="plan">
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--ink)"></span>Phase 0 — Verify first (owner input)</div>
+        <p class="gs">Do not publish changes built on unverified data. Each V-item blocks one or more downstream actions.</p>
+        <ul class="ol">
+          <li><b>V1</b><span>Primary location: SF or Berkeley? Reconcile Yelp (Berkeley) vs The Knot (SF) — blocks LocalBusiness schema, llms.txt, NAP citations</span><span class="src">Critical 4</span></li>
+          <li><b>V2</b><span>Office address: street, city, zip — confirm or declare SAB (service-area business)</span><span class="src">Critical 3</span></li>
+          <li><b>V3</b><span>Decide canonical AV URL — <code>/audio-visual/</code> recommended; confirm before 301</span><span class="src">Critical 9</span></li>
+          <li><b>V4</b><span>Confirm award details for "Top Wedding Awards" post — name, issuer, year</span><span class="src">Content</span></li>
+          <li><b>V5</b><span>Confirm WeddingWire 187 reviews + Yelp 346 reviews are current before AggregateRating</span><span class="src">Schema</span></li>
+          <li><b>V6</b><span>Confirm whether <code>/team/scott-oatman/</code> should display Scott Oatman or Carla Andrade-Perez</span><span class="src">Team</span></li>
+          <li><b>V7</b><span>Founding year — confirm "17+ years" implies 2008 vs another year</span><span class="src">Schema</span></li>
+          <li><b>V8</b><span>Business hours (days + open/close times)</span><span class="src">Schema</span></li>
+          <li><b>V9</b><span>Price range for <code>priceRange</code> field</span><span class="src">Schema</span></li>
+          <li><b>V10</b><span>Access: Google Business Profile, GSC, GA4, PSI API key, keyword tool, paid backlink data</span><span class="src">All</span></li>
+          <li><b>V16</b><span>Log into WP Admin → Plugins → confirm Formidable Forms version is ≥ 6.30; if below 6.3.1, update immediately before other work</span><span class="src">Critical 1</span></li>
+          <li><b>V17</b><span>Verify Keap CRM is correctly receiving form submissions from Formidable Forms / FormLift integration — confirm lead pipeline is intact before any plugin updates</span><span class="src">Critical 1</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Phase 1 — This week · high impact, low risk</div>
+        <ul class="ol">
+          <li><b>1</b><span>Fix the staging-domain redirect on <code>/virtual-event-inquiry/</code> — single direct 301 at nginx</span><span class="ef">15 min</span><span class="src">Critical 1</span></li>
+          <li><b>2</b><span>Change Yelp primary category from <i>DJs</i> to <i>Event Production Companies</i></span><span class="ef">5 min · owner</span><span class="src">Critical 2</span></li>
+          <li><b>3</b><span>Deploy unified homepage <code>@graph</code> — LocalBusiness + Organization + WebSite + WebPage + BreadcrumbList (after V1, V2, V7, V8, V9)</span><span class="ef">2 hr</span><span class="src">Critical 3</span></li>
+          <li><b>4</b><span>Reconcile Yelp / The Knot / WeddingWire / GBP NAP — all point at the verified primary city (after V1)</span><span class="ef">30 min</span><span class="src">Critical 4</span></li>
+          <li><b>5</b><span>Wrap every visible phone surface in a <code>tel:</code> link sitewide</span><span class="ef">30 min</span><span class="src">Critical 7</span></li>
+          <li><b>6</b><span>Link Privacy + Terms in global footer; add "agree to Privacy" microcopy under each form</span><span class="ef">15 min</span><span class="src">H1</span></li>
+          <li><b>7</b><span>Add templated in-content CTA paragraph to all 33 blog posts → <code>/contact-us/</code> + topical service</span><span class="ef">2 hr</span><span class="src">Critical 6</span></li>
+          <li><b>8</b><span>Migrate <code>/audio-visual-production-2/</code> body into <code>/audio-visual/</code>; 301 the <code>-2</code> page (after V3)</span><span class="ef">2 hr</span><span class="src">Critical 9</span></li>
+          <li><b>9</b><span>Rewrite over-length meta description on <code>/audio-visual-production-2/</code> → 140–155 chars</span><span class="ef">5 min</span><span class="src">H6</span></li>
+          <li><b>10</b><span>Write 140–155 char meta descriptions for sales-questionnaire, privacy-policy, terms-and-conditions</span><span class="ef">15 min</span><span class="src">H6</span></li>
+          <li><b>11</b><span>Deploy regenerated <code>llms.txt</code> with full service list + Key Facts header (after V1, V7)</span><span class="ef">20 min</span><span class="src">H8</span></li>
+          <li><b>12</b><span>Yoast: redirect attachment URLs to file; drop attachment sitemaps from index</span><span class="ef">5 min</span><span class="src">H10</span></li>
+          <li><b>13</b><span>Collapse HTTPS redirect chain to one hop at nginx</span><span class="ef">10–30 min</span><span class="src">H9</span></li>
+          <li><b>14</b><span>301 <code>/virtual-event-inquiry/</code> directly to <code>/contact-us/</code>; remove from sitemap</span><span class="ef">10 min</span><span class="src">H7</span></li>
+          <li><b>15</b><span>Fix broken internal link to <code>/virtual-skos-ckos/</code> on the linking page</span><span class="ef">5 min</span><span class="src">H7</span></li>
+          <li><b>16</b><span>Add "While you're here" services block on <code>/contact-us/</code> — closes the PageRank dead-end</span><span class="ef">20 min</span><span class="src">Link graph</span></li>
+          <li><b>58</b><span>Investigate FormLift cookie scope — determine whether <code>FORMLIFT_ID</code> can be restricted to form-bearing pages only rather than set sitewide; sitewide presence bypasses Pressable's Batcache on every page load (TTFB root cause)</span><span class="ef">½ day investigation</span><span class="src">Critical 10</span></li>
+          <li><b>59</b><span>Audit active Jetpack modules — identify which of the 6+ active namespaces are actually used; disable unused modules to reduce PHP execution overhead on every page load</span><span class="ef">1 hr audit</span><span class="src">Critical 10</span></li>
+          <li><b>60</b><span>Add "Do Not Sell or Share My Personal Information" footer link pointing to a preference-management mechanism — required by Cal. Civ. Code §1798.135</span><span class="ef">15 min · legal review on mechanism</span><span class="src">Critical 2</span></li>
+          <li><b>61</b><span>Add Notice at Collection microcopy adjacent to the submit button on all four forms (Contact Us, Newsletter, Virtual Event Inquiry, Sales Questionnaire) — required by Cal. Civ. Code §1798.100(b); specific language requires legal review</span><span class="ef">30 min per form + legal review</span><span class="src">Critical 2</span></li>
+          <li><b>50</b><span>Fix <code>/weddings/</code> og:image: replace 500×500 crop with 1200×630 horizontal hero in media library + Yoast social tab</span><span class="ef">15 min</span><span class="src">H14</span></li>
+          <li><b>51</b><span>Add 6 missing security headers via <code>.htaccess</code> or nginx snippet: CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Cache-Control</span><span class="ef">1 hr</span><span class="src">H13</span></li>
+          <li><b>52</b><span>Insert in-body links to <code>/live-streaming/</code>, <code>/virtual-events/</code>, <code>/audio-visual-production-2/</code> from homepage services block and relevant blog posts — minimum 3 content-inbound links each, at least one keyword-rich anchor per page</span><span class="ef">2 hr</span><span class="src">Anchor text</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Phase 2 — This month · authority + on-page</div>
+        <ul class="ol">
+          <li><b>17</b><span>Rewrite homepage <code>&lt;title&gt;</code> to lead with service + geo; demote the tagline below a service-led H1</span><span class="ef">30 min</span><span class="src">H2</span></li>
+          <li><b>18</b><span>Rebuild Contact Us from 179w → ~500w (process, response time, FAQ, map, named producer, testimonials); add <code>ContactPage</code> schema</span><span class="ef">½ day</span><span class="src">Critical 6</span></li>
+          <li><b>19</b><span>Expand Corporate Events from 504 (body) → ~1,000w; add 3–5 case studies with measurable outcomes</span><span class="ef">½ day</span><span class="src">Content</span></li>
+          <li><b>20</b><span>Add <code>Service</code> schema (with <code>provider → #localbusiness</code>) to each of the 12 service pages</span><span class="ef">2–3 hr</span><span class="src">Schema</span></li>
+          <li><b>21</b><span>Add <code>Person</code> schema to all 32 team profiles (template in Deliverables)</span><span class="ef">2–3 hr</span><span class="src">H4</span></li>
+          <li><b>22</b><span>Populate <code>alt</code> on 29 missing team headshots: "{Name}, {Title}"</span><span class="ef">1 hr</span><span class="src">H5</span></li>
+          <li><b>23</b><span>Populate empty <code>alt=""</code> on portfolio thumbnails sitewide (~150 images)</span><span class="ef">2–3 hr</span><span class="src">H5</span></li>
+          <li><b>24</b><span>Write bios for 5 empty-shell team profiles OR 301 to <code>/whoisvep/</code></span><span class="ef">½ day</span><span class="src">H3</span></li>
+          <li><b>25</b><span>301 one of each duplicate team pair (Andrew Verducci, Lawrence Arevalo)</span><span class="ef">30 min</span><span class="src">H3</span></li>
+          <li><b>26</b><span>Verify and fix <code>/team/scott-oatman/</code> content (after V6)</span><span class="ef">15 min</span><span class="src">H3</span></li>
+          <li><b>27</b><span>Sentence-case 8 ALL-CAPS H1s; rely on CSS for visual</span><span class="ef">30 min</span><span class="src">H3</span></li>
+          <li><b>28</b><span>Add H1 to <code>/virtual-events/</code> and <code>/virtual-event-gallery/</code></span><span class="ef">10 min</span><span class="src">H3</span></li>
+          <li><b>29</b><span>Surface Google review count + rating on homepage if verified (after V5)</span><span class="ef">1 hr</span><span class="src">Trust</span></li>
+          <li><b>30</b><span>Substantiate "Top Wedding Awards" claim on home + About — name, issuer, year (after V4)</span><span class="ef">1 hr</span><span class="src">E-E-A-T</span></li>
+          <li><b>31</b><span>Build "Related Services" block on every service page → 3–4 contextual links to the 6 orphan money pages</span><span class="ef">½ day</span><span class="src">Critical 5</span></li>
+          <li><b>32</b><span>Consolidate 3 cannibalising blog post pairs (301 the weaker post)</span><span class="ef">3 hr</span><span class="src">Critical 6</span></li>
+          <li><b>33</b><span>Audit <code>/faqs/</code>; add on-page FAQ blocks to service pages (no FAQPage schema for Google rich results on commercial)</span><span class="ef">½ day</span><span class="src">GEO</span></li>
+          <li><b>53</b><span>Update YouTube channel: rename description from "Verducci Entertainment Productions" to "We Are Vep", add <code>wearevep.com</code> to bio link, update video titles and descriptions to reflect current brand</span><span class="ef">1 hr</span><span class="src">H16</span></li>
+          <li><b>54</b><span>Sitemap cleanup: enable Yoast "redirect attachment to parent post" (removes 1,177 attachment URLs); set <code>noindex</code> on post_tag archives with fewer than 3 posts (~83) and all testimonial_tag archives (~27)</span><span class="ef">2 hr</span><span class="src">H15</span></li>
+          <li><b>55</b><span>Fix remaining OG issues: change <code>og:type</code> from <code>article</code> to <code>website</code> on all service pages; add <code>og:description</code> to all portfolio entries; fix <code>/the-importance-of-rehearsals/</code> og:image to 1200×630</span><span class="ef">2 hr</span><span class="src">H14</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 3 — This quarter · depth, performance, entity</div>
+        <ul class="ol">
+          <li><b>34</b><span>Image pipeline: WebP/AVIF (ShortPixel / Imagify / Cloudflare Polish); <code>loading="lazy"</code>; preconnect to CDN; fix Beaver Builder 1600px PNG export</span><span class="ef">1–2 hr setup + 1 day backfill</span><span class="src">Critical 8</span></li>
+          <li><b>35</b><span>Server-side investigation: TTFB 2.7–3.5s is server-side, not asset-side. Audit origin CPU/RAM, DB queries, WordPress object cache</span><span class="ef">1 day</span><span class="src">Critical 8</span></li>
+          <li><b>36</b><span>Consolidate virtual cluster: 301 <code>/digital-media-content/</code>, <code>/webcast-production/</code>, <code>/virtual-event-gallery/</code> to <code>/virtual-events/</code></span><span class="ef">½ day</span><span class="src">H12</span></li>
+          <li><b>37</b><span>Resolve non-profit / social events near-duplicate: differentiate or consolidate (Critical 10)</span><span class="ef">1 day</span><span class="src">Critical 10</span></li>
+          <li><b>38</b><span>Write 400–600w case studies for 8 top portfolio entries (Stanford, Asana, Zendesk, Osisoft, ALZ Gala + the 3 existing); add <code>Event</code> schema</span><span class="ef">2–3 days</span><span class="src">Critical 11</span></li>
+          <li><b>39</b><span><code>noindex</code> remaining 11 photo-only portfolio entries OR consolidate to single gallery URL</span><span class="ef">1 hr</span><span class="src">Critical 11</span></li>
+          <li><b>40</b><span>Publish "Top 10 Corporate Event Venues in SF" supplementary listicle URL</span><span class="ef">2 days</span><span class="src">Critical 12</span></li>
+          <li><b>41</b><span>Publish "10 Bay Area Wedding Venues We've Produced At" listicle</span><span class="ef">2 days</span><span class="src">Critical 12</span></li>
+          <li><b>42</b><span>Add self-contained 130–170w answer blocks to top 5 service pages; ~30% question-style headings</span><span class="ef">1–2 days</span><span class="src">GEO</span></li>
+          <li><b>43</b><span>Privacy Policy: confirm CCPA-compliance is maintained (substantive at 1,193 words) — review against current CPRA amendments and confirm Termageddon template covers all required disclosures; no full rewrite required unless counsel identifies gaps</span><span class="ef">Legal review: ½ day</span><span class="src">H1 · Critical 2</span></li>
+          <li><b>62</b><span>Rewrite Terms &amp; Conditions to include event-services contract terms: deposits and payment schedule, cancellation policy, force majeure provisions for live events, equipment damage liability, and performance refund terms — requires legal counsel familiar with event-services contracts; Termageddon template does not cover these</span><span class="ef">1–2 days copy + legal counsel</span><span class="src">H1</span></li>
+          <li><b>63</b><span>Rebuild <code>/corporate-events/</code> to match ABCey's structural depth: add FAQ section with 10+ items, expand sub-service coverage from bullet list to individual H3 paragraphs, target 3,500+ words total; add FAQPage JSON-LD once FAQ content is in place — ABCey has the content but not the schema, creating a first-mover schema opportunity</span><span class="ef">1–2 days copy + dev</span><span class="src">Competitor structural analysis · Critical 14</span></li>
+          <li><b>44</b><span>Citation + NAP consistency pass: Yelp, The Knot, WeddingWire, Eventective, BizBash, Thumbtack, GBP</span><span class="ef">½ day</span><span class="src">Local</span></li>
+          <li><b>45</b><span>Measure Core Web Vitals: PSI API + GSC CrUX baseline; rerun after image pipeline lands</span><span class="ef">setup</span><span class="src">Perf</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:#1f7a3e"></span>Phase 4 — Backlog · entity ceiling &amp; earned signals</div>
+        <ul class="ol">
+          <li><b>46</b><span>Drive 5 verified client reviews to Clutch.co for Top 70 Live Events Production SF inclusion</span><span class="ef">ongoing</span><span class="src">H11</span></li>
+          <li><b>47</b><span>Editorial outreach: Elev8.la (#1 leverage target), Trademark, BizBash, Cater+Event with Aveva / Michelin / Coca-Cola pitch (after #38)</span><span class="ef">ongoing</span><span class="src">H11</span></li>
+          <li><b>48</b><span>Build YouTube channel surface on site: create <code>/videos/</code> hub embedding top 5 videos; description SEO; channel growth</span><span class="ef">1 week</span><span class="src">FLOW Leverage</span></li>
+          <li><b>49</b><span>Publish first-party data asset: Bay Area event production cost guide (citable for AI engines); pursue Wikipedia / Wikidata entity once earned press accumulates</span><span class="ef">1 week + ongoing</span><span class="src">FLOW Leverage</span></li>
+          <li><b>56</b><span>Rewrite <code>/non-profit-events/</code> from ~300w to 1,000–1,300w (brief in Content Briefs section); add internal links from <code>/corporate-events/</code> and the homepage services block — fastest path from zero to ranked on non-profit event SERPs</span><span class="ef">1 day</span><span class="src">Content briefs</span></li>
+          <li><b>57</b><span>Execute outreach kit (5 drafts): Elev8.la list inclusion → Clutch.co review drive → Trademark reciprocal mention → BizBash/Cater+Event case study pitch → WeddingWire/The Knot profile optimisation (full templates in Content Briefs section)</span><span class="ef">ongoing · 1–2 hr per thread</span><span class="src">Content briefs</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="content-briefs">
+    <div class="sec-title">Content Briefs &amp; Outreach Kit</div>
+    <h2 class="sec-h1">Paste-ready briefs and outreach copy</h2>
+    <p class="sec-sub">Five commercial-intent content priorities and five earned-signal outreach channels. Headlines below; full briefs and send-ready copy are supplied with the engagement.</p>
+
+    <div class="panel">
+      <h3>Five commercial-intent content priorities</h3>
+      <table class="kv">
+        <tr><th>#</th><th>Brief</th><th>Type</th><th>Why it ranks here</th></tr>
+        <tr><td>1</td><td>Gala Production San Francisco</td><td>New service page</td><td>No SF competitor holds a dedicated gala production page; under-served commercial query</td></tr>
+        <tr><td>2</td><td>Corporate Offsite Bay Area</td><td>New service page</td><td>Distinct purchasing decision currently served by venues and Airbnb Experiences, not production firms</td></tr>
+        <tr><td class="warn"><b>3</b></td><td><b>Non-Profit Fundraiser Production SF</b></td><td>Rewrite existing page</td><td><b>Rank&nbsp;1 priority.</b> Removes the J=0.623 canonical content gap in one day; existing inbound links carry over. Fastest path from zero to ranked.</td></tr>
+        <tr><td>4</td><td>Live Streaming vs In-Person Event ROI</td><td>Blog post</td><td>Comparison + ROI format that frequently appears in AI Overviews; creates in-body link to the zero-inbound <code>/live-streaming/</code></td></tr>
+        <tr><td>5</td><td>Top 10 Corporate Event Venues SF</td><td>Authority listicle</td><td>Satisfies a dominant SERP intent service pages cannot serve; earns links from venues, local media, and planners' resource lists</td></tr>
+      </table>
+      <div class="fix"><b>Engagement scope —</b> full briefs (keyword research, outline, internal-link map, named-client evidence, extractable answer block, meta title/description) are supplied as a paste-ready bundle.</div>
+    </div>
+
+    <div class="panel">
+      <h3>Five earned-signal outreach channels</h3>
+      <table class="kv">
+        <tr><th>Channel</th><th>Mechanism</th><th>Why this channel</th></tr>
+        <tr><td>Elev8.la</td><td>Inclusion pitch on the SF event-producers list</td><td>Highest-leverage editorial; positions VEP for tech-forward events</td></tr>
+        <tr><td>Clutch.co</td><td>Review-drive sequence to cross the "Top Company" badge threshold</td><td>Surfaces VEP in B2B procurement searches</td></tr>
+        <tr><td>Trademark follow-up</td><td>Reciprocal mention sequence after Elev8 inclusion</td><td>Builds on momentum from the first inclusion</td></tr>
+        <tr><td>BizBash / Cater+Event</td><td>Case-study pitch to trade press</td><td>Earns trade-press citations and referring domains</td></tr>
+        <tr><td>WeddingWire / The Knot</td><td>Profile optimisation + review-request sequence</td><td>187 existing WeddingWire reviews; profile under-utilised as a traffic source</td></tr>
+      </table>
+      <div class="fix"><b>Engagement scope —</b> send-ready outreach copy, sequencing, and follow-up cadences are supplied for each channel.</div>
+    </div>
+
+  </section>
+
+  <section id="deliverables">
+    <div class="sec-title">Phase 1 Implementation Assets</div>
+    <h2 class="sec-h1">What ships in the first sprint</h2>
+    <p class="sec-sub">The audit produced a set of production-ready implementation artifacts to accompany the findings. These are summarised below — full code, validated against the schema.org spec and Google Rich Results Test, is supplied with the engagement.</p>
+
+    <div class="panel">
+      <h3>Schema rebuild package</h3>
+      <p>A unified machine-readable identity layer for the homepage that closes the <code>LocalBusiness</code> / <code>Service</code> / <code>Person</code> / <code>Event</code> gaps in one deployment, plus the additive schema across service, team, portfolio, and contact pages.</p>
+      <table class="kv">
+        <tr><th>Asset</th><th>Where it ships</th></tr>
+        <tr><td>Homepage <code>@graph</code> rebuild</td><td>Homepage <code>&lt;head&gt;</code> — replaces current Yoast output, adds the missing local entity</td></tr>
+        <tr><td><code>Service</code> schema</td><td>Each of 12 service pages</td></tr>
+        <tr><td><code>Person</code> schema</td><td>32 team profile pages + the principal on About</td></tr>
+        <tr><td><code>Event</code> schema</td><td>Portfolio entries with case-study depth</td></tr>
+        <tr><td><code>ContactPage</code> schema</td><td><code>/contact-us/</code></td></tr>
+        <tr><td><code>AggregateRating</code> (owner-gated)</td><td>Homepage <code>LocalBusiness</code> — once review aggregate is verified</td></tr>
+      </table>
+      <p>Every block validates against the schema.org spec and the Google Rich Results Test before deployment. Owner verification items (address, founding year, hours, price range, review counts, portfolio dates) are gated by Phase 0 of the roadmap.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Regenerated <code>llms.txt</code></h3>
+      <p>A full rewrite that surfaces VEP's current service catalogue and entity facts to AI crawlers — replacing today's narrow file (5 pages, no money URLs, 2020/2021 virtual-events positioning) with a complete, spec-compliant index.</p>
+    </div>
+
+    <div class="panel">
+      <h3>Content briefs &amp; outreach kit</h3>
+      <p>Five paste-ready content briefs and five send-ready outreach drafts (summarised in the Content Briefs section above). Each brief is built to ship without further research; each outreach draft has the angle, sequence, and follow-up cadence pre-defined.</p>
+    </div>
+
+    <div class="callout">
+      <div class="tag">● Engagement scope</div>
+      <h3>What's included in the implementation engagement</h3>
+      <p>The full code for every artifact above — paste-ready JSON-LD blocks, regenerated <code>llms.txt</code> file, complete content briefs with outlines and named-client evidence, send-ready outreach emails, and the deployment / verification / measurement playbook — is delivered as part of the implementation engagement. Deployment is sequenced against the Phase 0 verification checklist (Section 23) and the consolidated roadmap (Section 22).</p>
+    </div>
+  </section>
+
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <h2 class="sec-h1">Instrument before judging</h2>
+    <div class="panel">
+      <p>Add GA4 events for <code>tel:</code> click, contact-form submit, and inquiry-form submit — segmented by landing-page type (home / service / portfolio / blog) — <i>today</i>, before any change.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th>Method</th><th>When</th></tr>
+        <tr><td>Local entity recognition</td><td>Re-test AI answers ("event production San Francisco", "AV rental Bay Area", "who runs Verducci Event Productions") for brand mention + correct NAP</td><td>Baseline now → +4 wks after Phase 1</td></tr>
+        <tr><td>Schema validation</td><td>Google Rich Results Test on home + 3 service pages</td><td>Before &amp; after Phase 1 action #3</td></tr>
+        <tr><td>Yelp category ranking</td><td>SF "Event Production Companies" Yelp leaderboard position</td><td>Before #2; 1 week after; 4 weeks after</td></tr>
+        <tr><td>AV cannibalisation</td><td>GSC impressions/position for <code>/audio-visual/</code> vs <code>/audio-visual-production-2/</code></td><td>After #8</td></tr>
+        <tr><td>Blog conversion routing</td><td>GA4 form submit rate by landing-page type; <code>tel:</code> click rate from blog vs service</td><td>30 days after #7 + #18</td></tr>
+        <tr><td>Core Web Vitals</td><td>PSI field + lab on home, 1 service, 1 blog</td><td>Before &amp; after #34</td></tr>
+        <tr><td>Listicle / earned signals</td><td>Manual SERP check on "best event production companies San Francisco" for VEP inclusion</td><td>Monthly</td></tr>
+        <tr><td>Overall</td><td>Re-run full audit</td><td>Quarterly</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="verify">
+    <div class="sec-title">Owner Verification Checklist</div>
+    <h2 class="sec-h1">Before any block ships</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>#</th><th>Item</th><th>Affects</th><th class="r">Priority</th></tr>
+        <tr><td>V1</td><td>Primary location: street, city (SF or Berkeley?), zip</td><td>LocalBusiness, ContactPage, llms.txt, Yelp NAP</td><td class="r bad">Critical</td></tr>
+        <tr><td>V2</td><td>Exact founding year ("17+ years" implies 2008–2009)</td><td>LocalBusiness, Andrew Person, llms.txt</td><td class="r warn">High</td></tr>
+        <tr><td>V3</td><td>Business hours (days + open/close times)</td><td>openingHoursSpecification</td><td class="r warn">High</td></tr>
+        <tr><td>V4</td><td>Price-range tier ($$ – $$$$)</td><td>LocalBusiness</td><td class="r note">Medium</td></tr>
+        <tr><td>V5</td><td>Andrew Verducci headshot URL</td><td>Person schema</td><td class="r note">Medium</td></tr>
+        <tr><td>V6</td><td>Andrew Verducci LinkedIn: personal vs company page?</td><td>Person schema sameAs</td><td class="r note">Medium</td></tr>
+        <tr><td>V7</td><td>Aveva After Dark: event date, venue, city</td><td>Event schema</td><td class="r warn">High</td></tr>
+        <tr><td>V8</td><td>Michelin Guide + Coca-Cola/Reyes portfolio URLs and event dates</td><td>Event schema</td><td class="r warn">High</td></tr>
+        <tr><td>V9</td><td>All 8 portfolio page URLs (WordPress slugs)</td><td>llms.txt</td><td class="r warn">High</td></tr>
+        <tr><td>V10</td><td>4 additional team leads (names, roles, profile URLs)</td><td>llms.txt</td><td class="r note">Medium</td></tr>
+        <tr><td>V11</td><td>WeddingWire 187 + Yelp 346 review counts verified current</td><td>AggregateRating</td><td class="r warn">High</td></tr>
+        <tr><td>V12</td><td>"Top Wedding Awards" — name, issuer, year</td><td>About copy, llms.txt</td><td class="r note">Medium</td></tr>
+        <tr><td>V13</td><td>Confirm <code>/audio-visual/</code> is the keeper before 301-ing the <code>-2</code> page</td><td>Service schema, internal links</td><td class="r warn">High</td></tr>
+        <tr><td>V14</td><td>Confirm <code>/team/scott-oatman/</code> should display Scott Oatman</td><td>Team profile content</td><td class="r warn">High</td></tr>
+        <tr><td>V15</td><td>Access: GBP, GSC, GA4, PSI API key, paid backlink tool</td><td>Measurement plan</td><td class="r warn">High</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="limits">
+    <div class="sec-title">Limits of this audit</div>
+    <h2 class="sec-h1">What this audit can and cannot say</h2>
+    <div class="limit">
+      <h3>Still genuinely unmeasured — requires credentials</h3>
+      <p><b>Real Core Web Vitals field data.</b> PSI free-tier quota was exhausted during this run. Once GSC CrUX access or a PSI API key is provided, run on home + 3 service + 1 blog page for a real LCP/INP/CLS baseline. Performance score is currently held at 55* pending real measurement.</p>
+      <p><b>Google Business Profile.</b> Maps API / DataForSEO not available this run. GBP review count, category, photos, Q&amp;A, review velocity and geo-grid rank are unmeasured. The audit recommendations assume the existing Yelp and WeddingWire counts; GBP could be stronger, weaker, or absent.</p>
+      <p><b>Backlink profile.</b> Common Crawl returned 429 for this domain (rate-limited). Moz / Ahrefs / DataForSEO not provided. The off-site authority pillar (referring domain count, anchor distribution, top inbound URLs) is unmeasured. The FLOW Leverage roadmap is built on Wave 4 SERP evidence, not historical link data.</p>
+      <p><b>Search Console &amp; GA4.</b> No access this run. Search-volume, ranking, click and conversion data are absent. Prioritisation across the 57 actions is strategic, not numeric. Re-rank Phase 2/3 once GSC data exists.</p>
+      <p><b>Anchor text classification.</b> Full classification for 12 money pages is documented in the <a href="#anchors">Anchor Text Analysis</a> section. Key finding: three money pages (<code>/live-streaming/</code>, <code>/virtual-events/</code>, <code>/audio-visual-production-2/</code>) have zero content inbound links of any type. Roadmap item #52 addresses this.</p>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · wearevep.com · 25 May 2026<br>
+    Six research waves · 119 URLs audited · 610 in-content links mapped · 15 live SERPs captured · 5 competitors benchmarked · 17 plugins fingerprinted<br>
+    Implementation assets, complete content briefs, outreach drafts, and the deployment / verification / measurement playbook are supplied with the engagement.
+  </footer>
+
+</div>
+</body>
+</html>

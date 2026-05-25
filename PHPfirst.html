@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Philippine Hub Partners</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06);
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.5;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:980px;margin:0 auto}
+  .hero{text-align:center;padding:104px 0 56px}
+  .eyebrow{font-size:15px;font-weight:600;color:var(--blue);letter-spacing:.02em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,68px);font-weight:700;letter-spacing:-.03em;line-height:1.05}
+  .hero .sub{font-size:21px;color:var(--sub);margin-top:20px;font-weight:400}
+  .hero .meta{font-size:14px;color:var(--sub);margin-top:28px}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px}
+  .nav a{font-size:13px;font-weight:600;color:var(--sub);text-decoration:none;padding:8px 15px;border:1px solid var(--line);border-radius:980px}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:34px 0 18px}
+  .gauge{--val:55;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:26px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:700px;text-align:center;color:var(--sub);font-size:18px;margin:18px auto 0}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:14px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;text-align:center}
+  .sec-sub{font-size:14px;color:var(--sub);text-align:center;max-width:640px;margin:0 auto 26px}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+  .card{background:var(--card);border-radius:var(--radius);padding:28px 26px;box-shadow:var(--shadow)}
+  .card h3{font-size:15px;color:var(--sub);font-weight:600}
+  .card .v{font-size:44px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px}
+  .card .w{font-size:13px;color:var(--sub)}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:16px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:870px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .p-low{background:rgba(52,199,89,.12);color:#248a3d}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px}
+  .item .body p{font-size:14.5px;color:var(--sub)}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:38px 40px;margin-top:20px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px}
+  .panel .tag{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}.tag.med{color:var(--blue)}
+  .panel p{color:#3a3a3c;font-size:15.5px;margin-bottom:13px}
+  .panel p:last-child{margin-bottom:0}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+  .kv td,.kv th{padding:10px 13px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .bad{color:var(--red)}.ok{color:var(--green)}.warn{color:#b26a00}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13.5px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f}
+  .fix b{color:var(--blue)}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:36px 40px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:25px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px}
+  .callout p{font-size:16.5px;color:#3a3a3c}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:30px 34px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:880px;margin:0 auto}
+  .plan .group{margin-bottom:28px}
+  .plan .gh{font-size:18px;font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:11px}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:15px;display:flex;gap:13px;align-items:flex-start}
+  .ol li b{color:var(--blue);flex:none;min-width:22px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:92px;padding-top:40px;border-top:1px solid var(--line)}
+  .community{max-width:520px;margin:40px auto 0;background:var(--card);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);font-size:15px;text-align:center}
+  .community a{color:var(--blue);text-decoration:none}
+  @media(max-width:640px){
+    body{font-size:16px}.hero{padding:60px 0 32px}
+    .panel,.limit,.callout{padding:24px 20px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report — Fully Consolidated</div>
+    <h1>Philippine Hub&nbsp;Partners</h1>
+    <p class="sub">Philippines Market Entry &amp; Business Formation Consulting</p>
+    <p class="meta">
+      <b>philippinehubpartners.com</b> &nbsp;·&nbsp; Business setup consulting · San Francisco · Las Vegas · Taguig City
+      &nbsp;·&nbsp; WordPress + Rank Math &nbsp;·&nbsp; 36 URLs analyzed &nbsp;·&nbsp; <b>25 May 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#scores">Scores</a><a href="#first">Start Here</a><a href="#critical">Critical</a>
+      <a href="#tech">Technical</a><a href="#eeat">Content/E-E-A-T</a><a href="#geo">GEO</a>
+      <a href="#local">Local</a><a href="#onpage">On-Page/SXO</a><a href="#schema">Schema</a>
+      <a href="#perf">Performance</a><a href="#roadmap">Roadmap</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:55"><div class="inner"><div class="num">55</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Fair&nbsp;·&nbsp;C−</span></div>
+    <p class="lead">A technically sound WordPress foundation with active Rank Math schema injection and
+      fresh blog content — held back by a consistent cluster of structural defects:
+      malformed schema that nullifies FAQ rich results, anonymous authorship that suppresses
+      AI citation, service pages too shallow to compete with 3,000-word SERP leaders, and
+      zero AI search infrastructure (no llms.txt, no YouTube, no LocalBusiness schema on
+      a firm with three physical offices).</p>
+  </div>
+
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <div class="sec-sub">Each lens is scored independently from primary source data. Differences reflect different weighting priorities, not contradictions.</div>
+    <div class="grid">
+      <div class="card a"><h3>SEO Health</h3><div class="v">55</div><div class="w">Overall · Fair (C−)</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card a"><h3>Content Quality</h3><div class="v">55</div><div class="w">Thin service pages; good blog</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card r"><h3>E-E-A-T</h3><div class="v">48</div><div class="w">Anonymous authorship; weak authority</div><div class="bar"><i style="width:48%"></i></div></div>
+      <div class="card r"><h3>AI Citation</h3><div class="v">42</div><div class="w">No llms.txt; malformed FAQPage</div><div class="bar"><i style="width:42%"></i></div></div>
+      <div class="card r"><h3>GEO Readiness</h3><div class="v">44</div><div class="w">Low-Moderate</div><div class="bar"><i style="width:44%"></i></div></div>
+      <div class="card a"><h3>On-Page / SXO</h3><div class="v">54</div><div class="w">Typos; missing keywords; cannibalization</div><div class="bar"><i style="width:54%"></i></div></div>
+      <div class="card r"><h3>Performance (CWV)</h3><div class="v">52*</div><div class="w">Not measured — inferred</div><div class="bar"><i style="width:52%"></i></div></div>
+    </div>
+    <div class="panel" style="margin-top:18px">
+      <table class="kv">
+        <tr><th>Audit category</th><th class="r">Score</th><th>Weight</th><th>Verdict</th></tr>
+        <tr><td>Technical SEO</td><td class="r warn">68</td><td>22%</td><td>Solid base; redirect chains; WAF over-blocks tools</td></tr>
+        <tr><td>Content Quality</td><td class="r warn">55</td><td>23%</td><td>Thin service pages vs 3,000-word competitors</td></tr>
+        <tr><td>On-Page SEO</td><td class="r warn">54</td><td>20%</td><td>Typos in meta; duplicate H1s; overlong titles</td></tr>
+        <tr><td>Schema / Structured Data</td><td class="r bad">42</td><td>10%</td><td>FAQPage malformed; no LocalBusiness; no Service schema</td></tr>
+        <tr><td>Performance (CWV)</td><td class="r bad">52*</td><td>10%</td><td>Not measured — inferred from page weight/plugin count</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r bad">44</td><td>10%</td><td>No llms.txt; LinkedIn-only brand; no YouTube</td></tr>
+        <tr><td>Images</td><td class="r warn">62</td><td>5%</td><td>Featured images present; no WebP confirmed; no video</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">* Performance score is inferred from HTML analysis: WordPress with multiple plugins, no CDN signals detected, standard-format images. Actual CWV requires PageSpeed Insights API run.</p>
+    </div>
+  </section>
+
+  <section id="first">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <div class="callout">
+      <div class="tag">● Flagged independently by all six analyses</div>
+      <h3>Fix the schema, the author identity, and the content depth — in that order</h3>
+      <p>Three defects recur across every sub-audit. First: the <b>FAQPage schema on every page is
+        malformed</b> — it is stored as an escaped JSON string inside a <code>&lt;script&gt;</code> block
+        rather than valid JSON-LD. Google and all AI crawlers silently skip it, meaning 7+ service
+        pages with FAQ sections earn zero FAQ rich result benefit. Second: <b>author identity is
+        anonymous</b> — blog posts are attributed to the WordPress username <code>"sheiladizon"</code>
+        rather than the co-founder <b>Sheila Dizon-Burns</b>, stripping the E-E-A-T value of every
+        article and suppressing AI citation frequency. Third: <b>service pages are 900–1,400 words</b>
+        against competitors (Acclime, InCorp Asia, Emerhub) who publish 3,000–5,000 word service
+        guides that dominate the SERP. Fix the schema (hours, not days), humanize the authorship (one
+        day), then expand content depth starting with the highest-revenue service pages — everything
+        else sequences from these three.</p>
+    </div>
+  </section>
+
+  <section id="critical">
+    <div class="sec-title">Critical &amp; High Findings</div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Schema / Entity Trust</div>
+      <h3>US phone number (+1 415) on a Philippines-addressed LocalBusiness — entity trust failure</h3>
+      <table class="kv">
+        <tr><th>Field</th><th>Current Value</th><th class="r">Issue</th></tr>
+        <tr><td>LocalBusiness <code>telephone</code></td><td><code>+1 (415) 816 5555</code></td><td class="r bad">US area code on a PH postal address</td></tr>
+        <tr><td>LocalBusiness <code>address.addressCountry</code></td><td><code>PH</code></td><td class="r bad">Philippines — contradicts US area code</td></tr>
+        <tr><td>LocalBusiness <code>@id</code></td><td><em>Missing</em></td><td class="r bad">Disconnected from the @graph — Google sees two separate entities</td></tr>
+      </table>
+      <p>Google's local entity resolution uses telephone as a primary trust signal for the stated address.
+        A <code>+1 (415)</code> San Francisco area code paired with a Bonifacio Global City, Philippines
+        postal address degrades entity confidence and undermines Knowledge Panel eligibility.
+        The LocalBusiness block also has no <code>@id</code> property — it cannot be linked to the
+        Organization node in Block 1, so Google treats them as two separate, competing entities for
+        the same business.</p>
+      <div class="fix"><b>Fix —</b> Add a Philippines <code>+63</code> primary number to LocalBusiness <code>telephone</code>.
+        Keep the US line as <code>contactPoint</code> with <code>contactType: "customer service"</code>.
+        Add <code>"@id": "https://philippinehubpartners.com/#business"</code> to the LocalBusiness block
+        and merge both JSON-LD blocks into a single <code>@graph</code> (see Schema section for complete replacement code).</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · Schema / AI Citation</div>
+      <h3>FAQPage schema is malformed — zero AI citation benefit</h3>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Impact</th></tr>
+        <tr><td>FAQPage JSON-LD stored as escaped string inside <code>&lt;script&gt;</code> tag</td><td class="r bad">Not parsed by Google or AI crawlers</td></tr>
+        <tr><td>Rank Math FAQPage output is double-encoded JSON — plugin misconfiguration</td><td class="r bad">Silently skipped by all parsers</td></tr>
+      </table>
+      <p><b>Note on Google FAQ Rich Results:</b> Google restricted FAQ rich results to government and healthcare sites in August 2023 — commercial B2B sites like PHP are no longer eligible for the accordion SERP feature. However, valid FAQPage schema <em>does</em> improve AI/LLM citation frequency and is used by ChatGPT, Perplexity, and Bing Copilot to extract structured Q&amp;A content. The malformed output means PHP earns none of this benefit. Fix for AI citation value, not for Google rich results.</p>
+      <div class="fix"><b>Fix —</b> In Rank Math, diagnose and fix the FAQPage output mode — it should emit a
+        valid JSON-LD object, not an escaped string. Validate via
+        <code>search.google.com/test/rich-results</code>. Once fixed, the existing FAQ HTML on
+        7 service pages will be machine-readable for AI crawlers.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">● Critical · GEO / AI Visibility</div>
+      <h3>No <code>llms.txt</code> — AI search systems must guess your content priority</h3>
+      <p>Neither <code>/llms.txt</code> nor <code>/llms-full.txt</code> exists. With 19 blog posts
+        and 15 pages, the site has meaningful citable content but AI crawlers have no map for
+        prioritizing it. Competitors who add llms.txt first gain a durable AI-citation advantage in
+        a category where authoritative firm selection (Acclime, InCorp, Emerhub) is actively surfaced
+        by ChatGPT and Perplexity to users asking "best Philippines company formation consultants."</p>
+      <div class="fix"><b>Fix —</b> Create <code>/llms.txt</code> listing: company description (3 sentences),
+        key service pages with one-line descriptions, top 5 most-cited blog articles. Create
+        <code>/llms-full.txt</code> with full text of the 5 most authoritative articles.
+        Total effort: 2–3 hours.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page / Discoverability</div>
+      <h3>Services Hub has no keyword in title or H1 — invisible to search</h3>
+      <table class="kv">
+        <tr><th>Element</th><th>Current</th><th class="r">Issue</th></tr>
+        <tr><td>Title tag</td><td>"Services - Philippine Hub Partners"</td><td class="r bad">34 chars · no keywords</td></tr>
+        <tr><td>H1</td><td>"Launch Smarter in the Philippines"</td><td class="r bad">Marketing tagline · no service keyword</td></tr>
+        <tr><td>Meta description</td><td>"xpand your business to the Philippines…"</td><td class="r bad">Typo: missing "E" at start</td></tr>
+      </table>
+      <div class="fix"><b>Fix —</b> Title: <code>"Business Setup Services in the Philippines | PHP"</code> (48 chars) ·
+        H1: <code>"Full-Service Business Setup for Foreign Companies in the Philippines"</code> ·
+        Meta: fix typo and add specific service list within 155 chars.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · E-E-A-T / AI Citation</div>
+      <h3>Author identity is anonymous — "sheiladizon" credits a WordPress username, not a person</h3>
+      <p>All blog posts are attributed to the username <code>sheiladizon</code>. The real author is
+        <b>Sheila Dizon-Burns</b>, co-founder with demonstrable business credentials. The firm also
+        has a second co-founder, <b>Atty. Marvi R. Abo</b>, with attorney credentials — a significant
+        E-E-A-T signal going completely unused in author schema. Anonymous authorship is penalized in
+        Google's post-Dec 2025 E-E-A-T guidelines and suppresses AI citation (AI systems strongly
+        prefer attributable named-entity sources).</p>
+      <div class="fix"><b>Fix —</b> Create author bio pages for Sheila Dizon-Burns and Atty. Marvi R. Abo.
+        Include: full name, title, credentials, LinkedIn URL, 100–150 word bio. Add Person schema
+        with <code>sameAs</code> to LinkedIn profiles and <code>knowsAbout</code> arrays. Update
+        all blog post bylines to link to author pages.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · On-Page / Template Bug</div>
+      <h3>Duplicate H1 tags on Blog/Insights and IT Setup pages — template bleed-in</h3>
+      <p>The Blog/Insights page (<code>/new-insight/</code>) and IT Setup page
+        (<code>/services/it-set-up/</code>) both carry two H1 tags. The second H1 on both pages
+        is <b>the homepage hero headline</b> ("Your Gateway to the Philippine Market…") injected
+        by the global page builder template. Google parses both as equal H1 declarations and cannot
+        determine heading hierarchy for either page.</p>
+      <div class="fix"><b>Fix —</b> In WordPress page builder (Betheme/BeBuilder), set a unique page template
+        for the Blog index and IT Setup page that suppresses the global hero section. This is a
+        template override, not a content edit — takes under 30 minutes per page.</div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">● High · Content / SERP Competitiveness</div>
+      <h3>Service pages 900–1,400 words vs. SERP leaders at 3,000–5,000 words</h3>
+      <table class="kv">
+        <tr><th>Service Page</th><th class="r">PHP Words (est.)</th><th class="r">Competitor Avg</th><th>Gap</th></tr>
+        <tr><td>Company Registration</td><td class="r warn">~1,300</td><td class="r ok">3,500+</td><td class="bad">−2,200</td></tr>
+        <tr><td>Virtual Office</td><td class="r bad">~650</td><td class="r ok">2,800+</td><td class="bad">−2,150</td></tr>
+        <tr><td>HR &amp; Recruitment</td><td class="r warn">~1,100</td><td class="r ok">2,500+</td><td class="bad">−1,400</td></tr>
+        <tr><td>Philippine Visas</td><td class="r warn">~1,200</td><td class="r ok">2,200+</td><td class="bad">−1,000</td></tr>
+      </table>
+      <p>SERP leaders (Acclime, InCorp Asia, Emerhub, Triple i) publish service pages with: capital
+        requirement tables, step-by-step SEC registration timelines, government fee schedules,
+        comparison of entity types (OPC / Corp / Branch / Rep Office), and 8–12 FAQ entries.
+        PHP's pages cover the core but without specificity or pricing signals that dominate SERP features.</p>
+      <div class="fix"><b>Fix —</b> Priority order: Virtual Office (thinnest, add pricing tiers + location list),
+        Company Registration (add entity comparison table + capital requirements + SEC timeline),
+        HR &amp; Recruitment (add EOR vs direct-hire comparison). Target 2,500+ words per page.</div>
+    </div>
+  </section>
+
+  <section id="tech">
+    <div class="sec-title">Technical SEO · 68 / 100</div>
+    <div class="panel">
+      <div class="tag ok">● Strengths</div>
+      <p>HTTPS enforced on all 36 URLs; all 36 pages return HTTP 200 — zero 404s or 5xx errors
+        across the entire crawlable URL set; valid <code>robots.txt</code> with permissive wildcard
+        (all AI and search crawlers allowed); Rank Math XML sitemap active with sitemap index
+        and sub-sitemaps for posts, pages, and categories; <code>lang="en"</code>, viewport,
+        charset, OpenGraph prefix all present; WordPress with server-side rendering — AI crawlers
+        receive fully-formed HTML, not a JavaScript shell; Google Analytics active
+        (<code>G-N5X70E8B09</code>).</p>
+      <table class="kv">
+        <tr><th>Issue</th><th class="r">Severity</th><th>Detail</th></tr>
+        <tr><td>Redirect chain on non-www / http</td><td class="r warn">Medium</td><td>HTTP non-www → HTTPS non-www → HTTPS www = 2 hops. Collapse to one.</td></tr>
+        <tr><td>WAF over-blocking SEO tools</td><td class="r note">Low</td><td>Ahrefs, Moz, and generic crawlers return 406. Googlebot/AI bots fine — not an indexing risk, but blinds third-party audits</td></tr>
+        <tr><td>No hreflang / international targeting</td><td class="r warn">Medium</td><td>Serving US + PH market with no language/region targeting signals</td></tr>
+        <tr><td>No canonical tag on homepage</td><td class="r note">Low</td><td>Should self-reference canonical to prevent parameter/trailing-slash duplicates</td></tr>
+        <tr><td>Page weight / plugin count</td><td class="r warn">Medium</td><td>Heavy WordPress with multiple plugins detected; no CDN signals; inferred LCP risk</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="eeat">
+    <div class="sec-title">Content Quality &amp; E-E-A-T · 55 / 48</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>E-E-A-T Factor</th><th class="r">Score</th><th>Key Signals</th></tr>
+        <tr><td>Experience</td><td class="r warn">12/25</td><td>✅ Three office locations · ✅ Named founders · ❌ No case studies with client outcomes · ❌ No testimonials with company names</td></tr>
+        <tr><td>Expertise</td><td class="r bad">10/25</td><td>✅ Attorney co-founder (Atty. Marvi R. Abo) — unused in schema · ❌ "sheiladizon" username authorship · ❌ Zero credentials on service pages</td></tr>
+        <tr><td>Authoritativeness</td><td class="r bad">11/25</td><td>✅ LinkedIn sameAs in Organization schema · ❌ No press mentions · ❌ No external citations inbound · ❌ No SEC/PEZA accreditation badges</td></tr>
+        <tr><td>Trustworthiness</td><td class="r warn">15/25</td><td>✅ HTTPS · ✅ Contact page with BGC address · ✅ About page with founder names · ❌ No privacy policy or terms page confirmed · ❌ No phone number visible on contact page</td></tr>
+        <tr><td class="r"><b>Total</b></td><td class="r"><b>48</b></td><td>Attorney credential and three offices are real differentiators — neither is surfaced with schema or content authority signals</td></tr>
+      </table>
+      <p><b>AI Citation Readiness 42/100:</b> ✅ SSR content; ✅ All AI crawlers allowed; ✅ some definitional blog content ·
+        ❌ No llms.txt; ❌ "sheiladizon" entity; ❌ No first-party data/stats; ❌ Malformed FAQPage schema;
+        ❌ Promotional homepage copy not answer-first.</p>
+      <p><b>Content depth by page type:</b></p>
+      <table class="kv">
+        <tr><th>Page Type</th><th class="r">Floor</th><th class="r">Observed</th><th>Verdict</th></tr>
+        <tr><td>Homepage</td><td class="r">500</td><td class="r">~700</td><td>Meets floor; but H2s contain typos ("Phillppine," "BUSSINESS," "Suport")</td></tr>
+        <tr><td>Service pages</td><td class="r">800</td><td class="r">650–1,400</td><td>Virtual Office dangerously thin at ~650 words</td></tr>
+        <tr><td>Blog posts</td><td class="r">1,500</td><td class="r">Most 1,500+</td><td>Strongest content asset — fresh, topically aligned, specific</td></tr>
+        <tr><td>About Us</td><td class="r">600</td><td class="r">~400</td><td>Thin for the primary trust/credibility page</td></tr>
+        <tr><td>Contact</td><td class="r">300</td><td class="r">~150</td><td>No phone number, no map embed, no LocalBusiness schema</td></tr>
+      </table>
+      <div class="fix"><b>Top fixes —</b> Named bylines + author bio pages + Person schema for both founders ·
+        Fix homepage H2 typos ("Phillppine," "BUSSINESS," "Suport") ·
+        Add privacy policy + terms pages (compliance + trust) ·
+        Add phone number + map embed to Contact page ·
+        Expand About Us to 600+ words with founder bios and firm history.</div>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">GEO / AI-Search · 44 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Criterion</th><th class="r">Score</th><th>Note</th></tr>
+        <tr><td>Citability (25%)</td><td class="r bad">42</td><td>No 134–167 word self-contained answer blocks; stats cited without links</td></tr>
+        <tr><td>Structural readability (20%)</td><td class="r warn">48</td><td>Good H2/H3 on blog; ~33% question-style headings sitewide; H2 typos on homepage</td></tr>
+        <tr><td>Multi-modal (15%)</td><td class="r bad">18</td><td>No video, no charts, no interactive tools; blog images only</td></tr>
+        <tr><td>Authority &amp; brand (20%)</td><td class="r bad">38</td><td>LinkedIn-only; anonymous author; no YouTube; no Wikipedia entity</td></tr>
+        <tr><td>Technical access (20%)</td><td class="r ok">68</td><td>SSR; all AI crawlers allowed; Rank Math sitemaps; no llms.txt</td></tr>
+      </table>
+      <p><b>Platform estimates:</b> Google AIO ~38 · ChatGPT ~28 · Perplexity ~40 · Bing Copilot ~38.</p>
+      <table class="kv">
+        <tr><th>AI Crawler</th><th class="r">Status</th><th>Notes</th></tr>
+        <tr><td>GPTBot (OpenAI)</td><td class="r ok">Allowed</td><td>Default-permissive robots.txt</td></tr>
+        <tr><td>ClaudeBot (Anthropic)</td><td class="r ok">Allowed</td><td>Default-permissive robots.txt</td></tr>
+        <tr><td>PerplexityBot</td><td class="r ok">Allowed</td><td>Default-permissive robots.txt</td></tr>
+        <tr><td>OAI-SearchBot</td><td class="r ok">Allowed</td><td>Default-permissive robots.txt</td></tr>
+        <tr><td>Googlebot</td><td class="r ok">Allowed</td><td>Default-permissive robots.txt</td></tr>
+      </table>
+      <table class="kv">
+        <tr><th>Brand presence (sameAs signals)</th><th class="r">Status</th><th>AI weight</th></tr>
+        <tr><td>LinkedIn</td><td class="r ok">Present</td><td>Low–Moderate</td></tr>
+        <tr><td>YouTube</td><td class="r bad">Absent</td><td>~0.737 — <b>highest correlation with AI citations</b></td></tr>
+        <tr><td>Facebook / Instagram</td><td class="r bad">Absent</td><td>Moderate</td></tr>
+        <tr><td>Wikipedia / Wikidata</td><td class="r bad">Absent</td><td>High (ChatGPT 47.9%)</td></tr>
+        <tr><td>Reddit</td><td class="r bad">Absent</td><td>High (Perplexity / ChatGPT)</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">The foreign-ownership-rules article is the single
+        best existing AI citation candidate — definitional opening paragraph naming specific laws
+        (FIA, FINL, RA 11647) + inline government links + comparison table. Apply this pattern sitewide.</p>
+    </div>
+  </section>
+
+  <section id="local">
+    <div class="sec-title">Local SEO · Multi-Location Business</div>
+    <div class="panel">
+      <div class="tag high">● Three Physical Offices — Zero LocalBusiness Schema</div>
+      <p>Philippine Hub Partners operates from <b>San Francisco, CA</b>, <b>Las Vegas, NV</b>, and
+        <b>Taguig City, Philippines (BGC)</b>. None of the three locations is structured with
+        LocalBusiness or ProfessionalService schema. The contact page has a BGC address visible in
+        text but no map embed, no phone number, and no machine-readable location data.</p>
+      <table class="kv">
+        <tr><th>Local Signal</th><th class="r">Status</th><th>Impact</th></tr>
+        <tr><td>NAP in text (BGC address)</td><td class="r warn">Partial</td><td>BGC address on contact page only; SF/LV not confirmed in text</td></tr>
+        <tr><td>LocalBusiness / ProfessionalService schema</td><td class="r bad">Missing</td><td>No Knowledge Panel eligibility for any location</td></tr>
+        <tr><td>Google Maps embed</td><td class="r bad">Missing</td><td>No trust signal or GBP connection</td></tr>
+        <tr><td>Phone number</td><td class="r bad">Missing from contact page</td><td>Conversion friction; no NAP completeness</td></tr>
+        <tr><td>Google Business Profile</td><td class="r warn">Unknown</td><td>Cannot determine from site; must verify in Google Search Console</td></tr>
+        <tr><td>Review schema (AggregateRating)</td><td class="r bad">Missing</td><td>No star rating in SERP for any service page</td></tr>
+      </table>
+      <div class="fix"><b>Fix —</b> Add <code>ProfessionalService</code> schema to Contact page with:
+        name, address (BGC), telephone, email, url, openingHours, sameAs.
+        Add Google Maps embed for BGC office. Publish a phone number on the contact page.
+        Claim and optimize Google Business Profile for all three locations.</div>
+    </div>
+  </section>
+
+  <section id="onpage">
+    <div class="sec-title">On-Page SEO &amp; SXO · 54 / 51</div>
+    <div class="panel">
+      <div class="tag high">● Page-by-Page Meta Audit</div>
+      <table class="kv">
+        <tr><th>Page</th><th>Title Issue</th><th>Meta Issue</th><th>H1 Issue</th></tr>
+        <tr><td>Homepage</td><td class="warn">64 chars (long +4)</td><td class="ok">156 chars — OK</td><td class="bad">No target keyword in H1</td></tr>
+        <tr><td>Services Hub</td><td class="bad">34 chars — no keywords</td><td class="bad">Typo: starts "xpand"</td><td class="bad">Vague tagline; no service keyword</td></tr>
+        <tr><td>Company Registration</td><td class="warn">63 chars (long +3)</td><td class="ok">156 chars — OK</td><td class="warn">Missing article: "in Philippines" vs "in the Philippines"</td></tr>
+        <tr><td>Accounting &amp; Tax</td><td class="ok">52 chars — OK</td><td class="ok">150 chars — OK</td><td class="ok">OK</td></tr>
+        <tr><td>Philippine Visas</td><td class="ok">55 chars — OK</td><td class="ok">155 chars — OK</td><td class="warn">No specific visa type keyword</td></tr>
+        <tr><td>HR &amp; Recruitment</td><td class="warn">65 chars (long +5)</td><td class="ok">156 chars — OK</td><td class="ok">OK</td></tr>
+        <tr><td>Trademark Registration</td><td class="ok">59 chars — OK</td><td class="ok">159 chars — OK</td><td class="ok">OK</td></tr>
+        <tr><td>Virtual Office</td><td class="warn">61 chars (long +1)</td><td class="ok">151 chars — OK</td><td class="bad">"Virtual office" keyword missing from H1</td></tr>
+        <tr><td>IT Setup</td><td class="warn">61 chars (long +1)</td><td class="warn">164 chars (long)</td><td class="bad">Duplicate H1 (template bleed)</td></tr>
+        <tr><td>Advisory Services</td><td class="ok">59 chars — OK</td><td class="bad">170 chars + typo "companies growth"</td><td class="ok">OK</td></tr>
+        <tr><td>Blog/Insights</td><td class="ok">50 chars — OK</td><td class="ok">156 chars — OK</td><td class="bad">Duplicate H1 (template bleed)</td></tr>
+        <tr><td>About Us</td><td class="ok">60 chars — OK</td><td class="ok">151 chars — OK</td><td class="ok">OK</td></tr>
+        <tr><td>Contact</td><td class="warn">64 chars + intent mismatch</td><td class="ok">153 chars — OK</td><td class="ok">OK</td></tr>
+      </table>
+    </div>
+    <div class="panel" style="margin-top:20px">
+      <div class="tag high">● Keyword Cannibalization Risks</div>
+      <table class="kv">
+        <tr><th>Risk</th><th class="r">Severity</th><th>Pages in Conflict</th></tr>
+        <tr><td>Homepage vs. Contact on "Start Your Business In The Philippines"</td><td class="r bad">High</td><td>Title overlap; Google may show wrong page for navigational queries</td></tr>
+        <tr><td>Homepage vs. Company Registration on "Business Registration Philippines"</td><td class="r warn">Medium</td><td>Depth differentiation insufficient; Google struggles to choose</td></tr>
+        <tr><td>Blog articles vs. Service pages on exact service queries</td><td class="r warn">Medium</td><td>"Virtual Office Guide 2026" blog post competes directly with Virtual Office service page</td></tr>
+      </table>
+      <div class="fix"><b>Fix —</b> Contact page title: <code>"Contact Philippine Hub Partners | Book a Free Consultation"</code> ·
+        Homepage targets generic brand + market-entry intent · Company Registration owns transactional keyword ·
+        Add canonical internal links from each blog article to its corresponding service page.</div>
+    </div>
+    <div class="panel" style="margin-top:20px">
+      <div class="tag med">● SXO — User Intent Alignment</div>
+      <p><b>SERP expectation gap:</b> "Company registration Philippines" SERP is dominated by 2,500–4,000 word
+        service/guide hybrids with capital tables, timelines, and FAQ sections (Acclime, Emerhub,
+        InCorp Asia, Triple i Consulting). PHP's service pages are commercial-only brochures without
+        the informational depth the SERP rewards — a page-type mismatch that suppresses organic ranking
+        even when content is technically correct.</p>
+      <p><b>Target personas and their primary content gap:</b></p>
+      <table class="kv">
+        <tr><th>Persona</th><th>Primary Query</th><th>Content Gap</th></tr>
+        <tr><td>Foreign entrepreneur (awareness)</td><td>"how to start a business in Philippines as foreigner"</td><td>No foreign ownership limits explainer on service page; blog covers it but service page doesn't</td></tr>
+        <tr><td>HR/Ops manager (decision)</td><td>"HR outsourcing Philippines foreign company"</td><td>No EOR vs. direct-hire comparison; no cost-saving claims; no case study</td></tr>
+        <tr><td>Regional director (evaluation)</td><td>"Philippines business setup consulting firm"</td><td>No Philippines vs. Singapore vs. Vietnam comparison; no CREATE MORE Act incentives coverage</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="sec-title">Schema / Structured Data · 42 / 100</div>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Schema Type</th><th class="r">Present</th><th>Status</th></tr>
+        <tr><td>Organization</td><td class="r ok">All pages</td><td>✅ Present — missing <code>telephone</code>; only LinkedIn in <code>sameAs</code></td></tr>
+        <tr><td>WebSite + SearchAction</td><td class="r ok">Homepage</td><td>✅ Present — not extended to all pages</td></tr>
+        <tr><td>WebPage</td><td class="r ok">All pages</td><td>✅ Present via Rank Math</td></tr>
+        <tr><td>Article / BlogPosting</td><td class="r warn">All pages incl. service pages</td><td>⚠️ Article schema on commercial service pages — should be Service schema</td></tr>
+        <tr><td>BreadcrumbList</td><td class="r warn">All except Homepage</td><td>⚠️ Add to Homepage</td></tr>
+        <tr><td>FAQPage</td><td class="r bad">None (malformed)</td><td>❌ Double-encoded JSON string — not valid JSON-LD; not parsed by Google or AI crawlers</td></tr>
+        <tr><td>LocalBusiness / ProfessionalService</td><td class="r bad">Missing</td><td>❌ 3 physical offices; no machine-readable location data anywhere</td></tr>
+        <tr><td>Service</td><td class="r bad">Missing</td><td>❌ No Service schema on any of 8 service pages</td></tr>
+        <tr><td>Person (author)</td><td class="r bad">Missing</td><td>❌ No author Person schema linking founders to articles</td></tr>
+        <tr><td>AggregateRating</td><td class="r bad">Missing</td><td>❌ No review schema for star ratings in SERP</td></tr>
+      </table>
+      <p style="font-size:13.5px;color:var(--sub)">The recommended consolidated JSON-LD replacement (single @graph merging both blocks) is available from the schema report. Key fix: replace LocalBusiness with ProfessionalService, add @id to connect both blocks, correct telephone to +63, upgrade openingHours to openingHoursSpecification, remove Article node from homepage, fix logo dimension types from strings to integers.</p>
+      <div class="fix"><b>Priority order —</b>
+        1. Fix US phone + add @id to LocalBusiness block — merge into single @graph (Critical — 1 hr) ·
+        2. Fix malformed FAQPage JSON-LD in Rank Math (Critical — 30 min) ·
+        3. Add ProfessionalService schema to Contact page for all 3 offices (High — 2 hrs) ·
+        4. Replace Article with Service schema on 7 service pages (Medium — 2 hrs) ·
+        5. Add Person schema for both founders (Medium — 2 hrs) ·
+        6. Fix schema keywords typo: "Phillipine" → "Philippine" (Low — 5 min).</div>
+    </div>
+  </section>
+
+  <section id="perf">
+    <div class="sec-title">Sitemap &amp; Performance · Inferred</div>
+    <div class="panel">
+      <div class="tag ok">● Sitemap Coverage</div>
+      <table class="kv">
+        <tr><th>Metric</th><th class="r">Value</th><th>Status</th></tr>
+        <tr><td>Total URLs in sitemap index</td><td class="r">36</td><td class="ok">All return HTTP 200</td></tr>
+        <tr><td>HTTP 4xx / 5xx errors</td><td class="r ok">0</td><td class="ok">Clean crawl</td></tr>
+        <tr><td>Sitemap sub-types</td><td class="r">Posts · Pages · Categories</td><td class="ok">Rank Math structured correctly</td></tr>
+        <tr><td>lastmod dates</td><td class="r warn">Present on posts</td><td class="warn">Verify service pages have accurate lastmod</td></tr>
+      </table>
+      <div class="tag note" style="margin-top:20px">● Performance (Inferred — not measured)</div>
+      <table class="kv">
+        <tr><th>Signal</th><th class="r">Observation</th><th>Risk</th></tr>
+        <tr><td>CMS / plugins</td><td class="r">WordPress + Rank Math + caching plugin likely</td><td class="warn">Plugin overhead without CDN = LCP risk</td></tr>
+        <tr><td>Image formats</td><td class="r">JPEG/PNG detected; WebP not confirmed</td><td class="warn">Modern format uplift opportunity</td></tr>
+        <tr><td>CDN</td><td class="r bad">Not detected</td><td class="bad">Philippine servers may have high TTFB for US visitors</td></tr>
+        <tr><td>Lazy loading</td><td class="r warn">Not confirmed</td><td class="warn">Below-fold images may block LCP</td></tr>
+      </table>
+      <div class="fix"><b>Recommended —</b> Run PageSpeed Insights against homepage, Company Registration,
+        and Virtual Office pages to get actual CWV scores. If LCP &gt; 2.5s: enable CDN (Cloudflare free tier),
+        convert images to WebP, defer non-critical scripts. For a firm serving US clients from Philippines
+        hosting, CDN is critical for LCP performance.</div>
+    </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="sec-title">90-Day Roadmap</div>
+    <div class="sec-sub">Sequenced by impact-to-effort ratio. Weeks 1–2 are all low-effort, high-impact technical fixes.</div>
+
+    <div class="plan">
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Week 1–2 · Critical Fixes (Low effort · Immediate impact)</div>
+        <p class="gs">Each item under 4 hours. Fix these before touching content.</p>
+        <ul class="ol">
+          <li><b>1</b> Fix malformed FAQPage schema in Rank Math — validate at Google Rich Results Test <span class="src">Schema</span><span class="ef">2 hrs</span></li>
+          <li><b>2</b> Fix Services Hub title, H1, and meta description typo ("xpand") <span class="src">On-Page</span><span class="ef">30 min</span></li>
+          <li><b>3</b> Fix Advisory Services meta description typo ("companies growth") + trim to 155 chars <span class="src">On-Page</span><span class="ef">15 min</span></li>
+          <li><b>4</b> Fix duplicate H1 template bleed on Blog/Insights + IT Setup pages <span class="src">Technical</span><span class="ef">1 hr</span></li>
+          <li><b>5</b> Add FAQ schema to 7 service pages via Rank Math <span class="src">Schema</span><span class="ef">3.5 hrs</span></li>
+          <li><b>6</b> Fix homepage H2 typos: "Phillppine," "BUSSINESS," "Suport" <span class="src">Content</span><span class="ef">15 min</span></li>
+          <li><b>7</b> Add phone number and Google Maps embed to Contact page <span class="src">Local</span><span class="ef">30 min</span></li>
+          <li><b>8</b> Rewrite Contact page title: "Contact Philippine Hub Partners | Book a Free Consultation" <span class="src">On-Page</span><span class="ef">10 min</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Week 3–4 · High-Impact Authority Fixes (Medium effort)</div>
+        <p class="gs">Author identity and AI infrastructure — the two biggest AI-citation gaps.</p>
+        <ul class="ol">
+          <li><b>9</b> Create author bio pages for Sheila Dizon-Burns and Atty. Marvi R. Abo with Person schema <span class="src">E-E-A-T</span><span class="ef">1 day</span></li>
+          <li><b>10</b> Create /llms.txt and /llms-full.txt with curated service descriptions and top articles <span class="src">GEO</span><span class="ef">3 hrs</span></li>
+          <li><b>11</b> Add ProfessionalService schema to Contact page with all three office locations <span class="src">Schema/Local</span><span class="ef">2 hrs</span></li>
+          <li><b>12</b> Replace Article schema with Service schema on all 8 service pages <span class="src">Schema</span><span class="ef">2 hrs</span></li>
+          <li><b>13</b> Add telephone to Organization schema sitewide <span class="src">Schema</span><span class="ef">15 min</span></li>
+          <li><b>14</b> Publish privacy policy and terms of service; add to footer <span class="src">Trust</span><span class="ef">2 hrs</span></li>
+          <li><b>15</b> Claim + optimize Google Business Profile for all 3 locations <span class="src">Local</span><span class="ef">2 hrs</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Month 2 · Content Expansion (High effort · High return)</div>
+        <p class="gs">Close the content depth gap vs. Acclime, InCorp Asia, Emerhub.</p>
+        <ul class="ol">
+          <li><b>16</b> Expand Virtual Office page to 1,500+ words — add pricing tiers, location list, SEC compliance note <span class="src">Content</span><span class="ef">2 days</span></li>
+          <li><b>17</b> Expand Company Registration to 2,500+ words — add entity comparison table, capital requirements, SEC timeline, government fees <span class="src">Content</span><span class="ef">3 days</span></li>
+          <li><b>18</b> Expand HR &amp; Recruitment to 2,000+ words — add EOR vs direct-hire comparison, cost-saving claims <span class="src">Content</span><span class="ef">2 days</span></li>
+          <li><b>19</b> Expand About Us to 600+ words — add firm founding story, years in operation, founder credentials, client count <span class="src">E-E-A-T</span><span class="ef">1 day</span></li>
+          <li><b>20</b> Rewrite opening paragraphs of all service pages as 134–167 word self-contained answer blocks (GEO citability) <span class="src">GEO</span><span class="ef">2 days</span></li>
+        </ul>
+      </div>
+
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--green)"></span>Month 3 · AI Search &amp; Brand Presence</div>
+        <p class="gs">Build the multi-platform brand footprint that drives AI citation frequency.</p>
+        <ul class="ol">
+          <li><b>21</b> Launch YouTube channel with 3 explainer videos (company registration, foreign ownership rules, visa types) and embed on service pages <span class="src">GEO/Brand</span><span class="ef">2 weeks</span></li>
+          <li><b>22</b> Add Facebook + Instagram sameAs to Organization schema; claim profiles if not active <span class="src">GEO</span><span class="ef">1 hr</span></li>
+          <li><b>23</b> Run PageSpeed Insights; implement CDN (Cloudflare), WebP images, lazy loading if LCP &gt; 2.5s <span class="src">Performance</span><span class="ef">1 day</span></li>
+          <li><b>24</b> Add AggregateRating schema once 5+ Google reviews are collected for any location <span class="src">Schema/Local</span><span class="ef">1 hr</span></li>
+          <li><b>25</b> Add canonical internal links from blog articles to corresponding service pages; fix cannibalization <span class="src">On-Page</span><span class="ef">2 hrs</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · philippinehubpartners.com · 24 May 2026
+  </footer>
+
+</div>
+</body>
+</html>

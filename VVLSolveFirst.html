@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Implementation Walkthrough — Velvet Visibility Labs</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06); --code-bg:#1d1d1f; --code-ink:#e6e6ea;
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;font-size:17px;letter-spacing:-.01em;padding:0 22px 120px}
+  .wrap{max-width:1040px;margin:0 auto}
+  .hero{text-align:center;padding:96px 0 40px}
+  .eyebrow{font-size:14px;font-weight:600;color:var(--green);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(38px,6vw,66px);font-weight:700;letter-spacing:-.035em;line-height:1.05}
+  .hero .sub{font-size:20px;color:var(--sub);margin:22px auto 0;font-weight:400;max-width:760px}
+  .hero .meta{font-size:13.5px;color:var(--sub);margin-top:24px}.hero .meta b{color:var(--ink)}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:34px;max-width:900px;margin-left:auto;margin-right:auto}
+  .nav a{font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:980px;background:var(--card)}
+  .nav a:hover{color:var(--green);border-color:var(--green)}
+  section{margin-top:80px;scroll-margin-top:24px}
+  .sec-title{font-size:13.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;text-align:center}
+  .sec-h1{font-size:34px;font-weight:700;letter-spacing:-.025em;text-align:center;margin-bottom:14px;line-height:1.1}
+  .sec-sub{font-size:15.5px;color:var(--sub);text-align:center;max-width:700px;margin:0 auto 30px;line-height:1.55}
+  .sol{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:34px 36px;margin-top:20px;border-left:4px solid var(--green)}
+  .sol.crit{border-left-color:var(--red)}.sol.high{border-left-color:var(--amber)}.sol.med{border-left-color:var(--sub)}
+  .sol .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;color:var(--green)}
+  .sol.crit .tag{color:var(--red)}.sol.high .tag{color:#b26a00}.sol.med .tag{color:var(--sub)}
+  .sol h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px;line-height:1.25}
+  .sol .recap{font-size:14.5px;color:var(--sub);margin-bottom:18px;line-height:1.55;padding-bottom:14px;border-bottom:1px solid var(--hair)}
+  .sol h4{font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--sub);margin:20px 0 10px}
+  ol.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:11px}
+  ol.steps>li{counter-increment:s;position:relative;padding-left:42px;font-size:15px;color:#2c2c2e;line-height:1.6}
+  ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-1px;width:27px;height:27px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+  .sol.crit ol.steps>li::before{background:var(--red)}.sol.high ol.steps>li::before{background:var(--amber)}.sol.med ol.steps>li::before{background:var(--sub)}
+  ol.steps b{color:var(--ink)}
+  pre{background:var(--code-bg);color:var(--code-ink);border-radius:14px;padding:18px 20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.6;margin:12px 0;-webkit-overflow-scrolling:touch}
+  pre code{background:transparent;padding:0;color:inherit;font-size:12.5px}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .verify{margin-top:16px;padding:13px 17px;background:rgba(52,199,89,.08);border-radius:12px;font-size:14px;color:#1d1d1f;line-height:1.55}
+  .verify b{color:#1f7a3e}
+  .effort{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--sub)}.effort b{color:var(--ink)}
+  .note{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:26px 30px;margin-top:20px}
+  .note .t{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--blue);margin-bottom:8px}
+  .note p{font-size:15px;color:#3a3a3c;line-height:1.6}
+  ul.plain{padding-left:20px;font-size:15px;color:#2c2c2e;line-height:1.65;margin-top:8px}
+  ul.plain li{margin-bottom:5px}
+  .seq{max-width:760px;margin:0 auto}
+  table.kv{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px}
+  table.kv td,table.kv th{padding:9px 11px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  table.kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700}
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:90px;padding-top:36px;border-top:1px solid var(--line);line-height:1.7}
+  @media(max-width:680px){body{font-size:16px;padding:0 16px 80px}.hero{padding:54px 0 30px}.sol,.note{padding:24px 22px}.sec-h1{font-size:27px}pre{font-size:11.5px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Implementation Walkthrough · Companion to the SEO Master Report</div>
+    <h1>How to fix it — Velvet Visibility Labs</h1>
+    <p class="sub">Step-by-step remediation for every critical and high finding in the audit, with the exact changes, paste-ready markup, and how to verify each fix. Medium items are summarised.</p>
+    <p class="meta"><b>velvetvisibilitylabs.com</b> &nbsp;·&nbsp; pairs with the master report &nbsp;·&nbsp; <b>2 June 2026</b></p>
+    <nav class="nav">
+      <a href="#how">How to use</a><a href="#sequence">Sequence</a>
+      <a href="#c1">C01 Nav 404</a><a href="#c2">C02 Meta</a><a href="#c3">C03 Schema</a><a href="#c4">C04 Orphan</a><a href="#c5">C05 Entity</a><a href="#c6">C06 Speed</a>
+      <a href="#h1">H01–H08 High</a><a href="#med">Medium</a>
+    </nav>
+  </header>
+
+  <section id="how">
+    <div class="sec-title">How to use this document</div>
+    <h2 class="sec-h1">Fix in dependency order, verify each step</h2>
+    <p class="sec-sub">This walkthrough is the implementation companion to the audit. The audit says <i>what</i> is wrong and <i>why</i>; this says <i>how</i> to fix it. Work top-down — earlier fixes unblock later ones.</p>
+    <div class="note">
+      <div class="t">● Before you start</div>
+      <p>Take a full backup (files + database) and work on staging where possible. Two findings need owner confirmation before they ship: the "4.8-star" review claim (C05/H03) and the named testimonials. Do not publish Review/AggregateRating schema built on unverified claims.</p>
+    </div>
+  </section>
+
+  <section id="sequence">
+    <div class="sec-title">Sequence</div>
+    <h2 class="sec-h1">The order that minimises rework</h2>
+    <div class="seq">
+      <table class="kv">
+        <tr><th>Order</th><th>Fix</th><th>Why first</th></tr>
+        <tr><td>1</td><td>C01 broken nav · H01 email link</td><td>Active damage — broken clicks every day; trivial to fix</td></tr>
+        <tr><td>2</td><td>C02 meta descriptions · M03 OG images</td><td>Same Yoast/page pass; controls search + social messaging</td></tr>
+        <tr><td>3</td><td>C03 schema · C04 internal links · H05 H2s</td><td>One structured-data + template pass; lifts Schema, GEO, On-Page together</td></tr>
+        <tr><td>4</td><td>C06 speed · H04 images · H08 headers · H07 llms.txt</td><td>Technical/performance sprint</td></tr>
+        <tr><td>5</td><td>C05 entity · H03 reviews · H06 directories</td><td>Off-site authority — runs in parallel, gated on owner verification</td></tr>
+        <tr><td>6</td><td>H02 content depth · page rebuilds</td><td>Highest effort; depends on schema + entity foundation being in place</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== CRITICAL ===================== -->
+  <section id="c1">
+    <div class="sec-title">Critical 01 · Solution</div>
+    <h2 class="sec-h1">Fix the broken homepage service navigation</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · Technical / Link graph · Effort: Low</div>
+      <h3>Repoint the service cards and retire the dead <code>/services-details/</code> route</h3>
+      <p class="recap">Every homepage service card links to <code>/services-details/</code>, a leftover Crafto demo URL that 404s (16 links). Equity and clicks leak into a dead page.</p>
+      <h4>Steps</h4>
+      <ol class="steps">
+        <li>In WordPress, open the homepage in <b>Elementor</b> and select each service card / image-link in the services grid.</li>
+        <li>In each card's <b>Link</b> field, replace <code>https://velvetvisibilitylabs.com/services-details/</code> with the matching real service URL — e.g. the "SEO audit" card → <code>/home/seo-audit/</code>, "Technical SEO" → <code>/home/technical-seo/</code>, and so on for all five services. Map by the card's label/icon.</li>
+        <li>Repeat for any duplicate references (the audit found 16 instances; check the footer and any "read more" buttons too).</li>
+        <li>Add a safety 301 so the dead URL never returns a 404 again. In Yoast → <b>Redirects</b> (or your redirect plugin), add: <code>/services-details/ → /services/</code> (301).</li>
+        <li>Re-crawl the homepage (Screaming Frog, or re-run the link check) to confirm zero internal links resolve to <code>/services-details/</code>.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> <code>curl -sS -o /dev/null -w "%{http_code}" https://velvetvisibilitylabs.com/services-details/</code> returns <code>301</code>, and every homepage service card opens its real page. No card should land on a 404.</div>
+    </div>
+  </section>
+
+  <section id="c2">
+    <div class="sec-title">Critical 02 · Solution</div>
+    <h2 class="sec-h1">Add a meta description to all 10 pages</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · On-Page · Effort: Low</div>
+      <h3>Configure Yoast and write one description per page</h3>
+      <p class="recap">No page emits a <code>meta name="description"</code>. Yoast is installed but the description fields are empty, so Google writes the snippet for you.</p>
+      <h4>Steps</h4>
+      <ol class="steps">
+        <li>Edit each page → scroll to the <b>Yoast SEO</b> box → <b>Meta description</b> field.</li>
+        <li>Write a unique 140–155 character description per page: lead with the page's intent, include the primary keyword naturally, end with a reason to click. Keep the green length bar.</li>
+        <li>Optionally set a site-wide default template under Yoast → <b>Settings → Content types</b>, but per-page hand-written descriptions outperform templates — do those for the 10 pages.</li>
+        <li>Confirm Yoast's snippet preview shows your text, not auto-generated content.</li>
+      </ol>
+      <h4>Worked examples (adapt to brand voice)</h4>
+      <pre><code>Home:        SEO and AI-search (AEO) agency helping businesses in India, Vietnam
+             and the US get found on Google and cited by ChatGPT, Perplexity and AI
+             Overviews. Book a free visibility review.
+
+/aeo-ai-search/: Answer Engine Optimization that gets your brand cited by ChatGPT,
+             Perplexity and Google AI Overviews. See how Velvet Visibility Labs builds
+             AI-search visibility for growing businesses.
+
+/home/seo-audit/: A full SEO audit covering technical, on-page, content, schema, Core
+             Web Vitals and AI visibility — with a prioritised fix list. See what's
+             included and request yours.</code></pre>
+      <div class="verify"><b>Verify —</b> <code>curl -s https://velvetvisibilitylabs.com/ | grep -i 'name="description"'</code> returns your description on every page.</div>
+    </div>
+  </section>
+
+  <section id="c3">
+    <div class="sec-title">Critical 03 · Solution</div>
+    <h2 class="sec-h1">Deploy the entity schema graph</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · Schema / GEO · Effort: Medium</div>
+      <h3>Add Organization, Service, and FAQPage JSON-LD</h3>
+      <p class="recap">The site ships only Yoast defaults — no Organization, Service, or FAQPage. An AEO agency must give answer engines a structured entity to resolve and cite. Add the blocks below (replace <code>VERIFY:</code> placeholders with confirmed values).</p>
+      <h4>1 · Organization (site-wide — add via Yoast → Schema, or a header snippet)</h4>
+      <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "@id": "https://velvetvisibilitylabs.com/#org",
+  "name": "Velvet Visibility Labs",
+  "url": "https://velvetvisibilitylabs.com/",
+  "logo": "https://velvetvisibilitylabs.com/wp-content/uploads/VERIFY-logo.webp",
+  "description": "SEO and Answer Engine Optimization agency serving India, Vietnam and the US.",
+  "areaServed": ["IN","VN","US"],
+  "email": "info@velvetvisibilitylabs.com",
+  "sameAs": [
+    "https://www.linkedin.com/company/VERIFY-handle"
+    /* add Clutch, GoodFirms, DesignRush URLs here once profiles exist (C05) */
+  ]
+}
+&lt;/script&gt;</code></pre>
+      <h4>2 · Service (one per service page — example for the AEO page)</h4>
+      <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Answer Engine Optimization",
+  "provider": { "@id": "https://velvetvisibilitylabs.com/#org" },
+  "areaServed": ["IN","VN","US"],
+  "name": "Answer Engine Optimization (AEO)",
+  "description": "Optimization to get your brand cited by ChatGPT, Perplexity and Google AI Overviews.",
+  "url": "https://velvetvisibilitylabs.com/aeo-ai-search/"
+}
+&lt;/script&gt;</code></pre>
+      <h4>3 · FAQPage (on each money page — match real PAA questions)</h4>
+      <pre><code>&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What is Answer Engine Optimization?",
+      "acceptedAnswer": { "@type": "Answer",
+        "text": "AEO is the practice of structuring content and entity signals so AI answer engines (ChatGPT, Perplexity, Google AI Overviews) cite your brand in their responses." } },
+    { "@type": "Question", "name": "How is AEO different from SEO?",
+      "acceptedAnswer": { "@type": "Answer",
+        "text": "SEO targets ranked links on a results page; AEO targets being quoted inside an AI-generated answer. They overlap but need different signals." } }
+  ]
+}
+&lt;/script&gt;</code></pre>
+      <h4>Steps</h4>
+      <ol class="steps">
+        <li>Add the Organization block once, site-wide (Yoast's schema settings can emit much of this — fill Organization name, logo, and social profiles under Yoast → Settings → Site basics / Site representation).</li>
+        <li>Add a Service block to each of the six service pages, changing <code>serviceType</code>, <code>name</code>, <code>description</code>, and <code>url</code>.</li>
+        <li>Add a FAQPage block to each money page using <b>real questions the page visibly answers</b> (don't mark up FAQs that aren't on the page — Google requires visible matching content).</li>
+        <li>Cross-link everything by <code>@id</code> (Service <code>provider</code> → the Organization <code>@id</code>).</li>
+        <li>Hold the AggregateRating/Review block until reviews are verified (see C05/H03).</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> paste each URL into the <b>Google Rich Results Test</b> and <b>Schema.org validator</b>; confirm Organization, Service, and FAQPage are detected with no errors.</div>
+    </div>
+  </section>
+
+  <section id="c4">
+    <div class="sec-title">Critical 04 · Solution</div>
+    <h2 class="sec-h1">Un-orphan the flagship AEO page</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · Link graph · Effort: Low</div>
+      <h3>Route in-content internal links into <code>/aeo-ai-search/</code></h3>
+      <p class="recap">The AEO page — the brand's differentiator — has zero in-content internal links and is reachable only from the top nav.</p>
+      <ol class="steps">
+        <li>Add a prominent in-content link to <code>/aeo-ai-search/</code> from the <b>homepage</b> body (e.g. a "Cited by AI? See our AEO service" link in the AI section, not just the menu).</li>
+        <li>Link to it from the <b>/services/</b> hub as a first-class service.</li>
+        <li>Add a contextual link from each related service page (technical, on-page) — e.g. "pairs with our Answer Engine Optimization work".</li>
+        <li>Use descriptive anchor text containing "Answer Engine Optimization" / "AEO", not "click here".</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> re-run the internal link crawl; <code>/aeo-ai-search/</code> should show 3+ in-content inbound links instead of 0.</div>
+    </div>
+  </section>
+
+  <section id="c5">
+    <div class="sec-title">Critical 05 · Solution</div>
+    <h2 class="sec-h1">Establish the brand as an external entity</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · GEO / Off-site · Effort: Medium · the keystone</div>
+      <h3>Get listed, get reviewed, get cited</h3>
+      <p class="recap">The brand exists in no external index — no directory, no reviews platform, no AI-citation footprint. AI engines cannot cite a brand with no external signals. This is the single highest-leverage workstream.</p>
+      <ol class="steps">
+        <li><b>Claim a Clutch.co profile</b> (clutch.co/get-listed — free). Complete every field: services, focus areas, geographies, logo, description.</li>
+        <li><b>Collect 3 verified reviews</b> from the named homepage clients (confirm consent first). Clutch's phone-verified reviews are the most trusted B2B corroboration signal and the prerequisite for roundup inclusion.</li>
+        <li><b>Create GoodFirms, DesignRush, and Sortlist profiles</b> in parallel — these become entity anchors for AI-citation engines.</li>
+        <li><b>Add every profile URL to the Organization <code>sameAs</code> array</b> (C03) so search engines connect the entity to its off-site presence.</li>
+        <li>Once reviews exist, <b>pitch the AEO roundups</b> that currently list no Asia-Pacific agencies (the FLOW supporting document names the specific targets and angles).</li>
+        <li>Seed a LinkedIn cadence and participate in r/SEO / r/bigseo — Perplexity cites Reddit heavily.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> searching the brand name returns a Clutch/GoodFirms result; the homepage star claim links to a real profile; re-running the AI-citation baseline shows the brand resolving as an entity.</div>
+      <div class="note" style="margin-top:18px"><div class="t">● Gate</div><p>Do not publish AggregateRating schema or surface the "4.8 stars" claim as a ranking signal until the reviews exist on a real platform and the owner confirms them.</p></div>
+    </div>
+  </section>
+
+  <section id="c6">
+    <div class="sec-title">Critical 06 · Solution</div>
+    <h2 class="sec-h1">Bring mobile LCP into range</h2>
+    <div class="sol crit">
+      <div class="tag">Critical · Performance · Effort: Medium</div>
+      <h3>Cut image weight, fix the LCP element, cache at the edge</h3>
+      <p class="recap">Mobile LCP is 7–11s on every page (Poor). Root causes: 1 MB+ PNG hero images as the LCP element, theme payload, and no edge full-page cache.</p>
+      <ol class="steps">
+        <li><b>Convert content images to WebP/AVIF.</b> Install ShortPixel or Imagify, bulk-optimise the media library, and enable automatic next-gen delivery. The five 1 MB+ PNGs (ChatGPT-generated heroes, SEO-Audit.png, technical-seo.png) are the priority.</li>
+        <li><b>Right-size the LCP image.</b> Identify the homepage hero (the LCP element at 11s), export it at the actual displayed dimensions, and serve responsive <code>srcset</code> sizes. Add <code>fetchpriority="high"</code> to the hero and lazy-load everything below the fold.</li>
+        <li><b>Enable edge caching.</b> The homepage shows <code>cf-cache-status: DYNAMIC</code> — add a Cloudflare cache rule (or APO for WordPress) to full-page-cache HTML for anonymous visitors.</li>
+        <li><b>Trim render-blocking payload.</b> Use a caching/optimisation plugin (WP Rocket / LiteSpeed) to defer non-critical CSS/JS from Crafto + Elementor and inline critical CSS.</li>
+        <li>Remove the 94 unused Crafto demo images from the media library to cut page weight and clutter.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> re-run PageSpeed Insights (mobile): target LCP &lt; 2.5s and page weight under ~1 MB. Watch for the first CrUX field dataset as traffic grows.</div>
+    </div>
+  </section>
+
+  <!-- ===================== HIGH ===================== -->
+  <section id="h1">
+    <div class="sec-title">High Findings · Solutions</div>
+    <h2 class="sec-h1">Fix in the first month</h2>
+
+    <div class="sol high">
+      <div class="tag">High 01 · Conversion · Effort: Trivial</div>
+      <h3>Fix the broken contact email link</h3>
+      <p class="recap">The email link is coded as a web address, so clicking it loads a dead host instead of opening an email.</p>
+      <pre><code>&lt;!-- current (broken) --&gt;
+&lt;a href="https://info@velvetvisibilitylabs.com"&gt;info@velvetvisibilitylabs.com&lt;/a&gt;
+
+&lt;!-- corrected --&gt;
+&lt;a href="mailto:info@velvetvisibilitylabs.com"&gt;info@velvetvisibilitylabs.com&lt;/a&gt;</code></pre>
+      <ol class="steps">
+        <li>Edit the email element on <code>/contact/</code> and <code>/aeo-ai-search/</code> in Elementor.</li>
+        <li>Set the link to <code>mailto:info@velvetvisibilitylabs.com</code> (in Elementor's link field, type the full <code>mailto:</code> string).</li>
+        <li>Check the footer and any other template that repeats the email.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> clicking the email opens the mail client; <code>grep 'mailto:info@'</code> appears in the page source and no <code>https://info@</code> remains.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 02 · Content · Effort: Medium</div>
+      <h3>Expand and differentiate the thin service pages</h3>
+      <p class="recap">Five service pages run ~350 words at 48–53% uniqueness; the AEO page is 281 words. Competitors run 1,800–5,100 words with real structure.</p>
+      <h4>Per-page blueprint (apply to each money page)</h4>
+      <ul class="plain">
+        <li>Target 1,000–1,800 words with a real H2 layer: <i>What it is → Why it matters in 2026 → How we do it (process) → What you get / deliverables → Results / proof → FAQ</i>.</li>
+        <li>Make each service page's "How we do it" genuinely different — replace the shared scaffold so uniqueness rises well above 50%.</li>
+        <li>Add a 130–170-word extractable answer block near the top (the passage an AI engine can lift).</li>
+        <li>Rebuild <code>/aeo-ai-search/</code> first to the depth of the pattern-match competitor (Victorious): what AEO is, which platforms you optimise for (ChatGPT, Perplexity, AI Overviews), process, and at least one quantified result.</li>
+      </ul>
+      <div class="verify"><b>Verify —</b> re-run the uniqueness pass; pairwise Jaccard across the service cluster drops and each page clears ~1,000 words with a visible FAQ.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 03 · Trust · Effort: Medium · owner-gated</div>
+      <h3>Make the trust claims verifiable</h3>
+      <p class="recap">"4.8 stars / 3 continents", "19.58% profit", and named testimonials have no schema and no external platform behind them.</p>
+      <ol class="steps">
+        <li>Confirm with the owner which reviews/testimonials are real and have consent to publish.</li>
+        <li>Drive those reviews onto a real platform (Clutch / Google) — see C05.</li>
+        <li>Once live, link the homepage star claim to that platform and add AggregateRating schema referencing the verified count and value.</li>
+        <li>Re-state or remove any stat (e.g. "19.58% profit by sales") that can't be sourced.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> the star claim links to a platform showing the same rating/count; AggregateRating validates in the Rich Results Test.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 04 · Images · Effort: Medium</div>
+      <h3>Optimise images and remove demo art</h3>
+      <ol class="steps">
+        <li>Run the bulk WebP/AVIF conversion from C06.</li>
+        <li>Replace the 94 Crafto <code>demo-*</code> placeholder graphics with real brand imagery (or remove the sections that only exist to show demo art).</li>
+        <li>Keep the complete alt-text coverage you already have; ensure new images get descriptive alt too.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> <code>curl -H "Accept: image/webp" -I &lt;image-url&gt;</code> returns <code>content-type: image/webp</code>; no <code>demo-modern-business-*</code> assets remain referenced.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 05 · On-Page · Effort: Low-Medium</div>
+      <h3>Add an H2 section layer to every money page</h3>
+      <p class="recap">Money pages jump H1 → H3 with zero H2s — no semantic structure for crawlers or AI extraction.</p>
+      <ol class="steps">
+        <li>In Elementor, set each major section heading to <b>H2</b> (Heading widget → HTML Tag → H2), reserving H3 for sub-points.</li>
+        <li>Use the blueprint from H02 as the H2 outline (What it is / Why / Process / Deliverables / Results / FAQ).</li>
+        <li>Keep exactly one H1 per page (the page title).</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> <code>curl -s &lt;url&gt; | grep -c '&lt;h2'</code> returns 4+ on each money page.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 06 · SXO · Effort: Medium</div>
+      <h3>Match the channel to the SERP</h3>
+      <p class="recap">Three of four money keywords are won by listicles/directories, not service pages.</p>
+      <ul class="plain">
+        <li>For "AEO agency" / "answer engine optimization services" / "technical SEO services": pursue <b>directory + roundup inclusion</b> (C05) rather than trying to rank a thin service page on the head term.</li>
+        <li>Prioritise <b>"SEO audit service"</b> organically — it's the one keyword where agency service pages win (8/10), and you own <code>/home/seo-audit/</code>. Bring it to parity (schema + depth) first.</li>
+        <li>Target long-tail variants ("technical SEO for [industry]", "AEO for India B2B") where a service page can compete.</li>
+      </ul>
+      <div class="verify"><b>Verify —</b> brand appears in at least one roundup/directory within the quarter; <code>/home/seo-audit/</code> begins ranking for its long-tail variants.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 07 · GEO · Effort: Low-Medium</div>
+      <h3>Publish llms.txt and add answer blocks</h3>
+      <p class="recap">No <code>/llms.txt</code> and no extractable answer passages — conspicuous for an AI-search agency.</p>
+      <pre><code># /llms.txt  (place at site root)
+# Velvet Visibility Labs — SEO & Answer Engine Optimization agency
+
+> SEO and AEO agency serving India, Vietnam and the US. We help businesses
+> get found on Google and cited by ChatGPT, Perplexity and AI Overviews.
+
+## Services
+- Answer Engine Optimization: https://velvetvisibilitylabs.com/aeo-ai-search/
+- Technical SEO:  https://velvetvisibilitylabs.com/home/technical-seo/
+- On-Page SEO:    https://velvetvisibilitylabs.com/home/on-page-seo/
+- Off-Page SEO:   https://velvetvisibilitylabs.com/home/off-page-seo/
+- Local SEO / GBP: https://velvetvisibilitylabs.com/home/local-seo-google-business-profile/
+- SEO Audit:      https://velvetvisibilitylabs.com/home/seo-audit/
+
+## Contact
+- Email: info@velvetvisibilitylabs.com</code></pre>
+      <ol class="steps">
+        <li>Create the file above at the site root (<code>https://velvetvisibilitylabs.com/llms.txt</code>).</li>
+        <li>Add a 130–170-word self-contained answer block near the top of each money page that directly answers the page's core question.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> <code>/llms.txt</code> returns 200; each money page has a quotable answer paragraph.</div>
+    </div>
+
+    <div class="sol high">
+      <div class="tag">High 08 · Technical hygiene · Effort: Low</div>
+      <h3>Add security headers and suppress the version banner</h3>
+      <p class="recap">No HSTS / X-Frame-Options / X-Content-Type-Options / Referrer-Policy; <code>X-Powered-By: PHP/8.3.30</code> exposed.</p>
+      <pre><code># Cloudflare → Rules → Transform Rules → Modify Response Header (add):
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Frame-Options: SAMEORIGIN
+X-Content-Type-Options: nosniff
+Referrer-Policy: strict-origin-when-cross-origin
+
+# Remove the stack banner (PHP / server config):
+header_remove('X-Powered-By');   // or expose_php = Off in php.ini</code></pre>
+      <ol class="steps">
+        <li>Add the four response headers via Cloudflare Transform Rules (or <code>.htaccess</code> / server config).</li>
+        <li>Disable <code>expose_php</code> (or strip <code>X-Powered-By</code>) so the PHP version is no longer advertised.</li>
+        <li>Tighten the CSP beyond <code>upgrade-insecure-requests</code> once you've inventoried allowed sources.</li>
+      </ol>
+      <div class="verify"><b>Verify —</b> <code>curl -sI https://velvetvisibilitylabs.com/</code> shows the four headers and no <code>X-Powered-By</code>; securityheaders.com grade improves to A/B.</div>
+    </div>
+  </section>
+
+  <!-- ===================== MEDIUM ===================== -->
+  <section id="med">
+    <div class="sec-title">Medium Findings · Solutions (short)</div>
+    <h2 class="sec-h1">Cleanup tier</h2>
+
+    <div class="sol med">
+      <div class="tag">Medium 01 · URL architecture</div>
+      <h3>Flatten the <code>/home/</code> service nesting</h3>
+      <p class="recap">Service pages sit under a redirecting <code>/home/</code> parent. Either move them to clean <code>/services/&lt;slug&gt;/</code> URLs with 301s from the old paths, or — if the effort/redirect risk isn't worth it on a 10-page site — leave them and simply remove the redirecting <code>/home/</code> parent from any menus. Decide deliberately rather than leaving the demo artifact. If you migrate, 301 every old URL and update internal links + the sitemap.</p>
+    </div>
+
+    <div class="sol med">
+      <div class="tag">Medium 02 · Redirects</div>
+      <h3>Collapse the www-over-HTTP double hop</h3>
+      <pre><code># Cloudflare → Rules → Redirect Rules (single hop to canonical apex):
+# If hostname starts with "www"  →  301  https://velvetvisibilitylabs.com/$path
+# Ensure the rule fires for both http and https on www in one step.</code></pre>
+      <p class="recap">Today <code>http://www…</code> takes two 301s to reach the apex host; one redirect rule sends www straight to the canonical apex over HTTPS.</p>
+    </div>
+
+    <div class="sol med">
+      <div class="tag">Medium 03 · Open Graph</div>
+      <h3>Add social-share images to the money pages</h3>
+      <p class="recap">Set a 1200×630 <code>og:image</code> on <code>/aeo-ai-search/</code> and <code>/services/</code> (and replace the homepage demo placeholder) via Yoast → Social, or per-page Yoast "Social image". Use a branded graphic, not the Crafto demo asset.</p>
+    </div>
+  </section>
+
+  <footer>
+    Implementation Walkthrough · velvetvisibilitylabs.com · 2 June 2026<br>
+    Companion to the SEO Master Report. Step-by-step remediation for 6 critical + 8 high findings, with 3 medium summaries.<br>
+    Validate every schema block in Google's Rich Results Test and re-measure Core Web Vitals after the performance sprint.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Velvet Visibility Labs</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06); --code-bg:#f5f5f7;
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .hero{text-align:center;padding:96px 0 48px}
+  .eyebrow{font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-.035em;line-height:1.04}
+  .hero .sub{font-size:21px;color:var(--sub);margin:22px auto 0;font-weight:400;max-width:780px}
+  .hero .meta{font-size:13.5px;color:var(--sub);margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:36px;max-width:920px;margin-left:auto;margin-right:auto}
+  .nav a{font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:980px;background:var(--card)}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:30px 0 18px}
+  .gauge{--val:52;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:24px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:760px;text-align:center;color:var(--sub);font-size:17.5px;margin:18px auto 0;line-height:1.6}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:13.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;text-align:center}
+  .sec-h1{font-size:36px;font-weight:700;letter-spacing:-.025em;text-align:center;margin-bottom:14px;line-height:1.1}
+  .sec-sub{font-size:15.5px;color:var(--sub);text-align:center;max-width:680px;margin:0 auto 32px;line-height:1.55}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow)}
+  .card h3{font-size:14.5px;color:var(--sub);font-weight:600}
+  .card .v{font-size:42px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px;line-height:1}
+  .card .w{font-size:13px;color:var(--sub);line-height:1.4}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:14px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:920px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .p-low{background:rgba(110,110,115,.12);color:var(--sub)}
+  .p-win{background:rgba(52,199,89,.14);color:#1f7a3e}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+  .item .body p{font-size:14.5px;color:var(--sub);line-height:1.55}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 38px;margin-top:18px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;line-height:1.25}
+  .panel h4{font-size:16px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+  .panel .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .tag.win{color:#1f7a3e}
+  .panel p{color:#3a3a3c;font-size:15px;margin-bottom:12px;line-height:1.6}
+  .panel p:last-child{margin-bottom:0}
+  .panel ul, .panel ol{padding-left:22px;margin-bottom:12px;color:#3a3a3c;font-size:15px;line-height:1.65}
+  .panel li{margin-bottom:4px}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  .kv td,.kv th{padding:10px 12px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700;background:rgba(0,0,0,.012)}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .kv td.c,.kv th.c{text-align:center}
+  .bad{color:var(--red);font-weight:600}.ok{color:var(--green);font-weight:600}.warn{color:#b26a00;font-weight:600}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f;line-height:1.55}
+  .fix b{color:var(--blue)}
+  .effort-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--sub)}
+  .effort-row b{color:var(--ink);font-weight:600}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:34px 38px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;line-height:1.25}
+  .callout p{font-size:16px;color:#3a3a3c;line-height:1.65}
+  .callout.danger{background:linear-gradient(135deg,#fff,#fff6f4);border-color:rgba(255,59,48,.35)}
+  .callout.danger .tag{color:var(--red)}
+  .callout.warn{background:linear-gradient(135deg,#fff,#fffaef);border-color:rgba(255,159,10,.35)}
+  .callout.warn .tag{color:#b26a00}
+  .callout.win{background:linear-gradient(135deg,#fff,#f3fbf3);border-color:rgba(52,199,89,.35)}
+  .callout.win .tag{color:#1f7a3e}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:28px 32px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px;line-height:1.6}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:920px;margin:0 auto}
+  .plan .group{margin-bottom:30px}
+  .plan .gh{font-size:19px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:14.5px;display:flex;gap:13px;align-items:flex-start;line-height:1.5}
+  .ol li b{color:var(--blue);flex:none;min-width:30px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:18px}
+  .stat-strip{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .stat{background:var(--card);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);text-align:center;min-width:130px}
+  .stat .n{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:96px;padding-top:38px;border-top:1px solid var(--line);line-height:1.7}
+  footer code{font-size:11.5px}
+
+  /* Evidence accordions — granular data, collapsed by default */
+  details.eq{margin-top:16px;border:1px solid var(--line);border-radius:14px;background:rgba(0,113,227,.025);overflow:hidden}
+  details.eq>summary{list-style:none;cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:9px;user-select:none}
+  details.eq>summary::-webkit-details-marker{display:none}
+  details.eq>summary .ico{flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-style:italic;line-height:1}
+  details.eq>summary .chev{margin-left:auto;transition:transform .2s;font-size:11px;color:var(--sub)}
+  details.eq[open]>summary .chev{transform:rotate(180deg)}
+  details.eq>summary:hover{background:rgba(0,113,227,.05)}
+  details.eq .eq-body{padding:6px 18px 18px}
+  details.eq .eq-body p{font-size:13.5px;color:var(--sub);margin:12px 0 0;line-height:1.6}
+  details.eq .eq-body p:first-child{margin-top:6px}
+  details.eq .eq-body ul{padding-left:20px;margin-top:10px;font-size:13.5px;color:#3a3a3c;line-height:1.6}
+  details.eq .eq-body .kv{margin:10px 0 0;font-size:13px}
+  details.eq .eq-body .kv th,details.eq .eq-body .kv td{padding:8px 10px}
+  .eq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .eq-scroll .kv{min-width:560px}
+  @media(max-width:680px){
+    body{font-size:16px;padding:0 16px 80px}.hero{padding:56px 0 32px}
+    .panel,.callout,.limit{padding:24px 22px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+    .sec-h1{font-size:28px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report · Fully Consolidated</div>
+    <h1>Velvet Visibility Labs</h1>
+    <p class="sub">An SEO &amp; AI-search (AEO) agency, five weeks into its public launch. The diagnosis below separates what is genuinely promising from what is quietly undermining it.</p>
+    <p class="meta">
+      <b>velvetvisibilitylabs.com</b> &nbsp;·&nbsp; SEO / AEO agency · serves India, Vietnam &amp; US &nbsp;·&nbsp; WordPress · Yoast · Crafto · Elementor &nbsp;·&nbsp;
+      <b>10 URLs audited</b> across the research waves &nbsp;·&nbsp; <b>2 June 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#exec">Summary</a><a href="#method">Methodology</a><a href="#scores">Scorecard</a><a href="#convergent">Start Here</a>
+      <a href="#critical">Critical</a><a href="#competitor">Competitor</a><a href="#high">High</a><a href="#medium">Medium</a>
+      <a href="#technical">Technical</a><a href="#content">Content</a><a href="#schema">Schema</a>
+      <a href="#geo">GEO</a><a href="#perf">Perf</a>
+      <a href="#sxo">SXO</a><a href="#programmatic">Uniqueness</a><a href="#linkgraph">Link Graph</a>
+      <a href="#ai-baseline">AI Baseline</a>
+      <a href="#pages">Pages</a>
+      <a href="#roadmap">Roadmap</a><a href="#content-briefs">Content Briefs</a><a href="#deliverables">Phase 1 Assets</a>
+      <a href="#measure">Measure</a><a href="#verify">Verify</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:52"><div class="inner"><div class="num">52</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>C− · Moderate</span></div>
+    <p class="lead">The site is clean where it is cheap to be clean — crawlable, HTTPS-correct, complete image alt text — but structurally it is a lightly-edited theme demo that has been public for five weeks with broken primary navigation, no meta descriptions, no entity schema, and no presence in any external index. The score is held down by foundation that was never built, not by decay.</p>
+    <div class="stat-strip">
+      <div class="stat"><div class="n">10</div><div class="l">URLs audited</div></div>
+      <div class="stat"><div class="n">51</div><div class="l">internal links mapped</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">research waves</div></div>
+      <div class="stat"><div class="n">21</div><div class="l">roadmap actions</div></div>
+      <div class="stat"><div class="n">20+</div><div class="l">SERP queries verified</div></div>
+    </div>
+  </div>
+
+  <!-- ===== EXECUTIVE SUMMARY ===== -->
+  <section id="exec">
+    <div class="sec-title">Executive Summary</div>
+    <h2 class="sec-h1">The one-page picture</h2>
+    <p class="sec-sub">For a 90-second read before the meeting.</p>
+    <div class="panel">
+      <h3>What's working</h3>
+      <ul>
+        <li>All major search and AI crawlers (Googlebot, Bingbot, GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot) return 200 — nothing is blocked.</li>
+        <li>HTTPS is enforced and apex/www normalise correctly to one canonical host; self-canonicals are correct on all 10 pages.</li>
+        <li>Image <code>alt</code> coverage is complete on the audited pages — zero missing and zero empty alt attributes.</li>
+        <li>The brand positioning is sharp and timely: "Found on Google. Cited by AI." is exactly the right wedge for 2026, and the AEO focus is a genuine differentiator if the proof is built.</li>
+      </ul>
+      <h3 style="margin-top:24px">What's holding the site back</h3>
+      <ul>
+        <li><b>The homepage's main service navigation is broken</b> — every service card links to a page that returns 404.</li>
+        <li><b>No page on the site has a meta description</b>, and no page ships entity schema (Organization / Service / FAQ) — striking for an agency that sells answer-engine optimization.</li>
+        <li><b>The brand does not exist in any external index</b> — no directory listing, no reviews platform, no AI-citation footprint. The domain is five weeks old.</li>
+        <li><b>Mobile Largest Contentful Paint is 7–11 seconds</b> on every page measured — firmly in Google's "Poor" band.</li>
+      </ul>
+      <h3 style="margin-top:24px">If you do five things this week</h3>
+      <ol>
+        <li>Repoint the homepage service cards to the real service URLs and retire the dead <code>/services-details/</code> route.</li>
+        <li>Fix the broken email link on the contact path (it currently points to an unreachable web address, not an email address).</li>
+        <li>Add a unique meta description to all 10 pages via the existing Yoast install.</li>
+        <li>Replace the placeholder social-share image (currently a leftover theme-demo graphic).</li>
+        <li>Begin entity establishment — claiming the directory and reviews profiles that every competitor already holds is the keystone, and it is part of the engagement scope to execute.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ===== METHODOLOGY ===== -->
+  <section id="method">
+    <div class="sec-title">Methodology · How this report was built</div>
+    <h2 class="sec-h1">The work behind the findings</h2>
+    <p class="sec-sub">This audit was assembled across sequenced research waves. Every claim traces to a primary-evidence source captured directly from the live site, live search results, or the PageSpeed Insights API.</p>
+    <div class="panel">
+      <h3>Coverage at a glance</h3>
+      <div class="grid">
+        <div class="card b"><h3>Pages audited</h3><div class="v">10</div><div class="w">the entire public page-sitemap — every indexable URL</div></div>
+        <div class="card b"><h3>Internal links mapped</h3><div class="v">51</div><div class="w">in-content relationships, nav/footer chrome stripped</div></div>
+        <div class="card b"><h3>Live SERPs verified</h3><div class="v">20+</div><div class="w">brand, commercial, entity &amp; comparison queries</div></div>
+        <div class="card b"><h3>CWV measured</h3><div class="v">4</div><div class="w">representative URLs via PageSpeed Insights (mobile)</div></div>
+        <div class="card b"><h3>Competitors benchmarked</h3><div class="v">5</div><div class="w">SERP-confirmed SEO / AEO agencies</div></div>
+        <div class="card b"><h3>Supporting documents</h3><div class="v">8</div><div class="w">primary-evidence companion files behind this report</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>The sequenced research waves</h3>
+      <table class="kv">
+        <tr><th>Wave</th><th>Scope</th><th>What was measured</th></tr>
+        <tr><td class="r">1 · Foundation</td><td>Home + 7 top URLs</td><td>Titles, meta, canonicals, headings, JSON-LD, images, word counts, links, bot-access matrix, redirect chain</td></tr>
+        <tr><td class="r">2 · Crawl</td><td>All 10 sitemap URLs + live AI baseline</td><td>Per-page audit; brand/commercial/entity SERP capture; reviews &amp; directory presence</td></tr>
+        <tr><td class="r">3 · Strategic</td><td>Link graph · uniqueness · SXO · FLOW</td><td>Directed internal-link graph, 404 sweep, pairwise Jaccard similarity, page-type fit</td></tr>
+        <tr><td class="r">4 · Verification</td><td>Live SERP · measurement</td><td>PageSpeed Insights CWV, image-weight audit, Wayback, Common Crawl, intent-gap verification</td></tr>
+        <tr><td class="r">5 · Competitive</td><td>Benchmark · technical finisher</td><td>Schema/trust/word-count parity vs 5 competitors; security headers; OG; sitemap; anchors</td></tr>
+        <tr><td class="r">6 · Deep dives</td><td>Not run this pass</td><td>Forensic competitor-blueprint / boilerplate / legal / plugin-vuln layer deferred (see Limits)</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Supporting evidence</h3>
+      <p>This report is the consolidated executive layer. It is backed by <b>8 supporting documents</b> holding the primary evidence — the page-by-page inventory, the internal link graph, the live AI-citation baseline, the competitor benchmark, the FLOW outreach research, the measurement/CWV capture, the technical surface finisher, and the strategic synthesis. The detailed remediation work those documents inform is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <!-- ===== SCORECARD ===== -->
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <h2 class="sec-h1">Where the site stands</h2>
+    <p class="sec-sub">Each lens scored independently from primary evidence. Performance is now measured (not held) following a live PageSpeed Insights run.</p>
+    <div class="grid">
+      <div class="card a"><h3>Technical SEO</h3><div class="v">60</div><div class="w">Broken home nav, orphan flagship, missing security headers</div><div class="bar"><i style="width:60%"></i></div></div>
+      <div class="card a"><h3>Content Quality</h3><div class="v">55</div><div class="w">Thin, templated service cluster; no content engine</div><div class="bar"><i style="width:55%"></i></div></div>
+      <div class="card a"><h3>On-Page SEO</h3><div class="v">52</div><div class="w">Zero meta descriptions; no H2 layer on money pages</div><div class="bar"><i style="width:52%"></i></div></div>
+      <div class="card r"><h3>Schema</h3><div class="v">40</div><div class="w">Yoast defaults only — no Organization / Service / FAQ</div><div class="bar"><i style="width:40%"></i></div></div>
+      <div class="card r"><h3>Performance</h3><div class="v">46</div><div class="w">Measured: LCP 7–11s (Poor) on every page</div><div class="bar"><i style="width:46%"></i></div></div>
+      <div class="card r"><h3>AI Search (GEO)</h3><div class="v">30</div><div class="w">No entity footprint, no schema, no answer blocks</div><div class="bar"><i style="width:30%"></i></div></div>
+      <div class="card g"><h3>Images</h3><div class="v">75</div><div class="w">Heavy PNGs / no WebP, but alt coverage is complete</div><div class="bar"><i style="width:75%"></i></div></div>
+    </div>
+    <div class="panel">
+      <h4>Weighted composite</h4>
+      <table class="kv">
+        <tr><th>Lens</th><th class="r">Score</th><th class="r">Weight</th><th class="r">Contribution</th></tr>
+        <tr><td>Technical SEO</td><td class="r">60</td><td class="r">22%</td><td class="r">13.2</td></tr>
+        <tr><td>Content Quality</td><td class="r">55</td><td class="r">23%</td><td class="r">12.7</td></tr>
+        <tr><td>On-Page SEO</td><td class="r">52</td><td class="r">20%</td><td class="r">10.4</td></tr>
+        <tr><td>Schema</td><td class="r">40</td><td class="r">10%</td><td class="r">4.0</td></tr>
+        <tr><td>Performance</td><td class="r">46</td><td class="r">10%</td><td class="r">4.6</td></tr>
+        <tr><td>AI Search (GEO)</td><td class="r">30</td><td class="r">10%</td><td class="r">3.0</td></tr>
+        <tr><td>Images</td><td class="r">75</td><td class="r">5%</td><td class="r">3.8</td></tr>
+        <tr><td><b>Overall</b></td><td class="r"><b>52</b></td><td class="r">100%</td><td class="r"><b>C− · Moderate</b></td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== START HERE ===== -->
+  <section id="convergent">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <h2 class="sec-h1">It looks finished. Structurally, it is still launch day.</h2>
+    <p class="sec-sub">Flagged independently by the link graph, the schema lens, the AI baseline, and the competitor benchmark.</p>
+    <div class="callout danger">
+      <div class="tag">● The convergent finding</div>
+      <h3>Velvet Visibility Labs presents as an established agency but is, underneath, a five-week-old Crafto theme demo that was published before its foundation was built.</h3>
+      <p>Four independent lenses converge on the same root cause. The link graph finds the homepage's service cards pointing 16 times to a leftover demo URL that 404s. The schema lens finds only Yoast's default markup — none of the Organization / Service / FAQ entities an AEO agency lives or dies by. The AI-citation baseline finds the brand in no external index at all: no directory, no reviews platform, no mention. The competitor benchmark finds every rival shipping exactly the entity signals this site lacks. The site is not underperforming established authority — it has not yet built any. That reframes the work: this is a <b>launch checklist</b>, executed in order, not a turnaround. The good news is that almost every gap here is a known, finite, fixable foundation task — and sequencing them correctly is precisely the engagement scope.</p>
+    </div>
+  </section>
+
+  <!-- ===== CRITICAL FINDINGS ===== -->
+  <section id="critical">
+    <div class="sec-title">Critical Findings · Top 6</div>
+    <h2 class="sec-h1">Fix before everything else</h2>
+    <p class="sec-sub">Each finding includes the on-site evidence, the recommended direction, an effort estimate, and the lens(es) that flagged it.</p>
+
+    <div class="panel">
+      <div class="tag crit">Critical 01 · Technical / Link graph</div>
+      <h3>The homepage's service navigation links 16 times to a 404</h3>
+      <p>Every primary service card on the homepage links to <code>velvetvisibilitylabs.com/services-details/</code> — a leftover Crafto theme-demo URL that returns HTTP 404. It is the single most-linked internal target on the site (16 in-content links) and it is dead.</p>
+      <table class="kv">
+        <tr><th>Target</th><th class="r">In-content links</th><th class="r">Status</th></tr>
+        <tr><td><code>/services-details/</code></td><td class="r">16</td><td class="r bad">404</td></tr>
+        <tr><td>real service pages (each)</td><td class="r">5</td><td class="r ok">200</td></tr>
+      </table>
+      <p>A prospect who clicks "SEO audit" or any service tile on the homepage of an SEO agency lands on a broken page. Internal link equity is funnelled into a dead end, and keyword-bearing anchor text ("seo audit", etc.) is spent on a 404.</p>
+      <div class="fix"><b>Direction —</b> repoint every homepage service card to its real service URL and retire the demo route with an appropriate redirect. Mapping each card to the correct destination and handling the redirect cleanly is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Low</span><span><b>Impact:</b> Very high</span><span><b>Flagged by:</b> Technical, Link Graph, SXO</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Full internal inbound-link table (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>Directed graph from <code>&lt;a href&gt;</code> extraction across all 10 pages, nav/footer chrome stripped: 51 in-content link relationships resolving to 11 unique internal targets.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Target</th><th class="r">In-content inbound</th><th class="r">Status</th></tr>
+            <tr><td><code>/services-details/</code></td><td class="r">16</td><td class="r bad">404 (dead demo URL)</td></tr>
+            <tr><td><code>/cdn-cgi/l/email-protection/</code></td><td class="r">6</td><td class="r warn">404 to non-JS agents</td></tr>
+            <tr><td><code>/home/local-seo-google-business-profile/</code></td><td class="r">5</td><td class="r ok">200</td></tr>
+            <tr><td><code>/home/off-page-seo/</code></td><td class="r">5</td><td class="r ok">200</td></tr>
+            <tr><td><code>/home/on-page-seo/</code></td><td class="r">5</td><td class="r ok">200</td></tr>
+            <tr><td><code>/home/seo-audit/</code></td><td class="r">5</td><td class="r ok">200</td></tr>
+            <tr><td><code>/home/technical-seo/</code></td><td class="r">5</td><td class="r ok">200</td></tr>
+            <tr><td><code>/who-we-are/</code></td><td class="r">1</td><td class="r ok">200</td></tr>
+            <tr><td><code>/services/</code></td><td class="r">1</td><td class="r ok">200</td></tr>
+            <tr><td><code>/aeo-ai-search/</code></td><td class="r">0</td><td class="r bad">200 but orphaned</td></tr>
+          </table></div>
+          <p>Source: internal link-graph supporting document.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">Critical 02 · On-Page</div>
+      <h3>Not one page on the site has a meta description</h3>
+      <p>None of the 10 pages emits a <code>meta name="description"</code> tag. Yoast SEO is installed but its description templates are unconfigured, so Google synthesises snippets from arbitrary on-page text and the brand controls none of its own search-result messaging.</p>
+      <table class="kv">
+        <tr><th>Pages checked</th><th class="r">With meta description</th></tr>
+        <tr><td>10 (entire site)</td><td class="r bad">0</td></tr>
+      </table>
+      <div class="fix"><b>Direction —</b> author a unique, intent-matched description for every page through the existing Yoast fields. Writing the descriptions to the right length and search intent is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Low</span><span><b>Impact:</b> High</span><span><b>Flagged by:</b> On-Page</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">Critical 03 · Schema</div>
+      <h3>An AEO agency that ships none of the schema AI engines read</h3>
+      <p>Every page carries only Yoast's defaults — WebPage, WebSite, BreadcrumbList, SearchAction (plus ImageObject on some). There is <b>no Organization, no Service, no FAQPage, no ProfessionalService, no Person, and no Review / AggregateRating</b> anywhere on the site. The product this company sells is answer-engine optimization — and its own markup gives answer engines nothing structured to extract or attribute.</p>
+      <table class="kv">
+        <tr><th>Schema type</th><th class="r">Present</th><th>Why it matters here</th></tr>
+        <tr><td>Organization</td><td class="r bad">No</td><td>Core entity every competitor ships</td></tr>
+        <tr><td>Service</td><td class="r bad">No</td><td>Defines the 6 service offerings to engines</td></tr>
+        <tr><td>FAQPage</td><td class="r bad">No</td><td>Primary AI-Overview citation surface</td></tr>
+        <tr><td>Review / AggregateRating</td><td class="r bad">No</td><td>The "4.8 stars" claim is unstructured prose</td></tr>
+      </table>
+      <div class="fix"><b>Direction —</b> deploy a cross-linked entity graph (Organization + Service + FAQPage at minimum), with reviews expressed as AggregateRating only once corroborated. Authoring and validating the JSON-LD graph is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> Very high</span><span><b>Flagged by:</b> Schema, GEO, Competitor</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Schema gap matrix — VVL vs 5 competitors (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>JSON-LD <code>@type</code> values extracted from each live homepage/service page on 2026-06-02. VVL ships the thinnest schema of all six sites.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Schema type</th><th class="c">VVL</th><th class="c">Victorious</th><th class="c">NoGood</th><th class="c">(un)Common Logic</th><th class="c">Alev</th><th class="c">Elsner</th></tr>
+            <tr><td>WebPage / WebSite / Breadcrumb</td><td class="c ok">✓</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td></tr>
+            <tr><td><b>Organization</b></td><td class="c bad">✗</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c ok">✓</td></tr>
+            <tr><td><b>Service / ProfessionalService</b></td><td class="c bad">✗</td><td class="c">✗</td><td class="c">✗</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c ok">✓</td></tr>
+            <tr><td><b>FAQPage</b></td><td class="c bad">✗</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c">✗</td><td class="c ok">✓</td><td class="c ok">✓</td></tr>
+            <tr><td>LocalBusiness</td><td class="c bad">✗</td><td class="c">✗</td><td class="c">✗</td><td class="c">✗</td><td class="c">✗</td><td class="c ok">✓</td></tr>
+            <tr><td>PostalAddress / ContactPoint</td><td class="c bad">✗</td><td class="c">✗</td><td class="c">✗</td><td class="c ok">✓</td><td class="c ok">✓</td><td class="c ok">✓</td></tr>
+            <tr><td><b>sameAs entity anchors</b></td><td class="c bad">0</td><td class="c">0</td><td class="c">0</td><td class="c ok">38</td><td class="c ok">6</td><td class="c ok">18</td></tr>
+            <tr><td>Telephone in schema</td><td class="c bad">none</td><td class="c">none</td><td class="c">none</td><td class="c ok">yes</td><td class="c ok">yes</td><td class="c ok">yes</td></tr>
+          </table></div>
+          <p>Source: competitor benchmark supporting document. Every competitor ships at least Organization schema; VVL ships only the default Yoast generic output.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">Critical 04 · Link graph</div>
+      <h3>The flagship AEO page is orphaned</h3>
+      <p><code>/aeo-ai-search/</code> — the answer-engine-optimization service that is the brand's entire differentiator — receives <b>zero in-content internal links</b>. It is reachable only from the top nav. The most strategic page on the site is the one the internal architecture ignores.</p>
+      <div class="fix"><b>Direction —</b> route in-content links into the AEO page from the homepage, the services hub, and each related service page. The internal-link plan is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Low</span><span><b>Impact:</b> High</span><span><b>Flagged by:</b> Link Graph, SXO</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">Critical 05 · GEO / AI Search</div>
+      <h3>The brand does not exist in any external index</h3>
+      <p>Across 20+ live queries — brand, commercial, entity, and comparison — Velvet Visibility Labs returns no exact-match external footprint. No Clutch, GoodFirms, DesignRush, Sortlist, or TechBehemoths profile; no Trustpilot; no Wikipedia / Wikidata; no Reddit or Quora threads. The only confirmed off-site signal is a LinkedIn company page. The domain was created <b>24 April 2026</b> — five weeks before this audit.</p>
+      <p>AI answer engines build citations from external signals. With none, ChatGPT, Perplexity, and Google AI Overviews cannot cite this brand even when the query is a perfect match. Compounding it, the homepage claims "4.8 Stars — reviewed by clients across 3 continents" with no link to any platform hosting those reviews.</p>
+      <div class="fix"><b>Direction —</b> entity establishment precedes content: claim the directory and reviews profiles every competitor holds, collect verifiable reviews, and add the schema that lets engines resolve the brand. Sequencing and executing this is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> Very high</span><span><b>Flagged by:</b> GEO, FLOW, Competitor</span></div>
+      <details class="eq"><summary><span class="ico">i</span>External-index presence checked (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>Surfaces checked across 20+ live queries on 2026-06-02 — brand, category, entity, comparison, and reviews intent:</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Surface</th><th class="c">VVL present?</th></tr>
+            <tr><td>Clutch.co</td><td class="c bad">No</td></tr>
+            <tr><td>GoodFirms</td><td class="c bad">No</td></tr>
+            <tr><td>DesignRush</td><td class="c bad">No</td></tr>
+            <tr><td>Sortlist</td><td class="c bad">No</td></tr>
+            <tr><td>TechBehemoths</td><td class="c bad">No</td></tr>
+            <tr><td>G2 / Trustpilot</td><td class="c bad">No</td></tr>
+            <tr><td>Wikipedia / Wikidata</td><td class="c bad">No</td></tr>
+            <tr><td>Reddit / Quora threads</td><td class="c bad">No</td></tr>
+            <tr><td>AI Overview (any commercial query)</td><td class="c bad">Not present</td></tr>
+            <tr><td>LinkedIn company page</td><td class="c ok">Yes (only confirmed off-site signal)</td></tr>
+          </table></div>
+          <p>Domain WHOIS creation date: <b>24 April 2026</b>. No Wayback Machine snapshots exist for any year — consistent with a five-week-old domain. The homepage "4.8 Stars — reviewed by clients across 3 continents" claim links to no external platform. Source: live AI-citation baseline + FLOW supporting documents.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="tag crit">Critical 06 · Performance</div>
+      <h3>Mobile LCP is 7–11 seconds on every page</h3>
+      <p>A live PageSpeed Insights run (mobile) puts Largest Contentful Paint firmly in the "Poor" band on all four representative URLs, with the homepage at 11.0 s. No CrUX field dataset exists yet (insufficient traffic on a five-week domain), so these are lab figures — but the gap to the 2.5 s "Good" threshold is enormous.</p>
+      <table class="kv">
+        <tr><th>URL</th><th class="r">Perf</th><th class="r">LCP</th><th class="r">Page weight</th></tr>
+        <tr><td>/ (home)</td><td class="r">52</td><td class="r bad">11.0 s</td><td class="r">1,761 KiB</td></tr>
+        <tr><td>/aeo-ai-search/</td><td class="r">39</td><td class="r bad">7.7 s</td><td class="r">1,031 KiB</td></tr>
+        <tr><td>/services/</td><td class="r">63</td><td class="r bad">7.2 s</td><td class="r">938 KiB</td></tr>
+        <tr><td>/home/seo-audit/</td><td class="r">59</td><td class="r bad">8.3 s</td><td class="r">1,909 KiB</td></tr>
+      </table>
+      <p>Root causes point to unoptimised 1 MB+ PNG hero images as the LCP element, the Crafto/Elementor CSS/JS payload, and the absence of edge full-page caching. All recoverable.</p>
+      <div class="fix"><b>Direction —</b> convert content images to next-gen formats, right-size the LCP image, and address render-blocking payload and caching. The specific optimisation plan is part of the engagement scope.</div>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> High</span><span><b>Flagged by:</b> Performance, Images</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Full PageSpeed Insights metrics — mobile, 2026-06-02 (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>Live PSI v5 (mobile, Lighthouse lab). CrUX field dataset absent on every URL — insufficient traffic on a five-week domain — so these are lab figures.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>URL</th><th class="r">Perf</th><th class="r">LCP</th><th class="r">TBT</th><th class="r">CLS</th><th class="r">FCP</th><th class="r">Speed Index</th><th class="r">TTFB</th><th class="r">Weight</th></tr>
+            <tr><td>/ (home)</td><td class="r">52</td><td class="r bad">11.0 s</td><td class="r ok">0 ms</td><td class="r warn">0.171</td><td class="r">3.8 s</td><td class="r">9.3 s</td><td class="r">980 ms</td><td class="r">1,761 KiB</td></tr>
+            <tr><td>/aeo-ai-search/</td><td class="r">39</td><td class="r bad">7.7 s</td><td class="r bad">790 ms</td><td class="r ok">0.012</td><td class="r">4.7 s</td><td class="r">9.3 s</td><td class="r">590 ms</td><td class="r">1,031 KiB</td></tr>
+            <tr><td>/services/</td><td class="r">63</td><td class="r bad">7.2 s</td><td class="r ok">0 ms</td><td class="r ok">0.011</td><td class="r">3.9 s</td><td class="r">6.5 s</td><td class="r">680 ms</td><td class="r">938 KiB</td></tr>
+            <tr><td>/home/seo-audit/</td><td class="r">59</td><td class="r bad">8.3 s</td><td class="r ok">0 ms</td><td class="r ok">0.011</td><td class="r">4.7 s</td><td class="r">7.5 s</td><td class="r">690 ms</td><td class="r">1,909 KiB</td></tr>
+          </table></div>
+          <p>TTFB (590–980 ms) is acceptable — the bottleneck is render and image weight, not the server. LCP is Poor (&gt;4 s) on every page. Source: measurement-gaps supporting document.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== COMPETITOR ===== -->
+  <section id="competitor">
+    <div class="sec-title">Competitor Benchmark · Where VVL stands vs the SERP winners</div>
+    <h2 class="sec-h1">Every competitor is a verifiable entity. VVL is not one yet.</h2>
+    <div class="panel">
+      <div class="tag note">5 SERP-confirmed competitors</div>
+      <p>The benchmark compared Velvet Visibility Labs against agencies that actually appear for its target queries. The pattern is consistent: competitors ship the entity and proof signals VVL lacks, and three of four money keywords are won by listicles and directories rather than agency service pages — so being a <i>listed, verifiable entity</i> is the price of entry before any service page can compete.</p>
+      <table class="kv">
+        <tr><th>Signal</th><th class="c">VVL</th><th class="c">Typical competitor</th><th class="c">Pattern-match: Victorious (AEO page)</th></tr>
+        <tr><td>Organization schema</td><td class="c bad">No</td><td class="c ok">Yes</td><td class="c ok">Yes</td></tr>
+        <tr><td>sameAs profiles</td><td class="c bad">0</td><td class="c ok">many (e.g. 38)</td><td class="c ok">Yes</td></tr>
+        <tr><td>Reviews platform (Clutch/G2)</td><td class="c bad">None</td><td class="c ok">Listed</td><td class="c ok">119 Clutch reviews</td></tr>
+        <tr><td>AEO page word count</td><td class="c bad">281</td><td class="c">1,500–5,000</td><td class="c ok">5,133</td></tr>
+        <tr><td>H2 sections on AEO page</td><td class="c bad">0</td><td class="c">many</td><td class="c ok">55</td></tr>
+        <tr><td>FAQPage schema</td><td class="c bad">No</td><td class="c ok">Common</td><td class="c ok">Yes</td></tr>
+        <tr><td>Named case studies</td><td class="c bad">0</td><td class="c ok">Several</td><td class="c ok">3 (quantified AI-citation outcomes)</td></tr>
+      </table>
+      <h4>The fastest winnable keyword</h4>
+      <p>One money keyword bucks the listicle pattern: <b>"SEO audit service"</b> — agency service pages hold 8 of 10 SERP positions, and VVL already owns <code>/home/seo-audit/</code>. Bringing that page to parity (meta description, Service + FAQPage schema, and real process depth) is the most direct path to a first organic ranking. The pattern-match target for the flagship AEO page is <b>Victorious</b>'s answer-engine-optimization page. Building those pages to competitive depth is part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Biggest gap:</b> entity + proof, not keyword targeting</span><span><b>Source:</b> competitor benchmark (supporting document)</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Full benchmark — 5 named competitors (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>All data first-hand from <code>curl</code> fetches on 2026-06-02. Competitors confirmed in live top-10 SERPs for "AEO agency", "answer engine optimization services", and "AI search optimization agency".</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Metric</th><th class="r">VVL</th><th class="r">Victorious</th><th class="r">NoGood</th><th class="r">(un)Common Logic</th><th class="r">Alev</th><th class="r">Elsner</th></tr>
+            <tr><td>Homepage word count</td><td class="r bad">729</td><td class="r">4,179</td><td class="r">2,288</td><td class="r">933</td><td class="r">3,951</td><td class="r">2,678</td></tr>
+            <tr><td>AEO/service page words</td><td class="r bad">271</td><td class="r">5,133</td><td class="r">1,844</td><td class="r">2,752</td><td class="r">3,349</td><td class="r">3,514</td></tr>
+            <tr><td>AEO page H2 count</td><td class="r bad">0</td><td class="r">55</td><td class="r">12</td><td class="r">25</td><td class="r">16</td><td class="r">12</td></tr>
+            <tr><td>Meta description</td><td class="r bad">missing</td><td class="r">present</td><td class="r">present</td><td class="r">present</td><td class="r">present</td><td class="r">present</td></tr>
+            <tr><td>Organization schema</td><td class="r bad">no</td><td class="r">yes</td><td class="r">yes</td><td class="r">yes</td><td class="r">yes</td><td class="r">yes</td></tr>
+            <tr><td>sameAs anchors</td><td class="r bad">0</td><td class="r">0</td><td class="r">0</td><td class="r">38</td><td class="r">6</td><td class="r">18</td></tr>
+            <tr><td>Clutch presence</td><td class="r bad">no</td><td class="r">119 reviews</td><td class="r">no</td><td class="r">yes</td><td class="r">yes</td><td class="r">yes</td></tr>
+            <tr><td>Named case studies</td><td class="r bad">0</td><td class="r">3 (quantified)</td><td class="r">no</td><td class="r">yes</td><td class="r">ref.</td><td class="r">ref.</td></tr>
+          </table></div>
+          <h4 style="font-size:14px;margin-top:16px">Live SERP page-type by money keyword</h4>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Keyword</th><th>Dominant top-10 type</th><th>VVL fit</th></tr>
+            <tr><td>"answer engine optimization services"</td><td>Listicle/roundup (8/10)</td><td class="bad">Wrong vehicle — need directory inclusion</td></tr>
+            <tr><td>"AEO agency"</td><td>Listicle (5) + agency pages (3)</td><td class="warn">Entity-strong agency pages only</td></tr>
+            <tr><td>"technical SEO services"</td><td>Listicle (7) + directory (3)</td><td class="bad">No agency page in top 10</td></tr>
+            <tr><td>"SEO audit service"</td><td>Agency service pages (8/10)</td><td class="ok">Format-fit — VVL owns the page</td></tr>
+          </table></div>
+          <p>Easy wins where VVL already matches or leads: a sharp differentiated H1, WebP image serving, srcset present, and a clear India/Vietnam/US multi-geo positioning none of the five competitors target. Source: competitor benchmark supporting document.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===== HIGH FINDINGS ===== -->
+  <section id="high">
+    <div class="sec-title">High Findings · Next Tier</div>
+    <h2 class="sec-h1">Fix in the first month</h2>
+
+    <div class="panel">
+      <div class="tag high">High 01 · Conversion</div>
+      <h3>The contact email link is broken</h3>
+      <p>On <code>/contact/</code> and <code>/aeo-ai-search/</code> the email link is coded as a web address (<code>https://info@velvetvisibilitylabs.com</code>) instead of an email link (<code>mailto:</code>). Clicking it attempts to load a host that does not exist — on the very page whose job is lead capture. <b>Direction —</b> correct the link type; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Trivial</span><span><b>Impact:</b> High (direct conversion)</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 02 · Content</div>
+      <h3>Service pages are thin and near-duplicate of each other</h3>
+      <p>The five <code>/home/*</code> service pages run 338–359 words each, with pairwise text-similarity of 0.29–0.35 and per-page uniqueness of 48–53%. They share a common scaffold with the service noun swapped — thin for any single query and a cannibalisation risk across the cluster. The flagship AEO page is thinner still at 281 words. <b>Direction —</b> expand and genuinely differentiate each service page; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> High</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Pairwise uniqueness matrix — service cluster (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>Pairwise Jaccard 8-gram shingle similarity across the five <code>/home/*</code> service pages (chrome stripped). Higher J = more shared text.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Page pair</th><th class="r">Jaccard</th></tr>
+            <tr><td>off-page ⟷ technical</td><td class="r warn">0.350</td></tr>
+            <tr><td>local ⟷ technical</td><td class="r warn">0.326</td></tr>
+            <tr><td>on-page ⟷ technical</td><td class="r warn">0.317</td></tr>
+            <tr><td>local ⟷ off-page</td><td class="r warn">0.295</td></tr>
+            <tr><td>local ⟷ on-page</td><td class="r warn">0.295</td></tr>
+            <tr><td>off-page ⟷ on-page</td><td class="r warn">0.286</td></tr>
+          </table></div>
+          <p>Per-page uniqueness: technical-SEO 48% · off-page 52% · on-page 52% · local 53% · seo-audit 75%. Below the 0.5 near-duplicate alarm threshold, but high enough to confirm a shared scaffold with the service noun swapped. Source: programmatic uniqueness pass.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 03 · Trust / Verification</div>
+      <h3>Headline trust claims have no external corroboration</h3>
+      <p>The homepage states "4.8 Stars — reviewed by clients across 3 continents," "Trusted by … India, Vietnam, and the US," and "19.58% Profit by sales," and names client testimonials (Chau Luong, James Whitfield, Sofia Reyes). None is expressed as Review schema, and none is corroborated on any external platform. On a five-week-old domain these read as aspirational and are a credibility risk if a prospect or an AI engine tries to verify them. <b>Direction —</b> convert claimed reviews into verifiable platform reviews and structured data, pending owner confirmation. Part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> High</span><span><b>Owner verification required</b></span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 04 · Images / Performance</div>
+      <h3>Heavy unoptimised images and 94 leftover theme-demo graphics</h3>
+      <p>Five content images exceed 1 MB (AI-generated hero PNGs up to 1.59 MB; <code>SEO-Audit.png</code> 1.13 MB; <code>technical-seo.png</code> 1.19 MB), and WebP is not served under content negotiation. Separately, the pages still reference <b>94</b> Crafto <code>demo-*</code> placeholder graphics — the purchased theme's stock art, not brand assets. <b>Direction —</b> convert to next-gen formats and replace demo art with brand imagery; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> Medium-High</span></div>
+      <details class="eq"><summary><span class="ico">i</span>Image weight sample &amp; history checks (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>HEAD-request Content-Type + Content-Length on referenced uploads. WebP not served under <code>Accept: image/webp</code> for the PNGs.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Image</th><th class="r">Type</th><th class="r">Bytes</th></tr>
+            <tr><td>ChatGPT-Image-…-11_23_00-AM.png</td><td class="r">image/png</td><td class="r bad">1,589,523</td></tr>
+            <tr><td>technical-seo.png</td><td class="r">image/png</td><td class="r bad">1,187,138</td></tr>
+            <tr><td>SEO-Audit.png</td><td class="r">image/png</td><td class="r bad">1,128,032</td></tr>
+            <tr><td>ChatGPT-Image-…-11_45_42-AM.png</td><td class="r">image/png</td><td class="r bad">1,118,404</td></tr>
+            <tr><td>ChatGPT-Image-…-11_35_14-AM.png</td><td class="r">image/png</td><td class="r bad">1,062,340</td></tr>
+            <tr><td>Velvet-Logo-…webp</td><td class="r">image/webp</td><td class="r warn">84,852</td></tr>
+            <tr><td>demo-modern-business-elements-01.png</td><td class="r">image/png</td><td class="r">9,159</td></tr>
+          </table></div>
+          <p>Five content PNGs exceed 1 MB; addressable savings on the order of 70–85% per file as WebP. The pages reference <b>94</b> Crafto <code>demo-*</code> placeholder graphics. Alt coverage is complete (0 missing, 0 empty).</p>
+          <p><b>History checks:</b> Wayback Machine — no snapshots for 2018/2020/2022/2024 (domain is five weeks old). Common Crawl CDX (CC-MAIN-2025-08) — endpoint returned 504; no referring-host count obtained. Paid backlink data flagged in Limits.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 05 · On-Page</div>
+      <h3>Money pages have no H2 section layer</h3>
+      <p>Every money page — <code>/aeo-ai-search/</code>, <code>/services/</code>, and all five <code>/home/*</code> service pages — has exactly zero H2 headings; structure jumps H1 → H3. There is no semantic section layer for crawlers or AI extraction, and no extractable answer passages. <b>Direction —</b> introduce a real H2 structure with answer-shaped sections; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Low-Medium</span><span><b>Impact:</b> Medium-High</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 06 · SXO</div>
+      <h3>Page type does not match what the commercial SERPs reward</h3>
+      <p>For three of four money keywords ("answer engine optimization services", "AEO agency", "technical SEO services") the SERP is dominated by listicles and directories, not agency service pages. VVL ships thin service pages into SERPs that reward roundups and verified-directory presence — so the page type cannot win until the brand is a listed entity. <b>Direction —</b> pursue directory/roundup inclusion in parallel with page depth; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> High</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 07 · GEO</div>
+      <h3>No llms.txt and no extractable answer blocks</h3>
+      <p><code>/llms.txt</code> returns 404, and no money page carries a self-contained 130–170-word answer block of the kind AI engines lift. For a brand selling AI-search optimization, these are conspicuous omissions in its own house. <b>Direction —</b> publish an llms.txt and add answer-shaped passages to money pages; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Low-Medium</span><span><b>Impact:</b> Medium</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag high">High 08 · Technical hygiene</div>
+      <h3>Weak security headers and a leaked stack version</h3>
+      <p>The site sends no HSTS, no X-Frame-Options, no X-Content-Type-Options, and no Referrer-Policy, while exposing <code>X-Powered-By: PHP/8.3.30</code>. None is a direct ranking factor, but for an agency selling technical SEO they are table-stakes hygiene a prospect may inspect. <b>Direction —</b> add the standard security header set and suppress the version banner; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Low</span><span><b>Impact:</b> Low-Medium (credibility)</span></div>
+    </div>
+  </section>
+
+  <!-- ===== MEDIUM FINDINGS ===== -->
+  <section id="medium">
+    <div class="sec-title">Medium Findings · Cleanup Tier</div>
+    <h2 class="sec-h1">Fix alongside the foundation work</h2>
+    <p class="sec-sub">Lower-severity defects worth correcting while the structural work is open. None blocks ranking on its own; together they sharpen the technical and social surface.</p>
+
+    <div class="panel">
+      <div class="tag note">Medium 01 · Technical / URL architecture</div>
+      <h3>Service pages are nested under a redirecting <code>/home/</code> parent</h3>
+      <p>The five service pages live at <code>/home/on-page-seo/</code>, <code>/home/technical-seo/</code>, and so on — parented to a <code>/home/</code> page that itself 301-redirects to the root. The URLs resolve, but the nesting is an Elementor/Crafto page-hierarchy artifact: it buries services one level deeper than the flat <code>/services/</code> hub implies, and the redirecting parent is a structural smell that signals templated-demo origin. <b>Direction —</b> flatten or justify the service URL structure as part of a deliberate information architecture; the URL plan and any redirects are part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Medium</span><span><b>Impact:</b> Low-Medium</span><span><b>Flagged by:</b> Technical, Link Graph</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">Medium 02 · Technical / Redirects</div>
+      <h3>The www-over-HTTP path takes two hops to the canonical host</h3>
+      <p>Apex and HTTPS normalisation are clean, but a request to <code>http://www.velvetvisibilitylabs.com/</code> resolves through two 301s (to <code>https://www</code>, then to the apex host) rather than one. It is minor — a single redundant hop on one entry path — but it is free latency and a small crawl-efficiency cost that a one-line server rule removes. <b>Direction —</b> collapse the www-HTTP path to a single hop to the canonical host; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Trivial</span><span><b>Impact:</b> Low</span><span><b>Flagged by:</b> Technical</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="tag note">Medium 03 · Social / Open Graph</div>
+      <h3>Two key pages have no social-share image</h3>
+      <p>Beyond the homepage's placeholder share image (a leftover theme-demo graphic, noted in Phase 1), the flagship <code>/aeo-ai-search/</code> page and the <code>/services/</code> hub emit <b>no <code>og:image</code> at all</b>. When either is shared on social or surfaced by an engine that renders a preview, there is no controlled image — a weak first impression for the two pages most likely to be linked. <b>Direction —</b> add correctly-sized Open Graph images to every money page; part of the engagement scope.</p>
+      <div class="effort-row"><span><b>Effort:</b> Low</span><span><b>Impact:</b> Low-Medium</span><span><b>Flagged by:</b> Technical, On-Page</span></div>
+    </div>
+  </section>
+
+  <!-- ===== DEEP DIVES ===== -->
+  <section id="technical">
+    <div class="sec-title">Deep Dive · Technical SEO</div>
+    <h2 class="sec-h1">Clean plumbing, broken wiring</h2>
+    <div class="panel">
+      <p>The fundamentals are sound: HTTPS is enforced, apex and www normalise to a single canonical host, self-canonicals are correct on all 10 pages, robots.txt allows crawling and declares the sitemap, and the Yoast sitemap index is valid. The <code>www</code>-over-HTTP path takes two hops to reach the canonical host — minor. Where it breaks is internal wiring: the <code>/services-details/</code> 404 hub (Critical 01), the orphaned flagship (Critical 04), a malformed email link (High 01), and the Cloudflare email-protection endpoint that 404s for non-JS agents. Security headers are largely absent and the PHP version is exposed (High 08). The service pages are also nested under a <code>/home/</code> parent that itself redirects to the root — an Elementor/Crafto artifact that buries services a level deeper than the flat <code>/services/</code> hub implies. Full evidence is in the technical surface finisher and link-graph supporting documents; the remediation sequence is part of the engagement scope.</p>
+      <details class="eq"><summary><span class="ico">i</span>Security headers &amp; crawler-access matrix (evidence)<span class="chev">▾</span></summary>
+        <div class="eq-body">
+          <p>Response headers on the homepage, 2026-06-02. Score ≈ 2/8.</p>
+          <div class="eq-scroll"><table class="kv">
+            <tr><th>Header</th><th class="c">Present</th><th>Note</th></tr>
+            <tr><td>Strict-Transport-Security</td><td class="c bad">✗</td><td>no HSTS</td></tr>
+            <tr><td>Content-Security-Policy</td><td class="c warn">partial</td><td>only <code>upgrade-insecure-requests</code></td></tr>
+            <tr><td>X-Frame-Options</td><td class="c bad">✗</td><td>clickjacking exposure</td></tr>
+            <tr><td>X-Content-Type-Options</td><td class="c bad">✗</td><td>MIME-sniffing</td></tr>
+            <tr><td>Referrer-Policy</td><td class="c bad">✗</td><td>absent</td></tr>
+            <tr><td>Permissions-Policy</td><td class="c ok">✓</td><td>present (Private State Token scope)</td></tr>
+            <tr><td>X-Powered-By</td><td class="c bad">leak</td><td><code>PHP/8.3.30</code> exposed</td></tr>
+            <tr><td>cf-cache-status</td><td class="c warn">DYNAMIC</td><td>homepage not edge-cached</td></tr>
+          </table></div>
+          <p><b>Crawler access (home):</b> Googlebot, Bingbot, GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot all return 200 — nothing blocked. Accessibility is not the GEO problem; extractability and entity footprint are. Source: technical surface finisher supporting document.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="content">
+    <div class="sec-title">Deep Dive · Content &amp; E-E-A-T</div>
+    <h2 class="sec-h1">Thin everywhere, with no content engine</h2>
+    <div class="panel">
+      <p>There is no blog (the post-sitemap is empty) and no portfolio or team post-type — so the entire content surface is 10 brochure pages. Word counts are low across the board: home 755, services 493, the five service pages 338–359, the flagship AEO page 281, contact 215. The five service pages share roughly half their text as a common template. There is no author identity, no case-study depth, and no E-E-A-T scaffolding (no named team with credentials, no Person schema, no first-party data). For a discipline where depth and demonstrated experience are the ranking currency, this is the lens with the most ground to make up after the entity foundation is set. The page-by-page inventory supporting document holds the per-URL detail; content build-out is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="sec-title">Deep Dive · Schema</div>
+    <h2 class="sec-h1">Default markup, zero entity graph</h2>
+    <div class="panel">
+      <p>Every page ships the same Yoast default set — WebPage, WebSite, BreadcrumbList, SearchAction, and ImageObject on some — and nothing else. There is no Organization to anchor the brand entity, no Service markup on the service pages, no FAQPage to surface in AI Overviews, no Person on the about page, and no Review/AggregateRating despite the prominent "4.8 stars" claim. This is simultaneously the highest-irony gap (an AEO seller with no answer-engine schema) and one of the highest-leverage: a cross-linked entity graph is a finite, one-time build that lifts the Schema, GEO, and Competitor lenses together. Authoring and validating it is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="geo">
+    <div class="sec-title">Deep Dive · GEO / AI Search</div>
+    <h2 class="sec-h1">Crawlable, but invisible to the engines it sells</h2>
+    <div class="panel">
+      <p>Accessibility is not the problem — every AI crawler (GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot) returns 200. <i>Extractability</i> and <i>existence</i> are. There is no schema for engines to parse, no llms.txt, no answer-shaped passages to lift, and — most decisively — no external entity footprint for an engine to cite (Critical 05). The brand is absent from AI Overviews and from every directory and reviews platform checked. The honest read for a five-week-old domain: AI visibility is downstream of entity establishment, and entity establishment must come first. The live AI-citation baseline supporting document is the before-snapshot a future quarterly review will measure against; building the footprint is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="perf">
+    <div class="sec-title">Deep Dive · Performance &amp; Images</div>
+    <h2 class="sec-h1">Poor LCP, recoverable causes</h2>
+    <div class="panel">
+      <p>Measured mobile LCP is 7.2–11.0 s across the four URLs tested — firmly Poor, with the homepage worst at 11.0 s. Interactivity is mostly fine (TBT 0 on three of four pages; 790 ms on the AEO page), and CLS is good except a 0.171 on the homepage. TTFB sits at 590–980 ms, so the server is not the bottleneck — render and image weight are. The likely LCP element is an unoptimised 1 MB+ PNG hero; page weight runs 0.9–1.9 MB. No CrUX field dataset exists yet, so these are lab figures, but the gap to "Good" is large enough that the direction is unambiguous. Image alt hygiene is the bright spot (complete coverage), which keeps the Images lens at 75 despite the weight problem. The optimisation plan is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="sxo">
+    <div class="sec-title">Deep Dive · SXO / SERP Intent</div>
+    <h2 class="sec-h1">The right page type only for one keyword</h2>
+    <div class="panel">
+      <p>Reading the money-keyword SERPs backwards: "SEO audit service" rewards agency service pages (8/10 positions) — and VVL owns that page, making it the fastest foothold. The other commercial heads ("AEO agency", "answer engine optimization services", "technical SEO services") are won by listicles and directories, which a thin service page cannot displace without first being a listed entity. Homepage experience scores low on information scent (broken service cards), time-to-confidence (unverifiable claims, no external proof), and conversion friction (broken email link). The strategic-findings supporting document carries the persona scorecards and user stories; the page-type remediation is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="programmatic">
+    <div class="sec-title">Deep Dive · Programmatic Uniqueness</div>
+    <h2 class="sec-h1">A half-templated service cluster</h2>
+    <div class="panel">
+      <p>Pairwise Jaccard 8-gram similarity across the five service pages runs 0.29–0.35, with per-page uniqueness of 48–53% (technical-SEO lowest at 48%). That is below the near-duplicate alarm threshold but high enough to signal a shared scaffold with the service noun swapped — little distinctive substance for any single service query. Differentiating the cluster (unique value propositions, process, proof, and FAQs per service) is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="linkgraph">
+    <div class="sec-title">Deep Dive · Internal Link Graph</div>
+    <h2 class="sec-h1">Equity leaking into a 404</h2>
+    <div class="panel">
+      <p>Across 10 source pages, 51 in-content link relationships resolve to just 11 unique internal targets. The most-linked target is the dead <code>/services-details/</code> demo route (16 links, 404); the flagship <code>/aeo-ai-search/</code> receives zero in-content links. Keyword-bearing anchor text on the homepage is therefore spent pointing at a broken page, while the most strategic page gets no internal authority at all. One coordinated change — repointing the homepage cards and seeding links into the AEO page — addresses both the largest equity leak and the orphan simultaneously. The link-graph supporting document holds the full inbound table and redirect map; the link plan is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <section id="ai-baseline">
+    <div class="sec-title">Deep Dive · Live AI Citation Baseline</div>
+    <h2 class="sec-h1">The before-snapshot: a blank slate</h2>
+    <div class="panel">
+      <p>As of 2 June 2026 the brand returns no exact-match result across brand, category, entity, or comparison queries, and appears in no AI Overview. It holds no Clutch, GoodFirms, DesignRush, Sortlist, TechBehemoths, or Trustpilot profile; no Wikipedia/Wikidata entry; and no Reddit or Quora presence. The single confirmed off-site signal is a LinkedIn company page. This is the expected state for a five-week-old domain — and it is exactly why the roadmap leads with entity establishment. This baseline is the yardstick a future quarterly review will measure progress against. The full per-query capture is in the AI-citation-baseline supporting document.</p>
+    </div>
+  </section>
+
+  <section id="pages">
+    <div class="sec-title">Money-Page Inventory</div>
+    <h2 class="sec-h1">All 10 URLs at a glance</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>URL</th><th>Kind</th><th class="r">Words</th><th class="c">Meta desc</th><th class="c">H1/H2/H3</th><th class="c">Entity schema</th></tr>
+        <tr><td>/</td><td>Home</td><td class="r">755</td><td class="c bad">—</td><td class="c">1/5/1</td><td class="c bad">No</td></tr>
+        <tr><td>/aeo-ai-search/</td><td>Money (flagship)</td><td class="r">281</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/who-we-are/</td><td>About</td><td class="r">536</td><td class="c bad">—</td><td class="c">1/4/1</td><td class="c bad">No</td></tr>
+        <tr><td>/services/</td><td>Hub</td><td class="r">493</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/contact/</td><td>Conversion</td><td class="r">215</td><td class="c bad">—</td><td class="c">1/2/1</td><td class="c bad">No</td></tr>
+        <tr><td>/home/local-seo-google-business-profile/</td><td>Money</td><td class="r">358</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/home/off-page-seo/</td><td>Money</td><td class="r">350</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/home/on-page-seo/</td><td>Money</td><td class="r">348</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/home/seo-audit/</td><td>Money (fastest win)</td><td class="r">359</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+        <tr><td>/home/technical-seo/</td><td>Money</td><td class="r">338</td><td class="c bad">—</td><td class="c">1/0/1</td><td class="c bad">No</td></tr>
+      </table>
+      <p>No blog, portfolio, or team post-types exist on the site, so those deep-dive sections are not applicable to this engagement. The per-URL detail is in the page-inventory supporting document.</p>
+    </div>
+  </section>
+
+  <!-- ===== ROADMAP ===== -->
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap · 21 Actions</div>
+    <h2 class="sec-h1">Sequenced work plan</h2>
+    <p class="sec-sub">Phase 0 gates block dependent work — do not publish changes built on unverified claims. The detailed execution of every action is part of the engagement scope.</p>
+    <div class="plan">
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 0 · Verify (before anything ships)</div>
+        <div class="gs">Confirm the claims the site already makes before building structured data on top of them.</div>
+        <ul class="ol">
+          <li><b>1</b><span>Confirm whether the "4.8 stars / 3 continents" reviews and named testimonials are real and attributable.</span><span class="src">Verify</span></li>
+          <li><b>2</b><span>Confirm canonical NAP (business name, contact, service geographies) for entity and schema use.</span><span class="src">Verify</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--red)"></span>Phase 1 · This week · hygiene fixes</div>
+        <div class="gs">Low-effort, high-impact corrections to stop active damage.</div>
+        <ul class="ol">
+          <li><b>3</b><span>Repoint homepage service cards to real URLs; retire the <code>/services-details/</code> 404.</span><span class="src">Critical 01</span></li>
+          <li><b>4</b><span>Fix the malformed email link on the contact path.</span><span class="src">High 01</span></li>
+          <li><b>5</b><span>Add unique meta descriptions to all 10 pages.</span><span class="src">Critical 02</span></li>
+          <li><b>6</b><span>Replace the placeholder social-share image.</span><span class="src">Technical</span></li>
+          <li><b>7</b><span>Seed in-content links into the orphaned AEO page.</span><span class="src">Critical 04</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--amber)"></span>Phase 2 · Weeks 2–4 · foundation build</div>
+        <div class="gs">The one-time structural work the launch skipped.</div>
+        <ul class="ol">
+          <li><b>8</b><span>Deploy Organization + Service + FAQPage schema graph sitewide.</span><span class="src">Critical 03</span></li>
+          <li><b>9</b><span>Publish llms.txt and add extractable answer blocks to money pages.</span><span class="src">High 07</span></li>
+          <li><b>10</b><span>Add an H2 section layer to every money page.</span><span class="src">High 05</span></li>
+          <li><b>11</b><span>Convert content images to next-gen formats; replace theme-demo art.</span><span class="src">High 04</span></li>
+          <li><b>12</b><span>Add the standard security header set; suppress the version banner.</span><span class="src">High 08</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--green)"></span>Phase 3 · Entity &amp; authority</div>
+        <div class="gs">Make the brand exist in the public index.</div>
+        <ul class="ol">
+          <li><b>13</b><span>Claim Clutch.co and collect verifiable reviews from named clients — the keystone.</span><span class="src">Critical 05 / FLOW</span></li>
+          <li><b>14</b><span>Create GoodFirms + DesignRush + Sortlist profiles; add sameAs.</span><span class="src">GEO / Competitor</span></li>
+          <li><b>15</b><span>Pitch the relevant AEO roundups once reviews exist (Asia-Pacific wedge).</span><span class="src">FLOW</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--blue)"></span>Phase 4 · Content &amp; competitive depth</div>
+        <div class="gs">Convert foundation into rankings and citations.</div>
+        <ul class="ol">
+          <li><b>16</b><span>Bring <code>/home/seo-audit/</code> to parity and win the format-fit keyword first.</span><span class="src">Competitor / SXO</span></li>
+          <li><b>17</b><span>Rebuild <code>/aeo-ai-search/</code> to competitive depth and proof structure.</span><span class="src">Competitor</span></li>
+          <li><b>18</b><span>Publish the first geo/AEO articles; seed LinkedIn + community presence.</span><span class="src">FLOW</span></li>
+        </ul>
+      </div>
+      <div class="group">
+        <div class="gh"><span class="dot" style="background:var(--sub)"></span>Phase 5 · Technical cleanup (anytime)</div>
+        <div class="gs">Low-priority hygiene to fold into the foundation sprint.</div>
+        <ul class="ol">
+          <li><b>19</b><span>Add correctly-sized Open Graph images to the AEO and services pages (and replace the homepage placeholder).</span><span class="src">Medium 03</span></li>
+          <li><b>20</b><span>Collapse the www-over-HTTP path to a single redirect hop.</span><span class="src">Medium 02</span></li>
+          <li><b>21</b><span>Flatten or deliberately justify the <code>/home/</code> service URL nesting.</span><span class="src">Medium 01</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTENT BRIEFS (engagement-scope teaser) ===== -->
+  <section id="content-briefs">
+    <div class="sec-title">Content Briefs &amp; Outreach Kit</div>
+    <h2 class="sec-h1">Headline priorities</h2>
+    <p class="sec-sub">Commercial-intent content priorities and earned-signal outreach channels. Headlines below; full briefs and send-ready copy are part of the engagement scope.</p>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Priority piece</th><th>Why it wins for a new agency</th></tr>
+        <tr><td>"AEO vs SEO for service businesses in India / Vietnam"</td><td>Geo+industry modifier clears DA-60+ incumbents; AI-Overview citation candidate</td></tr>
+        <tr><td>"How to optimise a Google Business Profile for an agency"</td><td>Service-type specificity opens an otherwise-saturated head term</td></tr>
+        <tr><td>"Do I need an SEO audit — signs &amp; checklist" (SMB framing)</td><td>Decision-intent = commercial pipeline; routes to the fastest-win page</td></tr>
+        <tr><td>Earned-signal outreach</td><td>Directory + reviews + AEO-roundup inclusion — the unlock that precedes content</td></tr>
+      </table>
+      <p>The full briefs (outlines, target terms, internal links, answer blocks) and the send-ready outreach drafts are part of the engagement scope. The FLOW supporting document holds the underlying research.</p>
+    </div>
+  </section>
+
+  <!-- ===== PHASE 1 ASSETS (engagement-scope teaser) ===== -->
+  <section id="deliverables">
+    <div class="sec-title">Phase 1 Implementation Assets</div>
+    <h2 class="sec-h1">What ships in the first sprint</h2>
+    <p class="sec-sub">The audit identified a finite set of production-ready implementation artifacts. Summarised below; the build itself is part of the engagement scope.</p>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Asset</th><th>Purpose</th></tr>
+        <tr><td>Entity schema graph (Organization + Service + FAQPage)</td><td>Resolve the brand for search and AI engines</td></tr>
+        <tr><td>Homepage link-map correction + redirect</td><td>Stop the 404 equity leak; recover anchor text</td></tr>
+        <tr><td>Per-page meta descriptions</td><td>Control search-result messaging on all 10 pages</td></tr>
+        <tr><td>llms.txt + answer-block templates</td><td>Make money pages AI-extractable</td></tr>
+        <tr><td>Image optimisation + security-header set</td><td>Lift Performance and technical-hygiene lenses</td></tr>
+      </table>
+    </div>
+    <div class="callout">
+      <div class="tag">● Engagement scope</div>
+      <h3>What's included in the implementation engagement</h3>
+      <p>The paste-ready code, schema, content briefs, and outreach drafts for every artifact above are delivered as part of the implementation engagement. This audit deliberately diagnoses and directs; the build is the engagement scope.</p>
+    </div>
+  </section>
+
+  <!-- ===== MEASUREMENT PLAN ===== -->
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <h2 class="sec-h1">Instrument before judging</h2>
+    <div class="panel">
+      <p>Because the domain is five weeks old, this audit <i>is</i> the baseline — there is no historical or field data to compare against. To measure progress objectively, three instruments should be live before remediation begins, so improvement is provable rather than asserted:</p>
+      <ul>
+        <li><b>Search Console + GA4</b> — to capture the first impressions, positions, and conversions as the foundation work lands (no field data exists today).</li>
+        <li><b>Quarterly AI-citation re-run</b> — repeat the 20+ queries in the AI-baseline supporting document and compare entity presence over time.</li>
+        <li><b>PageSpeed / CWV tracking</b> — re-measure LCP after image and caching work; watch for the first CrUX field dataset as traffic grows.</li>
+      </ul>
+      <p>Standing up this instrumentation is part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <!-- ===== OWNER VERIFICATION ===== -->
+  <section id="verify">
+    <div class="sec-title">Owner Verification Checklist</div>
+    <h2 class="sec-h1">Before any block ships</h2>
+    <div class="panel">
+      <table class="kv">
+        <tr><th>Item</th><th>Why it needs owner input</th></tr>
+        <tr><td>"4.8 stars / 3 continents" review claim</td><td>Must be real and attributable before any Review/AggregateRating schema is published</td></tr>
+        <tr><td>Named testimonial clients</td><td>Confirm consent + accuracy before surfacing as case studies or schema</td></tr>
+        <tr><td>"19.58% profit by sales" stat</td><td>Confirm source/meaning before it stays on the homepage</td></tr>
+        <tr><td>Canonical NAP &amp; service geographies</td><td>Drives Organization schema and any directory/entity work</td></tr>
+        <tr><td>Backlink / referring-domain data</td><td>Requires a paid tool the audit did not have — see Limits</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== LIMITS ===== -->
+  <section id="limits">
+    <div class="sec-title">Limits of this audit</div>
+    <h2 class="sec-h1">What this audit can and cannot say</h2>
+    <div class="limit">
+      <h3>Measured, not estimated</h3>
+      <p>Every score traces to evidence captured directly from the live site, live SERPs, or the PageSpeed Insights API. Where a surface could not be measured, it is flagged here rather than estimated.</p>
+      <h3>Field performance data</h3>
+      <p>No CrUX field dataset exists for any URL — expected for a five-week-old domain with low traffic. Performance is scored from PageSpeed Insights <i>lab</i> data (mobile). Field data should be re-checked as traffic grows.</p>
+      <h3>Backlinks</h3>
+      <p>The free Common Crawl endpoint timed out on attempt; paid backlink data (Ahrefs / Moz / DataForSEO) was not available. Given the domain's age a near-zero referring-domain count is expected, but it is unconfirmed.</p>
+      <h3>Business-internal surfaces</h3>
+      <p>Google Business Profile internals, Search Console impressions/positions, and GA4 conversions require owner-authenticated access not provided for this pass. They are flagged in the Measurement Plan.</p>
+      <h3>Deep-dive forensic layer (Wave 6)</h3>
+      <p>The optional forensic layer — a section-by-section competitor blueprint, verbatim boilerplate extraction, legal/privacy compliance review, and a WordPress plugin-vulnerability fingerprint — was deferred at the client's request for this pass. Each is available as part of the engagement scope.</p>
+    </div>
+  </section>
+
+  <footer>
+    SEO Master Report · velvetvisibilitylabs.com · 2 June 2026<br>
+    Sequenced research waves · 10 URLs audited · 51 in-content links mapped · 20+ live SERPs captured · 5 competitors benchmarked · mobile CWV measured via PageSpeed Insights<br>
+    This report is backed by 8 supporting evidence documents. Implementation assets, complete content briefs, outreach drafts, and the deployment / verification / measurement playbook are supplied as part of the engagement scope.
+  </footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO Master Report — Verducci Event Productions</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06); --code-bg:#f5f5f7;
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .hero{text-align:center;padding:96px 0 48px}
+  .eyebrow{font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-.035em;line-height:1.04}
+  .hero .sub{font-size:21px;color:var(--sub);margin:22px auto 0;font-weight:400;max-width:780px}
+  .hero .meta{font-size:13.5px;color:var(--sub);margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:36px;max-width:920px;margin-left:auto;margin-right:auto}
+  .nav a{font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:980px;background:var(--card)}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:30px 0 18px}
+  .gauge{--val:55;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:24px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:760px;text-align:center;color:var(--sub);font-size:17.5px;margin:18px auto 0;line-height:1.6}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:13.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;text-align:center}
+  .sec-h1{font-size:36px;font-weight:700;letter-spacing:-.025em;text-align:center;margin-bottom:14px;line-height:1.1}
+  .sec-sub{font-size:15.5px;color:var(--sub);text-align:center;max-width:680px;margin:0 auto 32px;line-height:1.55}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow)}
+  .card h3{font-size:14.5px;color:var(--sub);font-weight:600}
+  .card .v{font-size:42px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px;line-height:1}
+  .card .w{font-size:13px;color:var(--sub);line-height:1.4}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:14px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:920px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .p-low{background:rgba(110,110,115,.12);color:var(--sub)}
+  .p-win{background:rgba(52,199,89,.14);color:#1f7a3e}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+  .item .body p{font-size:14.5px;color:var(--sub);line-height:1.55}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 38px;margin-top:18px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;line-height:1.25}
+  .panel h4{font-size:16px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+  .panel .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .tag.win{color:#1f7a3e}
+  .panel p{color:#3a3a3c;font-size:15px;margin-bottom:12px;line-height:1.6}
+  .panel p:last-child{margin-bottom:0}
+  .panel ul, .panel ol{padding-left:22px;margin-bottom:12px;color:#3a3a3c;font-size:15px;line-height:1.65}
+  .panel li{margin-bottom:4px}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  .kv td,.kv th{padding:10px 12px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700;background:rgba(0,0,0,.012)}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .kv td.c,.kv th.c{text-align:center}
+  .bad{color:var(--red);font-weight:600}.ok{color:var(--green);font-weight:600}.warn{color:#b26a00;font-weight:600}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:14px;padding:20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;margin:14px 0}
+  pre code{background:transparent;padding:0;font-size:12.5px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f;line-height:1.55}
+  .fix b{color:var(--blue)}
+  .effort-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--sub)}
+  .effort-row b{color:var(--ink);font-weight:600}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:34px 38px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;line-height:1.25}
+  .callout p{font-size:16px;color:#3a3a3c;line-height:1.65}
+  .callout.danger{background:linear-gradient(135deg,#fff,#fff6f4);border-color:rgba(255,59,48,.35)}
+  .callout.danger .tag{color:var(--red)}
+  .callout.warn{background:linear-gradient(135deg,#fff,#fffaef);border-color:rgba(255,159,10,.35)}
+  .callout.warn .tag{color:#b26a00}
+  .callout.win{background:linear-gradient(135deg,#fff,#f3fbf3);border-color:rgba(52,199,89,.35)}
+  .callout.win .tag{color:#1f7a3e}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:28px 32px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px;line-height:1.6}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:920px;margin:0 auto}
+  .plan .group{margin-bottom:30px}
+  .plan .gh{font-size:19px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:14.5px;display:flex;gap:13px;align-items:flex-start;line-height:1.5}
+  .ol li b{color:var(--blue);flex:none;min-width:30px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:18px}
+  .stat-strip{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .stat{background:var(--card);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);text-align:center;min-width:130px}
+  .stat .n{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:96px;padding-top:38px;border-top:1px solid var(--line);line-height:1.7}
+  footer code{font-size:11.5px}
+
+  /* Evidence accordions (v1.1.0) — granular data, collapsed by default. Hold EVIDENCE only, never solutions. */
+  details.eq{margin-top:16px;border:1px solid var(--line);border-radius:14px;background:rgba(0,113,227,.025);overflow:hidden}
+  details.eq>summary{list-style:none;cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:9px;user-select:none}
+  details.eq>summary::-webkit-details-marker{display:none}
+  details.eq>summary .ico{flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-style:italic;line-height:1}
+  details.eq>summary .chev{margin-left:auto;transition:transform .2s;font-size:11px;color:var(--sub)}
+  details.eq[open]>summary .chev{transform:rotate(180deg)}
+  details.eq>summary:hover{background:rgba(0,113,227,.05)}
+  details.eq .eq-body{padding:6px 18px 18px}
+  details.eq .eq-body p{font-size:13.5px;color:var(--sub);margin:12px 0 0;line-height:1.6}
+  details.eq .eq-body p:first-child{margin-top:6px}
+  details.eq .eq-body ul{padding-left:20px;margin-top:10px;font-size:13.5px;color:#3a3a3c;line-height:1.6}
+  details.eq .eq-body .kv{margin:10px 0 0;font-size:13px}
+  details.eq .eq-body .kv th,details.eq .eq-body .kv td{padding:8px 10px}
+  .eq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .eq-scroll .kv{min-width:560px}
+  @media(max-width:680px){
+    body{font-size:16px;padding:0 16px 80px}.hero{padding:56px 0 32px}
+    .panel,.callout,.limit{padding:24px 22px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+    .sec-h1{font-size:28px}
+    pre{font-size:11.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">SEO Master Report · Fully Consolidated</div>
+    <h1>Verducci Event Productions</h1>
+    <p class="sub">SEO audit of a San Francisco Bay Area event production company — audio visual, lighting, DJ, video production and live streaming.</p>
+    <p class="meta">
+      <b>wearevep.com</b> &nbsp;·&nbsp; Event production · San Francisco Bay Area &nbsp;·&nbsp; WordPress · Yoast SEO 28.0 · Automattic hosting &nbsp;·&nbsp;
+      <b>114 URLs audited</b> across six research waves &nbsp;·&nbsp; <b>20 July 2026</b>
+    </p>
+    <nav class="nav">
+      <a href="#exec">Summary</a><a href="#method">Methodology</a><a href="#scores">Scorecard</a><a href="#convergent">Start Here</a>
+      <a href="#critical">Critical</a><a href="#competitor">Competitor</a><a href="#high">High</a>
+      
+      
+      
+      
+      <a href="#pages">Pages</a>
+      <a href="#roadmap">Roadmap</a><a href="#content-briefs">Content Briefs</a><a href="#deliverables">Phase 1 Assets</a>
+      <a href="#measure">Measure</a><a href="#verify">Verify</a><a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <div class="score-stage">
+    <div class="gauge" style="--val:80"><div class="inner"><div class="num">80</div><div class="den">SEO Health · /100</div></div></div>
+    <div class="verdict">Overall: <span>Good — sound foundation, no critical defects</span></div>
+    <p class="lead">This is a technically healthy site with a small number of genuine problems, one of which is serious. The
+infrastructure is in good order — clean HTTPS, sitewide structured data, no duplicate titles, laboratory Core Web
+Vitals inside Google's thresholds, and 113 of 114 URLs returning healthy responses. That is why the score sits where it
+does, and inflating the problems to manufacture urgency would misrepresent the site. Nothing here is rated critical, and that is a
+finding in itself rather than an omission: no money page is blocked from indexing, no link equity is being destroyed,
+and no revenue surface has been lost. The item listed first is a question rather than a defect — a linked service
+property carries a noindex flag, and whether that was intended cannot be determined from outside. Below it sit two
+content and delivery issues with real commercial value, and a set of smaller items worth fixing because they are
+cheap, not because they are urgent. Of 33 candidate findings, 8 were rejected on re-measurement — including two that would have been the
+most alarming in the report.</p>
+    <div class="stat-strip">
+      <div class="stat"><div class="n">114</div><div class="l">URLs audited</div></div>
+      <div class="stat"><div class="n">1,926</div><div class="l">internal links mapped</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">research waves</div></div>
+      <div class="stat"><div class="n">17</div><div class="l">roadmap actions</div></div>
+      <div class="stat"><div class="n">6</div><div class="l">SERP queries verified</div></div>
+    </div>
+  </div>
+
+  <!-- ===== EXECUTIVE SUMMARY ===== -->
+  <section id="exec">
+    <div class="sec-title">Executive Summary</div>
+    <h2 class="sec-h1">The one-page picture</h2>
+    <p class="sec-sub">For a 90-second read before the meeting.</p>
+    <div class="panel">
+      <h3>What's working</h3>
+      <ul><li><b>113 of 114 sitemap URLs return a healthy 200.</b> The single exception is a redirect, not a broken page.</li><li><b>Structured data is already present sitewide</b> — a complete LocalBusiness graph on 113 of 114 pages. The part most sites get wrong is right here.</li><li><b>Zero duplicate title tags</b> across 114 pages, and every meta description within recommended length.</li><li><b>Core Web Vitals pass in laboratory conditions</b> — LCP and CLS both inside Google's Good thresholds even on a cache miss.</li><li><b>Every search and answer-engine crawler reaches the site</b>, and a valid llms.txt is published.</li><li><b>HTTPS is enforced cleanly</b> with no redirect chains beyond a single apex hop.</li><li><b>Content is genuinely distinct</b> — 83.9% average uniqueness across templated clusters, well clear of duplicate-content territory.</li><li><b>Over 500 third-party reviews</b> already exist across Yelp and WeddingWire — real equity to build on.</li></ul>
+      <h3 style="margin-top:24px">What's holding the site back</h3>
+      <ul><li><b>A linked service property is set to noindex</b> and cannot appear in search at all — needs an intent decision before anything else.</li><li><b>84% of portfolio case studies are empty</b> of client narrative, on the content type that converts.</li><li><b>HTML is not being edge-cached</b>, costing roughly 2.5 seconds on nearly every first visit.</li><li><b>The business address conflicts</b> between the site and its own directory listings.</li><li><b>No structured data describes what the business sells</b> — no service, person, video or FAQ markup anywhere.</li><li><b>The site's two largest pages have no internal links</b> pointing to them.</li></ul>
+      <h3 style="margin-top:24px">If you do five things this week</h3>
+      <ol></ol>
+    </div>
+  </section>
+
+  <!-- ===== METHODOLOGY ===== -->
+  <section id="method">
+    <div class="sec-title">Methodology · How this report was built</div>
+    <h2 class="sec-h1">The work behind the findings</h2>
+    <p class="sec-sub">This audit was assembled across six sequenced research waves. Every claim in this report traces to a primary-evidence source.</p>
+    <div class="panel">
+      <h3>Coverage at a glance</h3>
+      <div class="grid"><div class="card"><div class="n">246</div><div class="l">sitemap URLs enumerated</div></div><div class="card"><div class="n">114</div><div class="l">content pages crawled and cached</div></div><div class="card"><div class="n">2,103</div><div class="l">images inspected</div></div><div class="card"><div class="n">60</div><div class="l">timed requests across 30 URLs</div></div><div class="card"><div class="n">2</div><div class="l">Chrome performance traces</div></div><div class="card"><div class="n">33</div><div class="l">candidate findings tested</div></div><div class="card"><div class="n">8</div><div class="l">claims rejected on re-measurement</div></div><div class="card"><div class="n">17</div><div class="l">findings reported</div></div><div class="card"><div class="n">0</div><div class="l">rated critical</div></div></div>
+    </div>
+    <div class="panel">
+      <h3>The six sequenced waves</h3>
+      <table class="kv">
+        <tr><th>Wave</th><th>Scope</th><th>What was measured</th></tr>
+        <tr><td>1 · Foundation</td><td>Domain, redirects, robots, sitemaps, crawler access</td><td>Redirect chains from 3 entry points; 8 crawler user-agents tested with spaced requests; robots.txt and llms.txt fetched and validated</td></tr><tr><td>2 · Exhaustive crawl</td><td>All 114 content URLs</td><td>Full HTML and response headers cached once to disk; title, description, canonical, robots, headings, word count, structured data, images and link data parsed from the cache</td></tr><tr><td>3 · Strategic lenses</td><td>Link graph and content uniqueness</td><td>Directed internal link graph with navigation and footer stripped; pairwise 8-gram similarity across templated clusters</td></tr><tr><td>4 · Deep verification</td><td>Live measurement</td><td>Chrome performance traces on two page types; 60 timed requests with CDN cache-state capture; content negotiation tested with modern-format Accept headers; HTTP status swept across all 114 URLs</td></tr><tr><td>5 · Competitive and local</td><td>Market position</td><td>Live searches on core commercial queries; competitor pages fetched and compared; third-party citation and review surfaces enumerated</td></tr><tr><td>6 · Adversarial verification</td><td>Every candidate finding</td><td>Each finding independently re-measured against the cache by a second reviewer instructed to refute it; unconfirmed claims dropped, severities re-rated</td></tr>
+      </table>
+    </div>
+    <div class="panel">
+      <h3>Companion document index</h3>
+      <table class="kv">
+        <tr><th>Document</th><th>Contents</th></tr>
+        <tr><td>Technical and crawl analysis</td><td>Sitemap hygiene, canonical and indexation state, redirect behaviour, header posture</td></tr><tr><td>Structured data and AI surface</td><td>Schema inventory across all pages, llms.txt assessment, crawler reachability, answer-engine baseline</td></tr><tr><td>Content and intent coverage</td><td>Page-by-page content assessment, intent gaps, portfolio and team depth, content currency</td></tr><tr><td>Internal link architecture</td><td>Full inbound and outbound link graph, orphan analysis, anchor text, navigation versus in-content distinction</td></tr><tr><td>Performance and image delivery</td><td>Core Web Vitals traces, cache-state timing series, image payload inventory, format negotiation tests</td></tr><tr><td>Local search and conversion</td><td>Citation consistency, review surface enumeration, contact path and form analysis</td></tr><tr><td>Competitive benchmark</td><td>Live SERP-confirmed competitors compared on structured data, depth and review surface</td></tr><tr><td>Audit synthesis</td><td>Scoring derivation per lens, prioritised roadmap, full finding register, rejected claims, limits</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===== SCORECARD ===== -->
+  <section id="scores">
+    <div class="sec-title">Scorecard — Seven Lenses</div>
+    <h2 class="sec-h1">Where the site stands</h2>
+    <p class="sec-sub">Each lens scored independently from primary evidence.</p>
+    <div class="grid"><div class="card"><div class="n">90</div><div class="l">Technical SEO</div><div class="bar"><span style="width:90%"></span></div><p class="src">Clean HTTPS/redirect posture and 113/114 healthy URLs; deductions for the sitewide CTA redirect, two orphaned pages and a dead sitemap file.</p></div><div class="card"><div class="n">75</div><div class="l">Content Quality</div><div class="bar"><span style="width:75%"></span></div><p class="src">Median 528 words and 83.9% cluster uniqueness, against 84% of portfolio case studies carrying no client narrative.</p></div><div class="card"><div class="n">83</div><div class="l">On-Page SEO</div><div class="bar"><span style="width:83%"></span></div><p class="src">Zero duplicate titles across 114 pages and every meta description in range; isolated gaps on 5 pages.</p></div><div class="card"><div class="n">78</div><div class="l">Schema / Structured Data</div><div class="bar"><span style="width:78%"></span></div><p class="src">Yoast LocalBusiness graph sitewide on 113/114 — the expensive part is already right; entity-level Service/Person markup absent.</p></div><div class="card"><div class="n">72</div><div class="l">Performance (CWV)</div><div class="bar"><span style="width:72%"></span></div><p class="src">Lab LCP and CLS both Good. Penalised for TTFB and image format only. Lab-derived — no CrUX field data exists.</p></div><div class="card"><div class="n">78</div><div class="l">AI Search (GEO)</div><div class="bar"><span style="width:78%"></span></div><p class="src">llms.txt present and real, all answer-engine crawlers reachable; NAP conflict and llms.txt truncation are the live gaps.</p></div><div class="card"><div class="n">65</div><div class="l">Images</div><div class="bar"><span style="width:65%"></span></div><p class="src">525 of 2103 images lack usable alt text; zero modern-format delivery confirmed by live content negotiation.</p></div></div>
+    <div class="panel">
+      <h4>Weighted composite</h4>
+      <table class="kv"><tr><th>Lens</th><th class="r">Score</th><th class="r">Weight</th><th class="r">Contribution</th></tr><tr><td>Technical SEO</td><td class="r">90</td><td class="r">22%</td><td class="r">19.80</td></tr><tr><td>Content Quality</td><td class="r">75</td><td class="r">23%</td><td class="r">17.25</td></tr><tr><td>On-Page SEO</td><td class="r">83</td><td class="r">20%</td><td class="r">16.60</td></tr><tr><td>Schema / Structured Data</td><td class="r">78</td><td class="r">10%</td><td class="r">7.80</td></tr><tr><td>Performance (CWV)</td><td class="r">72*</td><td class="r">10%</td><td class="r">7.20</td></tr><tr><td>AI Search (GEO)</td><td class="r">78</td><td class="r">10%</td><td class="r">7.80</td></tr><tr><td>Images</td><td class="r">65</td><td class="r">5%</td><td class="r">3.25</td></tr><tr><td><b>Weighted composite</b></td><td class="r"></td><td class="r"><b>100%</b></td><td class="r"><b>80</b></td></tr></table>
+    </div>
+  </section>
+
+  <!-- ===== START HERE ===== -->
+  <section id="convergent">
+    <div class="sec-title">Start Here — The Convergent Finding</div>
+    <h2 class="sec-h1">What three independent lenses all pointed at</h2>
+    <p class="sec-sub">Flagged independently by multiple lenses across multiple waves.</p>
+    <div class="callout">
+      <div class="tag">● The convergent finding</div>
+      <h3>Start here</h3>
+      <p><div class="panel"><h3>The portfolio is the weak point, from every angle</h3>
+      <p>Three separate lines of analysis — content depth, internal link structure and structured data — converged on
+      the same 16 pages without being pointed at them.</p>
+      <table class="kv">
+        <tr><th>Lens</th><th>What it found on the same 16 portfolio pages</th></tr>
+        <tr><td>Content</td><td>No client narrative — a name, a video, and boilerplate calls to action</td></tr>
+        <tr><td>Link architecture</td><td>Zero in-content inbound links, and the archive hub reaching them is absent from the sitemap</td></tr>
+        <tr><td>Structured data</td><td>No video markup, despite every one of them embedding real video</td></tr>
+      </table>
+      <p>These pages carry the strongest assets the business has — Coca-Cola, Michelin, Stanford, Zendesk — and they are
+      simultaneously the thinnest, the least linked and the least marked up content on the site. That convergence is why
+      the portfolio ranks above larger technical items in the roadmap.</p></div></p>
+    </div>
+  </section>
+
+  <!-- ===== CRITICAL FINDINGS ===== -->
+  <section id="critical">
+    <div class="sec-title">Answer This First · 1 open question</div>
+    <h2 class="sec-h1">One question to settle before the roadmap</h2>
+    <p class="sec-sub">No finding in this audit was rated critical. Nothing blocks indexing of a money page, destroys link equity, or has removed a revenue surface. The item below is listed first because its impact depends entirely on an answer only the business can give.</p>
+    <div class="panel">
+      <div class="tag crit">● Verify intent first · Indexation · Ancillary Property</div>
+      <h3>1. A linked service property is set to <code>noindex</code> — high impact if that was not intended</h3>
+      <p>The primary navigation on every page of the main site carries a <b>Brand Activations</b> item. It opens
+    <code>brandactivations.wearevep.com</code> in a new tab — a live, separately-hosted property (Wix; server <code>Pepyaka</code>)
+    selling <b>Bay Area photo booth rentals and sales</b>. That property returns HTTP 200 and serves this in its
+    <code>&lt;head&gt;</code>:</p>
+    <table class="kv">
+      <tr><th>Check</th><th>Result</th><th class="r">Consequence</th></tr>
+      <tr><td>Robots meta tag</td><td><code>content="noindex"</code></td><td class="r bad">Excluded from all search indexes</td></tr>
+      <tr><td>Served to Googlebot UA</td><td>Identical <code>noindex</code></td><td class="r bad">Not a cloaking artefact</td></tr>
+      <tr><td>Consistency</td><td>3 of 3 spaced requests</td><td class="r bad">Not transient</td></tr>
+      <tr><td>Present in any sitemap</td><td>No — 0 references across all 246 URLs</td><td class="r bad">No discovery path</td></tr>
+      <tr><td>H1 elements</td><td>0</td><td class="r warn">No heading signal</td></tr>
+      <tr><td>Structured data</td><td><code>WebSite</code> only</td><td class="r warn">No LocalBusiness, Service, Product or Offer</td></tr>
+      <tr><td>Body copy</td><td>201 words</td><td class="r warn">Below any competitive threshold</td></tr>
+    </table>
+    <p>The effect is unambiguous: this property <b>cannot appear in organic search at all</b>. Any referral or link
+    pointing at photo booth rentals arrives at a page search engines are explicitly instructed to discard.</p>
+    <p><b>What is not established is whether that is a mistake.</b> A <code>noindex</code> flag is a deliberate switch,
+    and there are legitimate reasons to set one — a property used only as a paid-campaign landing page, a line being
+    retired, or a build still in progress. It is equally often a staging flag nobody switched off. From outside the
+    business, those cases are indistinguishable.</p>
+    <p>So this is listed first not because it is confirmed to be the worst problem, but because it has the widest gap
+    between the two possible answers: if intentional, it is a non-issue; if not, it is the most expensive item in this
+    report, because it costs a whole channel rather than a few positions. It is placed at the top of the roadmap as a
+    <b>question to answer</b>, not a defect to fix. One conversation settles it.</p>
+    <p>It is deliberately <i>not</i> rated critical. Every other finding here was independently re-measured and required
+    to survive an attempt to refute it before being reported, and unconfirmed intent does not clear that bar. Rating it
+    critical would mean presenting an inference as a measurement.</p><details class="eq"><summary>ⓘ Verification detail — how this was confirmed</summary><div class="eq-scroll"><table class="kv">
+        <tr><th>Probe</th><th>Observed</th></tr>
+        <tr><td>Nav link source (home page HTML)</td><td><code>&lt;a target="_blank" href="https://brandactivations.wearevep.com/"&gt;Brand Activations&lt;/a&gt;</code></td></tr>
+        <tr><td>Occurrences in main-site nav</td><td>3 links per page</td></tr>
+        <tr><td>HTTP status</td><td>200 (live, not parked)</td></tr>
+        <tr><td>Own robots.txt</td><td><code>User-agent: * / Allow: /</code> — so the block is the meta tag, not robots.txt</td></tr>
+        <tr><td>Own sitemap_index.xml</td><td>HTTP 400 — no sitemap published</td></tr>
+        <tr><td>Inner URLs tested (/about, /contact, /photo-booth)</td><td>404 — single-page property</td></tr>
+        <tr><td>Title</td><td>"Bay Area Photo Booth Rentals and Sales"</td></tr>
+      </table></div></details><div class="fix"><b>Direction —</b> Confirm with the business whether this line is meant to be discoverable. If it is, the indexation
+    flag, the discovery path from the main site, and the property's on-page fundamentals all need addressing together —
+    lifting the flag alone publishes a 201-word page with no H1 into a competitive local market. Sequencing that
+    correctly, and deciding whether this line belongs on its own subdomain at all, is part of the engagement scope.</div>
+    </div>
+  </section>
+
+  <!-- ===== COMPETITOR ===== -->
+  <section id="competitor">
+    <div class="sec-title">Competitor Benchmark · Where VEP stands vs the SERP winners</div>
+    <h2 class="sec-h1">Four competitors were confirmed from live searches on the core commercial queries.</h2>
+    <div class="panel"><h3>Where this site sits</h3>
+      <p>Competitors here were taken from live searches run during the audit, not from memory or an earlier report.
+      Only those confirmed by a search actually run are included.</p>
+      <table class="kv">
+        <tr><th>Observation</th><th>Detail</th></tr>
+        <tr><td>Nearest ranked competitor</td><td><code>av.land</code>, one position above this site's audio visual page for a shared commercial query</td></tr>
+        <tr><td>Structured data gap</td><td>That competitor carries AggregateRating, Product, Offer and Service markup; none of the four appears on any of this site's 114 pages</td></tr>
+        <tr><td>Wedding DJ vertical</td><td>Neither relevant page appeared in the top eight for the vertical's core query in one live snapshot</td></tr>
+        <tr><td>Not comparable</td><td>Backlink authority — no link index was available, so no competitor was assessed on authority</td></tr>
+      </table>
+      <p>A caution recorded deliberately: a competitor publishing AggregateRating markup is not on its own a reason to
+      match it. Rating markup unsupported by genuine first-party reviews breaches Google's structured data policies and
+      risks a manual action. What is worth matching is the service and offering markup, which this business can support
+      honestly.</p></div>
+  </section>
+
+  <!-- ===== HIGH FINDINGS ===== -->
+  <section id="high">
+    <div class="sec-title">Findings · Ranked by impact</div>
+    <h2 class="sec-h1">What the evidence actually supports</h2>
+    <div class="panel">
+      <div class="tag high">● High · Content · Conversion Evidence</div>
+      <h3>2. 84% of portfolio case studies carry no client narrative — the proof layer is empty</h3>
+      <p>The portfolio is where an event production company converts consideration into enquiry: it is the only place
+    a prospect can see whether this team has handled an event like theirs. Of 19 portfolio entries, <b>16 contain no
+    narrative at all</b> — a client name, an embedded video, and the same three boilerplate calls to action.</p>
+    <table class="kv">
+      <tr><th>Segment</th><th class="r">Count</th><th class="r">Median words</th><th>Content present</th></tr>
+      <tr><td>Entries under 250 words</td><td class="r bad">16 / 19</td><td class="r">167–170</td><td>Name + video + boilerplate only</td></tr>
+      <tr><td>Entries over 400 words</td><td class="r ok">3 / 19</td><td class="r">523–602</td><td>Brief, approach, outcome</td></tr>
+    </table>
+    <p>The three exceptions matter: <code>aveva-after-dark</code>, <code>coca-cola-reyes-bottling</code> and
+    <code>michelin-guide</code> prove the template already supports a full case study. This is not a platform
+    limitation — it is 16 pages of unwritten copy, on the highest-intent content type the site has.</p>
+    <p>The same 16 pages are also the ones with no in-content inbound links, so the weakness compounds: thin pages
+    that nothing points to.</p><details class="eq"><summary>ⓘ Thinnest portfolio entries (measured)</summary><div class="eq-scroll"><table class="kv"><tr><th>URL</th><th class="r">Words</th></tr>
+        <tr><td>/portfolio/sobrato-philanthropies/</td><td class="r bad">167</td></tr>
+        <tr><td>/portfolio/stanford-alumni/</td><td class="r bad">167</td></tr>
+        <tr><td>/portfolio/weddings/</td><td class="r bad">168</td></tr>
+        <tr><td>/portfolio/head-royce-starry-night-prom/</td><td class="r bad">170</td></tr>
+        <tr><td>/portfolio/jacob-bar-mitzvah/</td><td class="r bad">170</td></tr>
+        <tr><td>/portfolio/prialto-culture/</td><td class="r bad">170</td></tr>
+        <tr><td colspan="2"><i>…10 further entries in the same band. Word counts include sitewide nav and footer boilerplate, so true body copy is lower still.</i></td></tr>
+        </table></div></details><div class="fix"><b>Direction —</b> The client names are already there and are genuinely strong — Coca-Cola, Michelin, Stanford, Zendesk.
+    What is missing is the brief, the constraint, and the outcome for each. Turning those into case studies that both
+    convert and earn rankings is content authoring against a repeatable structure, and sits within the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Conversion Path · Sitewide</div>
+      <h3>3. The primary “Request a Quote” CTA routes through a redirect on 113 of 114 pages</h3>
+      <p>The main navigation's conversion button points at <code>/virtual-event-inquiry/</code>, which returns
+    <b>HTTP 301 to <code>/contact-us/</code></b>. That URL is also still published in the XML sitemap, and appears a
+    second time as the footer email icon.</p>
+    <table class="kv">
+      <tr><th>Measurement</th><th class="r">Value</th></tr>
+      <tr><td>Pages linking to the redirecting URL</td><td class="r warn">113 / 114</td></tr>
+      <tr><td>HTTP status (3 spaced checks)</td><td class="r warn">301 → /contact-us/</td></tr>
+      <tr><td>Redirect hops</td><td class="r">1</td></tr>
+      <tr><td>Still listed in page-sitemap.xml</td><td class="r warn">Yes</td></tr>
+      <tr><td>Other non-200 URLs in the sitemap</td><td class="r ok">0 of the remaining 113</td></tr>
+    </table>
+    <p>Deliberately <b>not</b> called critical. A single 301 passes ranking signals and is invisible to users — nobody
+    fails to reach the contact page. The real costs are smaller and specific: a stale URL published in the sitemap, and
+    an avoidable round-trip on the site's single most important click. It is worth fixing because it is a one-line
+    menu edit, not because it is doing damage.</p><div class="fix"><b>Direction —</b> Point the nav and footer links at the live contact URL and drop the retired one from the sitemap. Trivial to execute; confirming nothing else depends on the old URL is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Performance · Delivery</div>
+      <h3>4. HTML is effectively not being edge-cached — 59 of 60 requests missed cache</h3>
+      <p>Home-page TTFB measured 1,886&nbsp;ms in a Chrome trace, which is 82% of that page's entire LCP time. The
+    obvious conclusion — a slow server — is wrong, and worth showing because it changes the fix completely.</p>
+    <p>The same trace on <code>/audio-visual/</code> returned <b>TTFB of 27&nbsp;ms</b>. The difference was CDN cache
+    state. So the site was measured across 30 URLs, twice each:</p>
+    <table class="kv">
+      <tr><th>Pass</th><th>Cache state</th><th class="r">Requests</th><th class="r">Median TTFB</th></tr>
+      <tr><td>1</td><td>MISS</td><td class="r bad">30 / 30</td><td class="r bad">2,591 ms</td></tr>
+      <tr><td>2 (immediate repeat)</td><td>MISS</td><td class="r bad">29 / 30</td><td class="r bad">2,651 ms</td></tr>
+      <tr><td>2</td><td>HIT</td><td class="r ok">1 / 30</td><td class="r ok">82 ms</td></tr>
+    </table>
+    <p>Requesting the same URL twice in a row still missed cache. The server is not slow — when a page is served from
+    cache it responds in 27–82&nbsp;ms. The site is simply not retaining cached HTML, leaving roughly <b>2.5 seconds of
+    avoidable latency on nearly every first visit</b>, sitewide. This is the highest-leverage performance item in the
+    report, and it is a configuration question rather than a code change.</p><details class="eq"><summary>ⓘ Lab Core Web Vitals (Chrome trace, desktop, unthrottled)</summary><div class="eq-scroll"><table class="kv">
+        <tr><th>Page</th><th>Cache</th><th class="r">LCP</th><th class="r">TTFB</th><th class="r">CLS</th></tr>
+        <tr><td>Home</td><td>MISS</td><td class="r ok">2,292 ms</td><td class="r bad">1,886 ms</td><td class="r ok">0.08</td></tr>
+        <tr><td>/audio-visual/</td><td>HIT</td><td class="r ok">322 ms</td><td class="r ok">27 ms</td><td class="r ok">0.01</td></tr>
+        </table>
+        <p><b>Both LCP and CLS pass Google's Good thresholds even on a cache miss.</b> These are laboratory
+        measurements on desktop with no network throttling; real-world mobile figures will be worse. No Chrome UX
+        Report field data exists for this domain, so no claim is made here about what real users experience.</p></div></details><div class="fix"><b>Direction —</b> Establish why HTML responses are not being retained at the edge — a hosting and CDN configuration review rather than a code change. Diagnosing the cache rule and validating the fix under load is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Local Search · Data Integrity</div>
+      <h3>5. The business address on the site conflicts with its own directory listings</h3>
+      <p>The site's <code>LocalBusiness</code> structured data and page content give a <b>San Leandro</b> address.
+    Yelp (348 reviews), WeddingWire (187 reviews) and two further directories list <b>Berkeley</b>. The phone number is
+    identical across all of them, which confirms these describe one business rather than two.</p>
+    <p>Address consistency across citations is a direct input to local pack ranking, and this business has meaningful
+    review equity — over 500 reviews — attached to the conflicting record. Separately, the real address appears
+    <b>only inside JSON-LD</b>: there is no visible address in the page copy on the contact page, and no embedded map.</p>
+    <p>Which address is correct cannot be determined from outside. This needs a client answer before anything is changed.</p><div class="fix"><b>Direction —</b> Confirm the current trading address, then align the site, the structured data and every third-party citation to it. Auditing the full citation set and sequencing corrections is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Content Architecture · Discovery</div>
+      <h3>6. The two largest pages on the site have no internal links pointing to them</h3>
+      <p><code>/your-vision-amplified-capabilities-guide/</code> (2,604 words — the longest page on the site) and
+    <code>/vep-difference/</code> (1,688 words — fifth longest) receive <b>zero inbound links</b> from any of the other
+    113 pages. Not from navigation, not from the footer, not from body copy. Both are indexable with valid canonicals,
+    so they are reachable only by a crawler reading the XML sitemap.</p>
+    <p>For comparison, every page in the main navigation carries 113 inbound page-level references. These two are
+    differentiator and capability content — exactly the material a considering buyer should encounter — and internally
+    they are invisible.</p><div class="fix"><b>Direction —</b> Give both pages a genuine route in from the pages whose readers they are meant to persuade. Deciding where they belong in the site's information architecture is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Content Architecture · Internal Linking</div>
+      <h3>7. Most blog posts route readers to the contact form rather than the service they describe</h3>
+      <p>19 of 33 blog posts link only to <code>/contact-us/</code> in their body copy, never to the service page
+    covering the topic they just explained. A post about uplighting does not link to the lighting service; a post about
+    choosing a DJ does not link to DJ entertainment.</p>
+    <p>The remaining 14 posts do link correctly, which establishes this is an editorial inconsistency rather than a
+    template constraint. The cost is on both sides: service pages lose the topical internal links that help them rank,
+    and readers who are ready to act get sent to a generic form instead of the relevant page.</p><div class="fix"><b>Direction —</b> Route each post to the service page it supports, using anchor text that matches the topic. Mapping posts to targets across the archive is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Performance · Image Delivery</div>
+      <h3>8. A 63-image logo gallery is forced to load eagerly on four pages, two of them money pages</h3>
+      <p>The client-logo gallery carries <code>no-lazyload skip-lazy</code> classes that deliberately override the
+    site's own lazy-loading system. All 63 images load immediately on the home page, corporate events, lighting and
+    audio visual — roughly <b>1.2&nbsp;MB</b>, the majority of eager image weight on those pages, for a strip most
+    visitors scroll past.</p>
+    <p>Kept at medium rather than raised: measured lab LCP on these pages still passes, so this is not currently
+    breaking a threshold. It is avoidable weight that compounds the caching problem above, particularly on mobile.</p><div class="fix"><b>Direction —</b> Restore the site's own lazy-loading behaviour for below-the-fold galleries. Verifying no visual regression at each breakpoint is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Images · Format</div>
+      <h3>9. No modern image formats are served — confirmed by live content negotiation, not assumed</h3>
+      <p>Requests sent with an <code>Accept</code> header advertising WebP and AVIF support were answered with legacy
+    JPEG and PNG. <b>1,017 of 1,022 raster images (99.5%)</b> are legacy formats, and no modern-format sibling files
+    exist to negotiate to.</p>
+    <p>WebP typically reduces image payload 25–35% at equivalent quality. On an image-led portfolio site this is the
+    largest single lever on page weight after the caching issue.</p><div class="fix"><b>Direction —</b> Introduce modern-format delivery with correct fallbacks, sequenced after the caching work since both address the same page-weight problem. Selecting the conversion approach for this stack is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Images · Accessibility & Indexing</div>
+      <h3>10. A quarter of all images have no usable alt text, concentrated on the two most important pages</h3>
+      <table class="kv">
+      <tr><th>Page</th><th class="r">Images missing usable alt</th><th class="r">Share</th></tr>
+      <tr><td>Home</td><td class="r bad">66 / 95</td><td class="r bad">69.5%</td></tr>
+      <tr><td>/corporate-events/</td><td class="r bad">65 / 106</td><td class="r bad">61.3%</td></tr>
+      <tr><td>/video-production/</td><td class="r warn">24 / 45</td><td class="r warn">53.3%</td></tr>
+      <tr><td>/weddings/</td><td class="r warn">24 / 73</td><td class="r warn">32.9%</td></tr>
+      <tr><td><b>Sitewide</b></td><td class="r warn"><b>525 / 2,103</b></td><td class="r warn"><b>25.0%</b></td></tr>
+    </table>
+    <p>Not treated as critical — missing alt text does not block indexing or cost rankings directly. It is listed
+    because of where it is concentrated: a portfolio business whose photography is its product, with its two highest-value
+    pages the worst affected. It also carries real accessibility consequences for screen reader users, and it forecloses
+    image search as a discovery channel.</p><div class="fix"><b>Direction —</b> Prioritise descriptive alt text on the money pages first, where both the accessibility and discovery cost is concentrated. Establishing a convention that stays useful as the gallery grows is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Structured Data · Competitive Position</div>
+      <h3>11. A competitor ranking directly above the audio visual page carries rich-result markup this site has nowhere</h3>
+      <p>In a live search for the audio visual page's core commercial query, <code>av.land</code> ranked one position
+    above it. That competitor carries <code>AggregateRating</code>, <code>Product</code>, <code>Offer</code> and
+    <code>Service</code> structured data. Across all 114 pages here, <b>none of those four types appear once</b>.</p>
+    <p>Two honest caveats. This is a single search snapshot, not tracked rank data. And whether that markup actually
+    renders a visible rich result was not confirmed. What is certain is the markup gap.</p>
+    <p>One caution worth recording now: publishing <code>AggregateRating</code> that is not backed by genuine
+    first-party reviews breaches Google's structured data policies and risks a manual action. The presence of this
+    markup on a competitor is not on its own a reason to copy it.</p><div class="fix"><b>Direction —</b> Establish which structured data types are legitimately supported by evidence this business already holds, and implement those. Determining what is defensible versus what invites a penalty is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Structured Data · Entity Coverage</div>
+      <h3>12. The schema foundation is strong, but no page describes what the business actually sells</h3>
+      <p>Worth leading with the positive, because it inverts the usual finding: <b>113 of 114 pages already carry a
+    complete Yoast structured data graph</b> — <code>LocalBusiness</code>, <code>WebSite</code>,
+    <code>BreadcrumbList</code>, <code>PostalAddress</code>, <code>GeoCoordinates</code>,
+    <code>OpeningHoursSpecification</code>. The part most sites get wrong is already right here.</p>
+    <p>What is absent is the entity layer describing the offering:</p>
+    <table class="kv">
+      <tr><th>Type</th><th>Where it would belong</th><th class="r">Pages carrying it</th></tr>
+      <tr><td><code>Service</code></td><td>13 core service pages</td><td class="r bad">0</td></tr>
+      <tr><td><code>Person</code></td><td>30 team biography pages</td><td class="r bad">0</td></tr>
+      <tr><td><code>VideoObject</code></td><td>19 pages embedding real video</td><td class="r bad">0</td></tr>
+      <tr><td><code>FAQPage</code></td><td>The existing FAQ page</td><td class="r bad">0</td></tr>
+      <tr><td><code>Review</code> / <code>AggregateRating</code></td><td>Where review evidence supports it</td><td class="r bad">0</td></tr>
+    </table>
+    <p>This matters more than it used to. Answer engines lean on explicit entity markup to decide what a business does
+    and whether to cite it. The site says it is a local business; it does not say what it sells.</p><div class="fix"><b>Direction —</b> Extend the existing Yoast graph with the entity types the page inventory already supports. Determining which pages justify which types, and keeping it consistent with what is genuinely evidenced, is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Content · Team Pages</div>
+      <h3>13. Six team pages contain a job title and nothing else</h3>
+      <p>Six of 31 team pages carry roughly 150 words each — and that figure is entirely sitewide navigation and
+    footer boilerplate. There is no biography sentence at all: <code>carla-andrade-perez</code>,
+    <code>dylan-feldman</code>, <code>enrique-cuellar</code>, <code>gerard-fancuberta</code>,
+    <code>jesse-rosen</code>, <code>reiko-simmons</code>.</p>
+    <p>The other 24 team pages run 350–853 words, so the standard is set internally; these six were never filled in.
+    For an events business where clients are buying the people, an empty profile is a weak signal on a page a prospect
+    may well reach.</p><div class="fix"><b>Direction —</b> Bring the six empty profiles up to the standard the other 24 already set. Part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Technical · Index Hygiene</div>
+      <h3>14. 132 auto-generated archive URLs are indexable, and some compete directly with service page slugs</h3>
+      <p>Category, tag, author and portfolio-taxonomy archives — 132 URLs — return 200 with
+    <code>index, follow</code> and self-referencing canonicals. They carry generic "X Archives" titles and no meta
+    descriptions. <code>/category/uncategorized/</code> is live with 7 posts.</p>
+    <p>The specific concern is slug collision: <code>/category/audio-visual/</code> exists alongside the actual
+    <code>/audio-visual/</code> service page. Thin auto-generated archives competing for the same terms as money pages
+    is a genuine dilution risk.</p>
+    <p>Framed as risk rather than proven harm — without Search Console data there is no evidence these archives are
+    actually attracting impressions or outranking their service page counterparts. That check should precede any bulk change.</p><div class="fix"><b>Direction —</b> Decide per taxonomy whether each archive earns its place in the index, using impression data rather than a blanket rule. Making that determination is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · On-Page · Pagination</div>
+      <h3>15. Blog pagination shares a single title tag across three indexable URLs</h3>
+      <p><code>/blog/</code>, <code>/blog/page/2/</code> and <code>/blog/page/3/</code> all return 200, are
+    indexable and self-canonical, and share one identical title tag. Notably, <code>/team/</code> pagination on the
+    same installation varies its titles correctly — so the theme is already capable of this.</p>
+    <p>Also in this tier: two pages missing meta descriptions, two sharing a duplicate description, one page with no
+    H1, and eight titles over 60 characters. Individually minor; grouped here because they are the same class of
+    cheap, isolated on-page cleanup.</p><div class="fix"><b>Direction —</b> Apply the pagination title pattern the theme already uses elsewhere, and close the isolated on-page gaps. Part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag high">● Medium · Visibility · Vertical Gap</div>
+      <h3>16. The wedding DJ vertical is well built but did not appear in the top eight for its core query</h3>
+      <p><code>/weddings/</code> (1,357 words) and <code>/dj-entertainment/</code> (1,415 words) are substantial,
+    indexed pages. In a live search for the vertical's primary commercial query, neither appeared in the top eight
+    organic results, which were dominated by specialist DJ brands and aggregator directories.</p>
+    <p>Recorded as an observation rather than a diagnosis. This is one snapshot without rank tracking, and no backlink
+    data was available — a competitor may be winning on authority alone, in which case no on-page change would move it.
+    Flagging the gap; the cause is not established.</p><div class="fix"><b>Direction —</b> Establish rank tracking and an authority baseline before deciding whether this is a content, architecture or link problem. Diagnosing it properly is part of the engagement scope.</div>
+    </div><div class="panel">
+      <div class="tag low">● Low · Hygiene</div>
+      <h3>17. Lower-priority items, recorded for completeness</h3>
+      <table class="kv">
+      <tr><th>Item</th><th>Measured state</th><th>Why it is not higher</th></tr>
+      <tr><td><code>llms.txt</code> truncation</td><td>File exists and is valid, but Yoast's 5-item cap omits 83% of pages and 97% of posts</td><td>Present and well-formed; AI crawlers reach the site directly regardless</td></tr>
+      <tr><td>Dead <code>resources_tag-sitemap.xml</code></td><td>All 8 URLs redirect to the homepage; nothing links to them</td><td>8 of 246 URLs, zero equity was ever flowing through them</td></tr>
+      <tr><td>Dated blog content</td><td>14 of 33 posts are unrevised 2020–21 pandemic-era material</td><td>Non-money pages with no measured traffic loss</td></tr>
+      <tr><td>No links to review platforms</td><td>No on-site link to Yelp, WeddingWire or Google Business Profile despite 500+ reviews</td><td>Should follow the address decision, not precede it</td></tr>
+      <tr><td>Quote form friction</td><td>10 required fields including exact venue and budget; no stated response time</td><td>An untested hypothesis — worth measuring, not cutting blind</td></tr>
+      <tr><td><code>Google-Extended</code> returns 429</td><td>Consistent across 3 spaced rounds, while all search and answer-engine crawlers return 200</td><td>Gemini training opt-out signal, no established link to search or AI Overview visibility</td></tr>
+      <tr><td>Apex HTTP redirect</td><td><code>http://wearevep.com</code> takes 2 hops; all other entry points take 1</td><td>Correct destination, negligible cost</td></tr>
+    </table>
+    </div><div class="panel">
+  <h3>Claims tested and rejected</h3>
+  <p>Every candidate finding was independently re-measured before it entered this report, and anything that could not
+  be re-confirmed was dropped. Of 33 candidates, <b>8 were rejected</b>. They are recorded here because what an audit
+  declines to claim says as much as what it does.</p>
+  <table class="kv">
+    <tr><th>Claim</th><th>Why it was rejected</th></tr>
+    <tr><td><b>“AI crawlers are blocked”</b></td><td class="r ok">False. GPTBot and OAI-SearchBot initially returned 429, but re-testing with spaced requests returned 200 — the earlier failures were caused by our own request rate. Every search and answer-engine crawler reaches the site normally.</td></tr>
+    <tr><td><b>“No llms.txt file”</b></td><td class="r ok">False. The file exists at <code>/llms.txt</code>, is a genuine Yoast-generated document, and is not a soft 404. Only its truncation is a real issue, recorded at low priority.</td></tr>
+    <tr><td><b>“Server response time is 1.9 seconds”</b></td><td class="r ok">Misattributed. That reading was a cold cache miss. The same infrastructure returned 27&nbsp;ms when serving from cache. The real defect is the cache miss rate, which has a different cause and a different fix.</td></tr>
+    <tr><td><b>“28 orphaned pages”</b></td><td class="r ok">Count unsupported. The category is real but the figure did not survive re-measurement. Only 2 orphans re-confirmed cleanly; those are reported.</td></tr>
+    <tr><td><b>“Zero review schema is a high-severity defect”</b></td><td class="r ok">Fact true, severity wrong. The markup is genuinely absent, but it neither blocks indexing nor suppresses a money page, so it does not meet the bar for high.</td></tr>
+    <tr><td><b>“Five money pages are under-linked”</b></td><td class="r ok">The raw link counts reproduced, but the definition of which pages qualified as money pages did not hold up on review.</td></tr>
+    <tr><td><b>“Missing service-area landing pages”</b></td><td class="r ok">The absence is real, but nothing established that it is suppressing anything measurable. Recorded as an idea, not a defect.</td></tr>
+    <tr><td><b>“Absent from search for a commercial query”</b></td><td class="r ok">Not reproducible. A second independent search returned a different top ten, so the result is not stable enough to report as measured.</td></tr>
+  </table>
+  <p>Two of these — the AI crawler block and the slow server — would have been the most alarming findings in the
+  report. Both were wrong.</p>
+</div>
+  </section>
+
+  <!-- ===== DEEP DIVES ===== -->
+  <section id="pages"><table class="kv">
+      <tr><th>Type</th><th class="r">URLs</th><th class="r">Median words</th><th>State</th></tr>
+      <tr><td>Service and utility pages</td><td class="r">30</td><td class="r">—</td><td class="r ok">Substantial; the core money pages are well built</td></tr>
+      <tr><td>Blog posts</td><td class="r">34</td><td class="r">—</td><td class="r warn">14 unrevised since the pandemic era; most link only to the contact form</td></tr>
+      <tr><td>Portfolio entries</td><td class="r">19</td><td class="r bad">170</td><td class="r bad">16 of 19 carry no narrative</td></tr>
+      <tr><td>Team profiles</td><td class="r">31</td><td class="r">—</td><td class="r warn">24 substantial, 6 empty</td></tr>
+      <tr><td>Taxonomy archives</td><td class="r">132</td><td class="r">—</td><td class="r warn">Indexable and uncurated</td></tr>
+      <tr><td><b>Total enumerated</b></td><td class="r"><b>246</b></td><td class="r"></td><td></td></tr>
+    </table>
+    <p>Sitewide: median 528 words per content page, 83.9% average uniqueness across templated clusters, 2,103 images.</p></section>
+  <!-- ===== ROADMAP ===== -->
+  <section id="roadmap">
+    <div class="sec-title">Consolidated Roadmap · 17 Actions</div>
+    <h2 class="sec-h1">Sequenced work plan</h2>
+    <p class="sec-sub">Phase 0 gates block dependent work — do not publish changes built on unverified data.</p>
+    <div class="plan">
+<div class="prio"><h4>Now — decide and fix</h4><ol class="ol">
+<li><b>Answer one question about Brand Activations.</b> Is that property meant to be found in search? If yes, its indexation flag is the highest-value fix in this report. If no, close the item. <span class="src">Verify intent · Finding 1</span></li>
+<li><b>Confirm the trading address.</b> San Leandro or Berkeley. Blocks the citation, schema and contact-page work. <span class="src">Finding 5</span></li>
+<li><b>Repoint the “Request a Quote” CTA</b> at the live contact URL and remove the retired URL from the sitemap. <span class="src">Finding 3</span></li>
+<li><b>Give the two orphaned pages internal routes.</b> The largest pages on the site currently have none. <span class="src">Finding 6</span></li>
+<li><b>Close the isolated on-page gaps</b> — pagination titles, two missing descriptions, one missing H1. <span class="src">Finding 15</span></li>
+</ol></div>
+
+<div class="prio"><h4>Next — the work that moves rankings</h4><ol class="ol">
+<li><b>Diagnose the CDN cache miss rate.</b> Single highest-leverage performance item: roughly 2.5 seconds recoverable sitewide. <span class="src">Finding 4</span></li>
+<li><b>Write the 16 empty portfolio case studies.</b> Highest-intent content on the site, currently the emptiest. <span class="src">High · Finding 2</span></li>
+<li><b>Add the entity schema layer</b> — service, person and video markup on the pages that already justify them. <span class="src">Findings 11, 12</span></li>
+<li><b>Route blog posts to the services they describe</b> rather than to the contact form. <span class="src">Finding 7</span></li>
+<li><b>Restore lazy loading on the logo gallery</b> and fill the six empty team profiles. <span class="src">Findings 8, 13</span></li>
+</ol></div>
+
+<div class="prio"><h4>Later — sequence behind the above</h4><ol class="ol">
+<li><b>Modern image format delivery</b>, after the caching fix, since both address page weight. <span class="src">Finding 9</span></li>
+<li><b>Alt text on the money pages</b>, worst-affected first. <span class="src">Finding 10</span></li>
+<li><b>Review the 132 indexable archives</b> using impression data, not a blanket rule. <span class="src">Finding 14</span></li>
+<li><b>Establish rank tracking</b> before acting on the wedding DJ gap. <span class="src">Finding 16</span></li>
+<li><b>Refresh dated posts, link the review platforms, revisit form length.</b> <span class="src">Finding 17</span></li>
+</ol></div></div>
+  </section>
+
+  <!-- ===== CONTENT BRIEFS (engagement-scope teaser) ===== -->
+  <section id="content-briefs">
+    <div class="sec-title">Content Briefs &amp; Outreach Kit</div>
+    <h2 class="sec-h1">Headline priorities</h2>
+    <p class="sec-sub">Commercial-intent content priorities and earned-signal outreach channels. Headlines below; full briefs and send-ready copy are supplied with the engagement.</p>
+    
+  </section>
+
+  <!-- ===== PHASE 1 ASSETS (engagement-scope teaser) ===== -->
+  <section id="deliverables">
+    <div class="sec-title">Phase 1 Implementation Assets</div>
+    <h2 class="sec-h1">What ships in the first sprint</h2>
+    <p class="sec-sub">The audit produced a set of production-ready implementation artifacts. These are summarised below — full code is supplied with the engagement.</p>
+    
+    <div class="callout">
+      <div class="tag">● Engagement scope</div>
+      <h3>What's included in the implementation engagement</h3>
+      <p>The full code for every artifact above is delivered as part of the implementation engagement.</p>
+    </div>
+  </section>
+
+  <!-- ===== MEASUREMENT PLAN ===== -->
+  <section id="measure">
+    <div class="sec-title">Measurement Plan</div>
+    <h2 class="sec-h1">Instrument before judging</h2>
+    <p>Six things would materially raise the confidence of the next audit. Listed by value.</p>
+<table class="kv">
+  <tr><th>Addition</th><th>What it would resolve</th><th class="r">Value</th></tr>
+  <tr><td><b>Search Console access</b></td><td>Converts every ranking statement from a snapshot into a trend, and settles the archive dilution question with impression data instead of inference. Also surfaces coverage errors invisible from outside.</td><td class="r bad">Highest</td></tr>
+  <tr><td><b>Analytics access</b></td><td>Turns conversion findings from structure into behaviour — whether the quote form actually loses people, and whether empty portfolio pages fail to convert or simply are not reached.</td><td class="r bad">Highest</td></tr>
+  <tr><td><b>Rank tracking</b></td><td>Both competitive findings rest on single searches. Tracked positions would establish whether the wedding DJ gap is real, seasonal, or measurement noise.</td><td class="r warn">High</td></tr>
+  <tr><td><b>Backlink data</b></td><td>The one dimension entirely absent here. Without it, an on-page gap and an authority gap look identical — and the recommended fix differs completely.</td><td class="r warn">High</td></tr>
+  <tr><td><b>Mobile and throttled measurement</b></td><td>All performance figures are desktop and unthrottled. Most event enquiries begin on a phone; throttled mobile traces would give the number that matters.</td><td class="r warn">Medium</td></tr>
+  <tr><td><b>Answer-engine citation tracking</b></td><td>Whether the business is actually cited in AI answers for its commercial queries, tracked over time rather than sampled once.</td><td class="r">Medium</td></tr>
+</table>
+<p>Two structural notes on method. Every finding here was re-measured by an independent reviewer instructed to refute
+it, and anything that could not be re-confirmed was dropped — that is why 8 of 33 candidates are absent. And the crawl
+was taken fresh on the audit date; no earlier data was carried forward, because search conditions and the site both
+change faster than a report's shelf life.</p>
+  </section>
+
+  <!-- ===== OWNER VERIFICATION ===== -->
+  <section id="verify">
+    <div class="sec-title">Owner Verification Checklist</div>
+    <h2 class="sec-h1">Before any block ships</h2>
+    <div class="panel">
+      <table class="kv"><tr><th>Check before anything ships</th><th>Why it gates the work</th></tr><tr><td>Confirm the intended indexation state of the Brand Activations property</td><td>Determines whether the critical finding is a defect or a deliberate choice. Nothing else on that property should be touched first.</td></tr><tr><td>Confirm the current trading address with the business</td><td>The site and its directory listings disagree. Correcting the wrong one would make the problem worse.</td></tr><tr><td>Verify no system depends on the retired quote URL</td><td>It is referenced sitewide and published in the sitemap; check for campaign or email links before removing it.</td></tr><tr><td>Check archive impressions in Search Console before changing indexation</td><td>The dilution risk from 132 archives is a hypothesis. Impression data confirms or refutes it.</td></tr><tr><td>Re-test crawler access with spaced requests</td><td>Rapid sequential testing produces false rate-limit failures — as it did during this audit.</td></tr><tr><td>Baseline Core Web Vitals before and after the caching change</td><td>The lab figures here are the only measurement available; without a baseline the improvement cannot be evidenced.</td></tr></table>
+    </div>
+  </section>
+
+  <!-- ===== LIMITS ===== -->
+  <section id="limits">
+    <div class="sec-title">Limits of this audit</div>
+    <h2 class="sec-h1">What this audit can and cannot say</h2>
+    <div class="limit"><p>Stated plainly, because an audit that hides its blind spots is not worth much.</p>
+<table class="kv">
+  <tr><th>Not measured</th><th>What would be needed</th><th>What it affects</th></tr>
+  <tr><td>Impressions, clicks, average position</td><td>Search Console access</td><td>Every ranking statement here is a single live snapshot, never a trend. This is the single largest gap.</td></tr>
+  <tr><td>Traffic, conversion, drop-off</td><td>Analytics access</td><td>Conversion findings are structural observations, not measured behaviour.</td></tr>
+  <tr><td>Real-user Core Web Vitals</td><td>Field data — <b>none exists for this domain</b></td><td>Checked, not assumed. Performance is scored on laboratory measurement and marked accordingly.</td></tr>
+  <tr><td>Google Business Profile internals</td><td>Profile access</td><td>The profile may already hold the correct address, with only third-party directories stale. This changes how urgent the address fix is.</td></tr>
+  <tr><td>Backlinks and domain authority</td><td>A paid link index</td><td>Competitive findings compare structured data and content only. A competitor may outrank on authority alone, in which case no on-page change would move it.</td></tr>
+  <tr><td>Rank position over time</td><td>Rank tracking</td><td>Both competitive findings are single snapshots and are labelled as such.</td></tr>
+  <tr><td>Live form submission behaviour</td><td>A test submission</td><td>Form markup was inspected; delivery and validation were not tested against production.</td></tr>
+</table>
+<p><b>On the performance score.</b> It carries an asterisk deliberately. Laboratory measurement on desktop without
+network throttling is a real measurement, but it is not what real users on mobile networks experience. The figures are
+labelled lab throughout rather than presented as field data.</p></div>
+  </section>
+
+  <footer>
+    SEO Master Report · wearevep.com · 20 July 2026<br>
+    Six research waves · 114 URLs audited · 1,926 in-content links mapped · 6 live SERPs captured · 4 competitors benchmarked<br>
+    Implementation assets, complete content briefs, outreach drafts, and the deployment / verification / measurement playbook are supplied with the engagement.
+  </footer>
+
+</div>
+</body>
+</html>

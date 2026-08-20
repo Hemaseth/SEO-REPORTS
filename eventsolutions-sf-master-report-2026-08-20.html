@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launch Preservation Report — Event Solutions Productions</title>
+<style>
+  :root{
+    --bg:#fbfbfd; --card:#ffffff; --ink:#1d1d1f; --sub:#6e6e73;
+    --line:#d2d2d7; --blue:#0071e3; --green:#34c759; --amber:#ff9f0a;
+    --red:#ff3b30; --hair:rgba(0,0,0,.06); --code-bg:#f5f5f7;
+    --radius:22px; --shadow:0 1px 3px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.55;
+    font-size:17px;letter-spacing:-.01em;padding:0 22px 120px;
+  }
+  .wrap{max-width:1040px;margin:0 auto}
+  .hero{text-align:center;padding:96px 0 48px}
+  .eyebrow{font-size:14px;font-weight:600;color:var(--blue);letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px}
+  .hero h1{font-size:clamp(40px,6vw,72px);font-weight:700;letter-spacing:-.035em;line-height:1.04}
+  .hero .sub{font-size:21px;color:var(--sub);margin:22px auto 0;font-weight:400;max-width:780px}
+  .hero .meta{font-size:13.5px;color:var(--sub);margin-top:26px;max-width:820px;margin-left:auto;margin-right:auto}
+  .hero .meta b{color:var(--ink);font-weight:600}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:36px;max-width:920px;margin-left:auto;margin-right:auto}
+  .nav a{font-size:12.5px;font-weight:600;color:var(--sub);text-decoration:none;padding:7px 14px;border:1px solid var(--line);border-radius:980px;background:var(--card)}
+  .nav a:hover{color:var(--blue);border-color:var(--blue)}
+
+  .score-stage{display:flex;flex-direction:column;align-items:center;padding:30px 0 18px}
+  .gauge{--val:55;width:248px;height:248px;border-radius:50%;
+    background:radial-gradient(closest-side,var(--card) 79%,transparent 80% 100%),
+      conic-gradient(var(--amber) calc(var(--val)*1%), var(--hair) 0);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .gauge .inner{text-align:center}
+  .gauge .num{font-size:80px;font-weight:700;letter-spacing:-.04em;line-height:1}
+  .gauge .den{font-size:18px;color:var(--sub);font-weight:500;margin-top:2px}
+  .verdict{margin-top:24px;font-size:24px;font-weight:600}
+  .verdict span{color:var(--amber)}
+  .lead{max-width:760px;text-align:center;color:var(--sub);font-size:17.5px;margin:18px auto 0;line-height:1.6}
+
+  section{margin-top:88px;scroll-margin-top:24px}
+  .sec-title{font-size:13.5px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;text-align:center}
+  .sec-h1{font-size:36px;font-weight:700;letter-spacing:-.025em;text-align:center;margin-bottom:14px;line-height:1.1}
+  .sec-sub{font-size:15.5px;color:var(--sub);text-align:center;max-width:680px;margin:0 auto 32px;line-height:1.55}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+  .card{background:var(--card);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow)}
+  .card h3{font-size:14.5px;color:var(--sub);font-weight:600}
+  .card .v{font-size:42px;font-weight:700;letter-spacing:-.03em;margin:10px 0 4px;line-height:1}
+  .card .w{font-size:13px;color:var(--sub);line-height:1.4}
+  .bar{height:6px;border-radius:3px;background:var(--hair);margin-top:14px;overflow:hidden}
+  .bar i{display:block;height:100%;border-radius:3px}
+  .g .v,.g i{color:var(--green)}.g i{background:var(--green)}
+  .a .v,.a i{color:var(--amber)}.a i{background:var(--amber)}
+  .r .v,.r i{color:var(--red)}.r i{background:var(--red)}
+  .b .v,.b i{color:var(--blue)}.b i{background:var(--blue)}
+
+  .prio{display:flex;flex-direction:column;gap:14px;max-width:920px;margin:0 auto}
+  .item{background:var(--card);border-radius:18px;padding:20px 24px;box-shadow:var(--shadow);display:flex;gap:18px;align-items:flex-start}
+  .pill{flex:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:980px;letter-spacing:.02em;margin-top:2px}
+  .p-crit{background:rgba(255,59,48,.12);color:var(--red)}
+  .p-high{background:rgba(255,159,10,.14);color:#b26a00}
+  .p-med{background:rgba(0,113,227,.1);color:var(--blue)}
+  .p-low{background:rgba(110,110,115,.12);color:var(--sub)}
+  .p-win{background:rgba(52,199,89,.14);color:#1f7a3e}
+  .item .body h4{font-size:17px;font-weight:600;margin-bottom:4px;letter-spacing:-.01em}
+  .item .body p{font-size:14.5px;color:var(--sub);line-height:1.55}
+  .item .eff{flex:none;margin-left:auto;font-size:13px;color:var(--sub);text-align:right;white-space:nowrap;padding-top:3px}
+
+  .panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:36px 38px;margin-top:18px}
+  .panel h3{font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:6px;line-height:1.25}
+  .panel h4{font-size:16px;font-weight:600;margin:18px 0 6px;color:var(--ink)}
+  .panel .tag{font-size:12.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px}
+  .tag.crit{color:var(--red)}.tag.high{color:#b26a00}.tag.note{color:var(--blue)}.tag.ok{color:var(--green)}
+  .tag.win{color:#1f7a3e}
+  .panel p{color:#3a3a3c;font-size:15px;margin-bottom:12px;line-height:1.6}
+  .panel p:last-child{margin-bottom:0}
+  .panel ul, .panel ol{padding-left:22px;margin-bottom:12px;color:#3a3a3c;font-size:15px;line-height:1.65}
+  .panel li{margin-bottom:4px}
+  .kv{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+  .kv td,.kv th{padding:10px 12px;border-bottom:1px solid var(--hair);text-align:left;vertical-align:top}
+  .kv th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--sub);font-weight:700;background:rgba(0,0,0,.012)}
+  .kv tr:last-child td{border-bottom:none}
+  .kv td.r,.kv th.r{text-align:right;font-weight:600;white-space:nowrap}
+  .kv td.c,.kv th.c{text-align:center}
+  .bad{color:var(--red);font-weight:600}.ok{color:var(--green);font-weight:600}.warn{color:#b26a00;font-weight:600}
+  code{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:13px;background:var(--hair);padding:2px 6px;border-radius:6px}
+  pre{background:var(--code-bg);border:1px solid var(--line);border-radius:14px;padding:20px;overflow-x:auto;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12.5px;line-height:1.55;margin:14px 0}
+  pre code{background:transparent;padding:0;font-size:12.5px}
+  .fix{margin-top:14px;padding:14px 18px;background:rgba(0,113,227,.06);border-radius:14px;font-size:14.5px;color:#1d1d1f;line-height:1.55}
+  .fix b{color:var(--blue)}
+  .effort-row{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13.5px;color:var(--sub)}
+  .effort-row b{color:var(--ink);font-weight:600}
+  .callout{background:linear-gradient(135deg,#fff,#f4f8ff);border:1px solid rgba(0,113,227,.25);border-radius:var(--radius);padding:34px 38px;box-shadow:var(--shadow)}
+  .callout .tag{color:var(--blue);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+  .callout h3{font-size:26px;font-weight:700;letter-spacing:-.02em;margin-bottom:12px;line-height:1.25}
+  .callout p{font-size:16px;color:#3a3a3c;line-height:1.65}
+  .callout.danger{background:linear-gradient(135deg,#fff,#fff6f4);border-color:rgba(255,59,48,.35)}
+  .callout.danger .tag{color:var(--red)}
+  .callout.warn{background:linear-gradient(135deg,#fff,#fffaef);border-color:rgba(255,159,10,.35)}
+  .callout.warn .tag{color:#b26a00}
+  .callout.win{background:linear-gradient(135deg,#fff,#f3fbf3);border-color:rgba(52,199,89,.35)}
+  .callout.win .tag{color:#1f7a3e}
+  .limit{background:linear-gradient(180deg,#fff,#fbfbfd);border:1px solid var(--line);border-radius:var(--radius);padding:28px 32px;margin-top:20px}
+  .limit h3{font-size:18px;font-weight:700;margin-bottom:9px}
+  .limit p{color:var(--sub);font-size:14.5px;margin-bottom:10px;line-height:1.6}.limit p:last-child{margin-bottom:0}
+
+  .plan{max-width:920px;margin:0 auto}
+  .plan .group{margin-bottom:30px}
+  .plan .gh{font-size:19px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:11px;letter-spacing:-.01em}
+  .plan .gs{font-size:13.5px;color:var(--sub);margin:0 0 14px 22px}
+  .dot{width:11px;height:11px;border-radius:50%;flex:none}
+  .ol{list-style:none;display:flex;flex-direction:column;gap:8px}
+  .ol li{background:var(--card);border-radius:14px;padding:14px 19px;box-shadow:var(--shadow);font-size:14.5px;display:flex;gap:13px;align-items:flex-start;line-height:1.5}
+  .ol li b{color:var(--blue);flex:none;min-width:30px}
+  .ol li .src{margin-left:auto;flex:none;font-size:11px;color:var(--sub);background:var(--hair);padding:3px 9px;border-radius:980px;white-space:nowrap;align-self:center}
+  .ol li .ef{flex:none;font-size:12px;color:var(--sub);align-self:center;white-space:nowrap}
+
+  .two-col{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:18px}
+  .stat-strip{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:30px}
+  .stat{background:var(--card);border-radius:14px;padding:14px 20px;box-shadow:var(--shadow);text-align:center;min-width:130px}
+  .stat .n{font-size:28px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+  .stat .l{font-size:12px;color:var(--sub);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
+
+  footer{text-align:center;color:var(--sub);font-size:13px;margin-top:96px;padding-top:38px;border-top:1px solid var(--line);line-height:1.7}
+  footer code{font-size:11.5px}
+
+  /* Evidence accordions (v1.1.0) — granular data, collapsed by default. Hold EVIDENCE only, never solutions. */
+  details.eq{margin-top:16px;border:1px solid var(--line);border-radius:14px;background:rgba(0,113,227,.025);overflow:hidden}
+  details.eq>summary{list-style:none;cursor:pointer;padding:12px 16px;font-size:13px;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:9px;user-select:none}
+  details.eq>summary::-webkit-details-marker{display:none}
+  details.eq>summary .ico{flex:none;width:19px;height:19px;border-radius:50%;border:1.5px solid var(--blue);color:var(--blue);font-size:12px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;font-style:italic;line-height:1}
+  details.eq>summary .chev{margin-left:auto;transition:transform .2s;font-size:11px;color:var(--sub)}
+  details.eq[open]>summary .chev{transform:rotate(180deg)}
+  details.eq>summary:hover{background:rgba(0,113,227,.05)}
+  details.eq .eq-body{padding:6px 18px 18px}
+  details.eq .eq-body p{font-size:13.5px;color:var(--sub);margin:12px 0 0;line-height:1.6}
+  details.eq .eq-body p:first-child{margin-top:6px}
+  details.eq .eq-body ul{padding-left:20px;margin-top:10px;font-size:13.5px;color:#3a3a3c;line-height:1.6}
+  details.eq .eq-body .kv{margin:10px 0 0;font-size:13px}
+  details.eq .eq-body .kv th,details.eq .eq-body .kv td{padding:8px 10px}
+  .eq-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .eq-scroll .kv{min-width:560px}
+  @media(max-width:680px){
+    body{font-size:16px;padding:0 16px 80px}.hero{padding:56px 0 32px}
+    .panel,.callout,.limit{padding:24px 22px}
+    .item{flex-wrap:wrap}.item .eff{margin-left:0}
+    .ol li{flex-wrap:wrap}.ol li .src{margin-left:0}
+    .sec-h1{font-size:28px}
+    pre{font-size:11.5px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <div class="eyebrow">Launch Preservation Report · Ranking &amp; Answer-Engine Retention</div>
+  <h1>Event Solutions Productions</h1>
+  <p class="sub">Holding search and answer-engine visibility through the July replatform — corporate events, weddings, galas and team building across the San Francisco Bay Area, Lake Tahoe and Las Vegas.</p>
+  <p class="meta">
+    <b>eventsolutions-sf.com</b> &nbsp;·&nbsp; Astro on Vercel, content from Sanity CMS &nbsp;·&nbsp;
+    <b>182 live URLs crawled</b> and diffed against <b>74 pre-cutover URLs</b> &nbsp;·&nbsp; <b>20 August 2026</b>
+  </p>
+  <nav class="nav">
+    <a href="#exec">Summary</a><a href="#method">Methodology</a><a href="#scores">Scorecard</a>
+    <a href="#verdict">Launch Verdict</a><a href="#critical">Critical</a><a href="#high">High</a>
+    <a href="#schema">Schema &amp; AEO</a><a href="#index">Index Surface</a><a href="#content">Content</a>
+    <a href="#serp">SERP</a><a href="#entity">Brand Entity</a><a href="#measure">Measurement</a>
+    <a href="#roadmap">Roadmap</a><a href="#watch">What to Watch</a><a href="#limits">Limits</a>
+  </nav>
+</header>
+
+<div class="score-stage">
+  <div class="gauge" style="--val:54"><div class="inner"><div class="num">54</div><div class="den">SEO Health · /100</div></div></div>
+  <div class="verdict">Overall: <span>C&minus; · Moderate</span></div>
+  <p class="lead">The migration itself was executed well. Not one page was lost, not one page lost body copy, there are no 404s anywhere in the pre-launch URL set, every redirect is a single hop, and money pages answer in 130&nbsp;milliseconds. The risk to your rankings and your AI visibility is not in what visitors see — it is in the machine-readable layer underneath, which the rebuild replaced rather than carried across. Five structured-data types that were on every page before the launch are now on none or almost none of them, two-thirds of the URLs offered for recrawl are thin archives, the previous site is still published and still readable by every AI crawler, and two of the channels that would let you verify any of this lapsed at cutover.</p>
+  <div class="stat-strip">
+    <div class="stat"><div class="n">182</div><div class="l">live URLs crawled</div></div>
+    <div class="stat"><div class="n">74</div><div class="l">pre-launch URLs diffed</div></div>
+    <div class="stat"><div class="n">0</div><div class="l">pages that lost content</div></div>
+    <div class="stat"><div class="n">5</div><div class="l">schema types lost sitewide</div></div>
+    <div class="stat"><div class="n">125</div><div class="l">thin archives in the sitemap</div></div>
+    <div class="stat"><div class="n">8</div><div class="l">supporting documents</div></div>
+  </div>
+</div>
+
+<!-- ===== EXECUTIVE SUMMARY ===== -->
+<section id="exec">
+  <div class="sec-title">Executive Summary</div>
+  <h2 class="sec-h1">The one-page picture</h2>
+  <p class="sec-sub">For a 90-second read before the meeting.</p>
+
+  <div class="panel">
+    <h3>The launch did not damage your content — and that is the important part</h3>
+    <ul>
+      <li><b>Zero pages lost.</b> All 74 pre-launch URLs still resolve with a 200. No 404s, no 410s, no redirect chains — every redirect is a single hop.</li>
+      <li><b>Zero pages lost body copy.</b> The 62 pages present on both sides of the cutover were re-measured with <em>one</em> parser applied identically to old and new HTML. Not one page shrank. The homepage went 577&nbsp;&rarr;&nbsp;777 words, the corporate page 824&nbsp;&rarr;&nbsp;1,107.</li>
+      <li><b>The four empty template shells found on 25 July are fixed.</b> No page on the site now returns 200 with nothing in it.</li>
+      <li><b>Canonical discipline is complete and correct.</b> All 182 pages self-canonical, all on the <span class="c">www</span> host, all <span class="c">index, follow</span>. No staging <span class="c">noindex</span> survived the cutover.</li>
+      <li><b>Speed is a non-issue.</b> 130&ndash;140&nbsp;ms time-to-first-byte on money pages from Vercel's edge. This should not absorb any remediation budget.</li>
+      <li><b>Image accessibility is complete.</b> 4,046 images, <b>zero</b> missing <span class="c">alt</span> attributes. The 97 empty-alt cases are decorative and correctly marked.</li>
+      <li><b>Your <span class="c">llms.txt</span> is genuinely good.</b> 16&nbsp;KB, correctly structured, with a categorised page index carrying real descriptions. Most competitors in this category publish nothing here.</li>
+    </ul>
+  </div>
+
+  <div class="panel p-crit">
+    <h3>What actually threatens the rankings you are trying to hold</h3>
+    <ul>
+      <li><b>The structured-data layer was replaced, not ported.</b> <span class="c">BreadcrumbList</span> went from 74 pages to <b>0</b>. <span class="c">SearchAction</span> from 74 to <b>0</b>. <span class="c">WebSite</span> from 74 to <b>2</b>. <span class="c">Organization</span> and <span class="c">ImageObject</span> from 74 to about half. These are precisely the types answer engines and rich results depend on.</li>
+      <li><b>The previous WordPress site is still published.</b> It now blocks Googlebot — but explicitly allows every other crawler, including GPTBot, PerplexityBot and ClaudeBot. A self-canonical full duplicate of your content remains freely harvestable by exactly the systems this engagement is meant to protect. Raised on 6 August; still open.</li>
+      <li><b>Two-thirds of your sitemap is furniture.</b> 125 of 182 URLs are tag, category and author archives — up from 36 before the launch. Each now carries about 400 words of chrome around a handful of links. Only 57 URLs are pages a customer or an answer engine has any reason to read.</li>
+      <li><b>Your six revenue pages are half-duplicates of each other.</b> After stripping every phrase that appears on more than half the site, they remain 46&ndash;56% mutually identical. A holiday-party page and a City&nbsp;Hall wedding page share more than half their distinctive language.</li>
+      <li><b>Measurement lapsed at cutover.</b> Google Analytics survived. Google Tag Manager did not, and neither did the Search Console verification tag — so conversion tracking is likely incomplete and the ability to verify any of this may have lapsed with it.</li>
+      <li><b>Your best ranking could not be reproduced today.</b> <span class="c">/corporate-holiday-party-ideas/</span> ranked <b>#1</b> on 3&nbsp;August. It did not appear in today's pull. The page is alive, indexed and unchanged — but this was measured with a different instrument, so it needs a first-party check before it is treated as a loss.</li>
+    </ul>
+  </div>
+
+  <div class="callout">
+    <b>The shape of the problem.</b> Everything a person can see survived the launch. Everything a machine reads did not. That is an unusual failure mode and a favourable one — restoring machine-readable signals is template work at the layout level, not a rewrite of the site.
+  </div>
+</section>
+
+<!-- ===== LAUNCH VERDICT ===== -->
+<section id="verdict">
+  <div class="sec-title">Launch Acceptance</div>
+  <h2 class="sec-h1">What the July rebuild kept, moved, and dropped</h2>
+  <p class="sec-sub">Every pre-launch URL followed live; content measured with a single parser on both sides of the cutover.</p>
+
+  <div class="panel">
+    <h3>Cohorts</h3>
+    <table>
+      <tr><th>Cohort</th><th class="num">Count</th><th>Status</th></tr>
+      <tr><td>Pre-launch URLs still resolving 200</td><td class="num">74 / 74</td><td class="ok">No dead URLs</td></tr>
+      <tr><td>Preserved at the same path</td><td class="num">63</td><td class="ok">Direct 200</td></tr>
+      <tr><td>Redirected to a different path</td><td class="num">11</td><td class="warn">All 200, all single-hop</td></tr>
+      <tr><td>404 / 410</td><td class="num">0</td><td class="ok">None</td></tr>
+      <tr><td>Pages losing &gt;10% of body copy</td><td class="num">0</td><td class="ok">None</td></tr>
+      <tr><td>Empty template shells</td><td class="num">0</td><td class="ok">Fixed since 25 July</td></tr>
+    </table>
+  </div>
+
+  <div class="panel p-high">
+    <h3>Two redirects whose destination does not match the intent</h3>
+    <p>Nine of the eleven redirects are sound consolidations. Two are not.</p>
+    <ul>
+      <li><b><span class="c">/contact-us/</span> &rarr; homepage.</b> Redirecting a specific page to a site's root is the textbook soft-404 pattern: the destination does not satisfy the intent that earned the original URL, so accumulated equity dissipates rather than transferring. The new site has no dedicated contact URL at all.</li>
+      <li><b><span class="c">/lake-tahoe-event-planning-services/</span> &rarr; <span class="c">/corporate-event-planning/</span>.</b> 883 words of Tahoe-specific copy now land on a generic service hub. Lake Tahoe is one of three locations the business markets in its own schema, its own <span class="c">llms.txt</span> and its own homepage copy — and it no longer has a page. Meanwhile the site publishes a New York page for a market it does not serve.</li>
+    </ul>
+  </div>
+
+  <details class="eq">
+    <summary>Evidence — full redirect cohort with destination intent</summary>
+    <div class="eq-scroll">
+    <table>
+      <tr><th>Old URL</th><th class="num">Old words</th><th>Lands on</th><th class="num">Live words</th><th>Intent</th></tr>
+      <tr><td><span class="c">/las-vegas-event-planning-services/</span></td><td class="num">916</td><td><span class="c">/event-planning-las-vegas/</span></td><td class="num">893</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/lake-tahoe-event-planning-services/</span></td><td class="num">883</td><td><span class="c">/corporate-event-planning/</span></td><td class="num">1,107</td><td class="bad">Weak — geo intent lost</td></tr>
+      <tr><td><span class="c">/wedding-concierge/</span></td><td class="num">850</td><td><span class="c">/wedding-planning-services/</span></td><td class="num">1,092</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/san-francisco-event-planning-services/</span></td><td class="num">836</td><td><span class="c">/corporate-event-planning/</span></td><td class="num">1,107</td><td class="warn">Acceptable — but still holds a ranking</td></tr>
+      <tr><td><span class="c">/team/</span></td><td class="num">826</td><td><span class="c">/about-us/</span></td><td class="num">1,708</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/event-planning-services/</span></td><td class="num">738</td><td><span class="c">/corporate-event-planning/</span></td><td class="num">1,107</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/meeting-procurement-hotel-site-selection/</span></td><td class="num">646</td><td><span class="c">/venue-sourcing/</span></td><td class="num">769</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/blog/</span></td><td class="num">417</td><td><span class="c">/blogs/</span></td><td class="num">1,071</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/city-hall-weddings/</span></td><td class="num">369</td><td><span class="c">/sf-city-hall-wedding/</span></td><td class="num">1,062</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/partners/</span></td><td class="num">271</td><td><span class="c">/about-us/</span></td><td class="num">1,708</td><td class="ok">Sound</td></tr>
+      <tr><td><span class="c">/contact-us/</span></td><td class="num">191</td><td><span class="c">/</span></td><td class="num">777</td><td class="bad">Soft-404 pattern</td></tr>
+    </table>
+    </div>
+  </details>
+
+  <details class="eq">
+    <summary>Evidence — content parity, one parser applied to both sides</summary>
+    <div class="eq-scroll">
+    <p>The migration baseline TSV was produced by a different extractor from the one used here, so its word counts are not comparable to a fresh crawl. To avoid a false regression, the 62 pages present in both the pre-cutover raw HTML and today's crawl were re-measured with identical stripping and tokenising rules.</p>
+    <table>
+      <tr><th>Page</th><th class="num">Pre-launch</th><th class="num">Live</th><th class="num">&Delta;</th></tr>
+      <tr><td><span class="c">/floral-design-arrangements/</span></td><td class="num">660</td><td class="num">751</td><td class="num ok">+91</td></tr>
+      <tr><td><span class="c">/</span> (home)</td><td class="num">577</td><td class="num">777</td><td class="num ok">+200</td></tr>
+      <tr><td><span class="c">/wedding-planning-services/</span></td><td class="num">891</td><td class="num">1,092</td><td class="num ok">+201</td></tr>
+      <tr><td><span class="c">/corporate-event-planning/</span></td><td class="num">824</td><td class="num">1,107</td><td class="num ok">+283</td></tr>
+      <tr><td>Blog posts (36)</td><td class="num">&mdash;</td><td class="num">&mdash;</td><td class="num">uniformly &asymp; +400</td></tr>
+      <tr><td>Tag archives (&asymp;40)</td><td class="num">129&ndash;199</td><td class="num">530&ndash;586</td><td class="num warn">uniformly &asymp; +401</td></tr>
+    </table>
+    <p>The uniform +400 on posts and tags is the new sitewide chrome, not new editorial copy. A tag archive going 133&nbsp;&rarr;&nbsp;534 words is 401 words of furniture — which is why the index-surface finding treats these as thin regardless of what the word count reads.</p>
+    </div>
+  </details>
+</section>
+
+<!-- ===== SCORECARD ===== -->
+<section id="scores">
+  <div class="sec-title">Scorecard</div>
+  <h2 class="sec-h1">Seven lenses</h2>
+  <p class="sec-sub">Every score traces to a measurement in this run. Where a lens could not be measured, the score is held and marked with an asterisk rather than estimated.</p>
+  <div class="panel">
+    <table>
+      <tr><th>Lens</th><th class="num">Weight</th><th class="num">Score</th><th>What moved it</th></tr>
+      <tr><td><b>Technical</b></td><td class="num">22%</td><td class="num warn">53</td><td>Clean plumbing — no 404s, single-hop redirects, correct canonicals, fast edge. Held down by the published legacy duplicate, 125 thin archives offered for recrawl, no <span class="c">lastmod</span> anywhere, an indexable internal-search surface, and an unresolved apex/www index split.</td></tr>
+      <tr><td><b>Content</b></td><td class="num">23%</td><td class="num bad">45</td><td>No content was lost at launch. Held down by six revenue pages that are 46&ndash;56% mutually duplicate after boilerplate removal, no editorial internal linking in the commercial layer, two competing San Francisco geo pages, a New York page for an unserved market, and no Lake Tahoe page at all.</td></tr>
+      <tr><td><b>On-Page</b></td><td class="num">20%</td><td class="num warn">63</td><td>All 182 pages carry a unique title, a meta description and exactly one H1 — no duplicates, no missing. Held down by 42 titles over 60 characters (mostly brand-suffix duplication), 87 meta descriptions under 70 characters, and duplicate H1s between tag archives and their posts.</td></tr>
+      <tr><td><b>Schema</b></td><td class="num">10%</td><td class="num bad">48</td><td>Strong new commercial markup — <span class="c">LocalBusiness</span>, <span class="c">ProfessionalService</span>, <span class="c">Service</span> and <span class="c">Offer</span> on all 182 pages, complete NAP, five <span class="c">sameAs</span> profiles. Held down by five entity-graph types lost at the launch and by <span class="c">FAQPage</span>, <span class="c">Review</span> and <span class="c">AggregateRating</span> never having been present.</td></tr>
+      <tr><td><b>Performance</b></td><td class="num">10%</td><td class="num warn">55*</td><td><b>Held, not measured.</b> Lab timings are excellent — 130&ndash;140&nbsp;ms TTFB on money pages, HSTS set, Vercel edge. No Core Web Vitals <em>field</em> data was pulled this run, so the score is held at the standing placeholder rather than asserted. <b>No performance remediation is indicated.</b></td></tr>
+      <tr><td><b>GEO / AEO</b></td><td class="num">10%</td><td class="num bad">45</td><td>An excellent <span class="c">llms.txt</span> and a correct <span class="c">sameAs</span> block. Held down by the lost entity-graph markup, no <span class="c">FAQPage</span> or review markup, no feed of any kind, a same-named competing domain dominating brand search, and a legacy duplicate that every AI crawler may still read.</td></tr>
+      <tr><td><b>Images</b></td><td class="num">5%</td><td class="num ok">90</td><td>4,046 images, zero missing <span class="c">alt</span>, 97 correctly-marked decorative cases. Nothing to do here.</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    <b>On the number.</b> 54 against 51 on 3&nbsp;August. That is not a like-for-like comparison — this run is scoped to launch preservation rather than a full six-wave audit, so the lens inputs differ. The genuine improvements since 3&nbsp;August are real: the empty shells are fixed, canonical discipline is complete, and a robots directive now exists on the legacy host. The genuine regressions found here were present on 3&nbsp;August too but sat outside that run's scope, because nothing in a standard audit compares a site to what it used to be.
+  </div>
+</section>
+
+<!-- ===== CRITICAL ===== -->
+<section id="critical">
+  <div class="sec-title">Critical</div>
+  <h2 class="sec-h1">Six findings that put current visibility at risk</h2>
+  <p class="sec-sub">Ordered by threat to the rankings and AI visibility you are trying to hold.</p>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 1</div>
+    <h3>The previous WordPress site is still published, and every AI crawler can still read it</h3>
+    <p><span class="c">https://lightskyblue-porcupine-787632.hostingersite.com/</span> returns <b>HTTP 200</b>, 95,595 bytes, full page set intact, six weeks after cutover. Its <span class="c">sitemap_index.xml</span> also returns 200 and actively offers the full URL set.</p>
+    <p>Something did change since this was raised on 6 August. The host now serves a <span class="c">robots.txt</span> that disallows <b>Googlebot</b> — and explicitly allows <b>everything else</b>.</p>
+    <p><b>That is a partial fix that leaves the half this engagement is about untouched.</b> Two reasons:</p>
+    <ul>
+      <li><b>Blocking crawl does not remove anything from an index.</b> A URL Google has already indexed and can no longer fetch stays in the index — often for a long time, precisely because Google can no longer read the page to learn it should be dropped. The page still declares <span class="c">index, follow</span> and still canonicalises to <b>itself</b>, not to your domain — and Googlebot can no longer read either of those statements.</li>
+      <li><b>Every non-Google crawler retains full access.</b> That includes Bingbot, and it includes GPTBot, PerplexityBot, ClaudeBot, CCBot, Amazonbot and Applebot-Extended. For answer engines, nothing was fixed. A self-canonical full duplicate of your content, with the same title and the same positioning, remains freely harvestable on a domain you do not control and cannot update.</li>
+    </ul>
+    <div class="fix">
+      <b>Direction —</b> crawl-blocking is the wrong instrument for the outcome required here. What is needed is a disposition decision that removes the legacy property as an independent source for <em>all</em> agents, not one that hides it from a single crawler. The available mechanisms differ sharply in speed, in whether residual equity is preserved, and in whether they affect non-Google agents at all. Selecting among them, and sequencing that against the apex-to-www consolidation already in flight, is part of the engagement scope.
+    </div>
+  </div>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 2</div>
+    <h3>Five structured-data types present on every page before the launch are now on none or almost none</h3>
+    <p>The rebuild replaced the structured-data layer rather than porting it. The new layer is stronger commercially and weaker on exactly the entity-graph types that rich results and answer engines depend on.</p>
+    <table>
+      <tr><th>Type</th><th class="num">Pre-launch (of 74)</th><th class="num">Live (of 182)</th><th>Verdict</th></tr>
+      <tr><td><span class="c">BreadcrumbList</span></td><td class="num">74</td><td class="num bad">0</td><td class="bad">Lost sitewide</td></tr>
+      <tr><td><span class="c">SearchAction</span></td><td class="num">74</td><td class="num bad">0</td><td class="bad">Lost sitewide</td></tr>
+      <tr><td><span class="c">WebSite</span></td><td class="num">74</td><td class="num bad">2</td><td class="bad">Lost on 180 pages</td></tr>
+      <tr><td><span class="c">Organization</span></td><td class="num">74</td><td class="num warn">36</td><td class="warn">Blog posts only</td></tr>
+      <tr><td><span class="c">ImageObject</span></td><td class="num">74</td><td class="num warn">37</td><td class="warn">Blog posts only</td></tr>
+    </table>
+    <p><b>Why each one costs you.</b> <span class="c">BreadcrumbList</span> is what produces the site-hierarchy path instead of a raw URL in a search result, and it is one of the few explicit statements a page makes about where it sits in a site — three of the four competitors benchmarked on 3 August carry it, so the site went from parity to absent. <span class="c">SearchAction</span> forecloses the sitelinks search box. <span class="c">WebSite</span> is the anchor node of a site's entity graph: 180 pages now assert a business without asserting the site that publishes them, which is exactly the join an answer engine needs when assembling a citation.</p>
+    <p><b>What the launch gained</b>, in fairness: <span class="c">LocalBusiness</span> and <span class="c">ProfessionalService</span> now on all 182 pages where the old site had them on 74; <span class="c">Service</span> and <span class="c">Offer</span> newly present sitewide; <span class="c">BlogPosting</span> correctly replacing generic <span class="c">Article</span>; <span class="c">Person</span> up from 19 to 37 pages; and a complete <span class="c">sameAs</span> block covering LinkedIn, Facebook, Instagram, Yelp and Pinterest. The entity data itself is good. It is the graph wiring around it that thinned.</p>
+    <div class="fix">
+      <b>Direction —</b> restoring the five lost types is template work at the layout level rather than per-page work, and it returns the site to its own pre-launch parity — a restoration, not an enhancement. The <span class="c">@id</span> graph wiring, node placement and validation pass are part of the engagement scope.
+    </div>
+  </div>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 3</div>
+    <h3>Two-thirds of the URLs offered for recrawl are thin archives — during the window when recrawl matters most</h3>
+    <p>The relaunch carried the WordPress tag taxonomy across intact and then grew it: <b>36 archive pages before, 125 today</b>. All 125 sit in the sitemap, all are <span class="c">index, follow</span>.</p>
+    <p>Only <b>57 of 182 sitemap URLs (31%)</b> are pages a customer or an answer engine has any reason to read.</p>
+    <p>The archives look substantial and are not. Measured with one parser on both sides:</p>
+    <table>
+      <tr><th>Tag archive</th><th class="num">Pre-launch</th><th class="num">Live</th><th class="num">&Delta;</th></tr>
+      <tr><td><span class="c">/tag/moscone-center/</span></td><td class="num">134</td><td class="num">535</td><td class="num warn">+401</td></tr>
+      <tr><td><span class="c">/tag/hungry-tables/</span></td><td class="num">134</td><td class="num">535</td><td class="num warn">+401</td></tr>
+      <tr><td><span class="c">/tag/concierge-services/</span></td><td class="num">133</td><td class="num">534</td><td class="num warn">+401</td></tr>
+      <tr><td><span class="c">/tag/lake-tahoe/</span></td><td class="num">133</td><td class="num">534</td><td class="num warn">+401</td></tr>
+      <tr><td><span class="c">/tag/sanfrancisco/</span></td><td class="num">133</td><td class="num">532</td><td class="num warn">+399</td></tr>
+    </table>
+    <p>The delta is a constant +399 to +401 across every archive. That constant <em>is</em> the new header, footer and CTA block — not one word of it is unique to the tag. Several tags exist for a single post (<span class="c">/tag/moscone-center/</span>, <span class="c">/tag/hungry-tables/</span>, <span class="c">/tag/sustainable-lighiting/</span> — spelling as published), which makes them duplicates of that post's own entry with nothing added.</p>
+    <p><b>Why this is urgent now rather than background noise.</b> After a replatform, Google recrawls to re-establish what a site is. Two-thirds of what you are offering for that recrawl is near-identical filler, which slows recovery of the 57 pages that matter. Compounding it: <b>not one of the 182 sitemap entries carries a <span class="c">lastmod</span> date</b> — the single mechanism for telling Google which URLs actually changed at cutover is unused, at the exact moment it would have had the most value.</p>
+    <div class="fix">
+      <b>Direction —</b> three levers apply, in descending order of effect: decide the index status of the 125 archives and align the sitemap to that decision; add change dates so recrawl can be prioritised; and close the indexable internal-search surface. Which archives are consolidated, which are pruned and which are kept — and the migration path for each — is part of the engagement scope.
+    </div>
+  </div>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 4</div>
+    <h3>The six revenue pages are half-duplicates of one another</h3>
+    <p>Body text was tokenised into five-word phrases across all 56 pages and posts. Every phrase appearing on more than half the site — 505 of them, the navigation, footer and CTA — was removed as sitewide boilerplate. What remains is each page's own language. On that basis:</p>
+    <table>
+      <tr><th class="num">Similarity</th><th>Page A</th><th>Page B</th></tr>
+      <tr><td class="num bad">0.56</td><td><span class="c">/holiday-parties/</span></td><td><span class="c">/team-building-events/</span></td></tr>
+      <tr><td class="num bad">0.54</td><td><span class="c">/sf-city-hall-wedding/</span></td><td><span class="c">/team-building-events/</span></td></tr>
+      <tr><td class="num bad">0.52</td><td><span class="c">/milestone-celebrations/</span></td><td><span class="c">/team-building-events/</span></td></tr>
+      <tr><td class="num bad">0.52</td><td><span class="c">/holiday-parties/</span></td><td><span class="c">/sf-city-hall-wedding/</span></td></tr>
+      <tr><td class="num bad">0.51</td><td><span class="c">/corporate-event-planning/</span></td><td><span class="c">/holiday-parties/</span></td></tr>
+    </table>
+    <p>Every pair among the six primary revenue pages exceeds 0.46. A corporate holiday party page and a City&nbsp;Hall wedding page — targeting entirely different searchers — share more than half their distinctive language. There is a second layer of shared template copy beneath the sitewide chrome, and it is substantial enough that these pages compete with each other rather than each owning a query.</p>
+    <p>Eight service pages are <b>under 40% unique</b>. The thinnest by unique content is <span class="c">/event-planning-new-york/</span> at 33%.</p>
+    <div class="fix">
+      <b>Direction —</b> the commercial layer needs differentiation before it needs anything else — the shared template has to carry less of each page's weight, and each page has to own a distinct query. Which sections are replaced and what replaces them is part of the engagement scope.
+    </div>
+  </div>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 5</div>
+    <h3>Measurement lapsed at cutover — including, possibly, the ability to verify anything in this report</h3>
+    <table>
+      <tr><th>Signal</th><th>Pre-launch</th><th>Live</th><th>Status</th></tr>
+      <tr><td>GA4 measurement ID</td><td><span class="c">G-CQ7SL4ESSY</span></td><td><span class="c">G-CQ7SL4ESSY</span></td><td class="ok">Preserved</td></tr>
+      <tr><td>Google Tag Manager container</td><td><span class="c">GTM-MGWBSRV</span> on 74 pages</td><td>absent</td><td class="bad">Dropped</td></tr>
+      <tr><td>Search Console verification meta</td><td>present sitewide</td><td>absent on all 182</td><td class="bad">Removed</td></tr>
+    </table>
+    <p><b>Analytics survived</b> — the same GA4 property fires on the new site, so session and conversion history is continuous across the cutover. That is the single most important thing to have got right, and it was.</p>
+    <p><b>Tag Manager did not.</b> Everything that fired <em>through</em> that container is no longer firing — on a site of this shape that typically means conversion events, remarketing audiences and ad-platform pixels, none of which appear inline on the new site either. Post-launch conversion measurement is likely materially incomplete, and any paid-media audience fed by those tags has been decaying since cutover.</p>
+    <p><b>The verification tag is gone, and that needs a first-party check rather than an assumption.</b> Search Console verification can also be held by DNS record, a GA4 link, or a Tag Manager link — none of which is visible from outside. But two of those three are relevant here: Tag Manager is gone, and the HTML method is gone. Stated precisely: <b>both externally observable verification methods that existed pre-launch are absent post-launch.</b> Whether the property is still verified can only be answered inside Search Console — and it gates every other recommendation in this report, because verifying the holiday-party ranking, tracking apex-to-www consolidation, and reading index coverage on the 125 archives all depend on that data.</p>
+    <div class="fix">
+      <b>Direction —</b> confirm verification status first, because it gates the ability to verify everything else. Then re-establish tag management and audit which conversion events are currently unmeasured. Container rebuild scope and the event taxonomy are part of the engagement scope.
+    </div>
+  </div>
+
+  <div class="panel p-crit">
+    <div class="tag crit">Critical 6</div>
+    <h3>The site's best ranking could not be reproduced today — and needs first-party verification before it is called a loss</h3>
+    <p>On 3 August, <span class="c">/corporate-holiday-party-ideas/</span> ranked <b>#1</b> for <em>corporate holiday party ideas San Francisco</em>. In today's pull the domain does not appear anywhere in that result set; the results are venue pages and listicles.</p>
+    <p><b>What is confirmed:</b> the page is alive, unchanged and indexed. It returns 200, sits in the sitemap, carries <span class="c">index, follow</span>, grew from 2,279 to 2,680 words at the launch, and a targeted search surfaces it directly.</p>
+    <p><b>What is not confirmed:</b> that the position was actually lost. The 3 August baseline came from a Google SERP scraper returning ranked organic positions; that tool's quota is exhausted, so today's reading came from a <b>different instrument</b> whose ordinals are not interchangeable with Google positions. Two instruments, one query, six weeks apart, on a <em>seasonal</em> term whose competitive set reshapes as autumn approaches. The honest statement is that the site's single best ranking could not be reproduced and the reason is not yet known.</p>
+    <p>Two contributing factors are measured and hold regardless of which instrument is right:</p>
+    <ul>
+      <li>The page receives <b>8 internal links</b>, against 181 for every page in the navigation. The site's strongest asset is one of its least internally supported.</li>
+      <li>It lost <span class="c">BreadcrumbList</span> and <span class="c">Organization</span> markup at the launch along with every other page.</li>
+    </ul>
+    <div class="fix">
+      <b>Direction —</b> settle this against Search Console impressions and average position for that query before treating it as a ranking loss or spending remediation effort on it. Search Console is authoritative where an external pull is not. If the loss is real, the internal-linking and markup factors above are where the recovery work starts — scoping that is part of the engagement scope.
+    </div>
+  </div>
+</section>
+
+<!-- ===== HIGH ===== -->
+<section id="high">
+  <div class="sec-title">High Priority</div>
+  <h2 class="sec-h1">Findings that shape recovery speed and answer-engine standing</h2>
+
+  <div class="panel p-high" id="serp">
+    <div class="tag">High</div>
+    <h3>Google is still ranking the apex host, not the canonical <span class="c">www</span> host</h3>
+    <p>Every appearance of the site in today's results resolves to <span class="c">https://eventsolutions-sf.com/</span> — the apex, which 308s — while other pages surface on <span class="c">www</span>. The site's own signals are unanimously <span class="c">www</span>: all 182 canonicals, the robots.txt sitemap directive, every sitemap entry, and a clean 308 from apex.</p>
+    <p><b>This is not a canonical-tag defect.</b> The declarations are correct and consistent. It is Google still carrying pre-launch apex URLs and not yet having consolidated onto the declared host — expected behaviour weeks after a cutover, and normally self-resolving.</p>
+    <p>It matters here because of what else is true at the same time: the pages ranking under a redirecting apex URL are exactly the pages whose signals are mid-transfer, and anything that slows recrawl — 125 thin archives, no change dates — slows that consolidation. The same pattern applies to <span class="c">/san-francisco-event-planning-services/</span>, a redirected legacy URL that held the <em>corporate event planner Bay Area</em> ranking on 3 August rather than its destination.</p>
+  </div>
+
+  <div class="panel p-high" id="entity">
+    <div class="tag">High</div>
+    <h3>A larger company with the same name is winning your brand searches</h3>
+    <p>A brand-scoped search in this run returned a result set dominated by <b><span class="c">eventsolutions.com</span></b> — a different, larger operator trading under the same name, which publishes a <span class="c">/locations/san-francisco/</span> page and holiday-party content targeting the same Bay Area terms. Five of six results were the other property.</p>
+    <p>For classic search this is competition. <b>For answer engines it is worse.</b> An assistant asked about "Event Solutions" for San Francisco events has two same-named entities to disambiguate, and the larger domain wins on nearly every signal a language model weighs.</p>
+    <p>Your defence is entity distinctiveness — <span class="c">sameAs</span> profiles, <span class="c">LocalBusiness</span> NAP, named people, review markup, and content unmistakably rooted in the Bay Area. The <span class="c">sameAs</span> block is in place and correct. The <span class="c">Organization</span> and <span class="c">WebSite</span> graph wiring that would tie it together is exactly what the launch removed. And the legacy WordPress duplicate adds a <em>third</em> same-content property to the disambiguation problem.</p>
+  </div>
+
+  <div class="panel p-high" id="index">
+    <div class="tag">High</div>
+    <h3>The commercial layer has no editorial internal linking at all</h3>
+    <p>All 4,316 internal links on the site were resolved and classified. <b>There are zero orphans</b> — every URL is reachable. But stripping navigation, header and footer and counting only links inside the body:</p>
+    <table>
+      <tr><th>Page</th><th class="num">Body words</th><th class="num">In-body internal links</th></tr>
+      <tr><td><span class="c">/corporate-event-planning/</span></td><td class="num">1,107</td><td class="num bad">3</td></tr>
+      <tr><td><span class="c">/wedding-planning-services/</span></td><td class="num">1,092</td><td class="num bad">3</td></tr>
+      <tr><td><span class="c">/milestone-celebrations/</span></td><td class="num">1,092</td><td class="num bad">3</td></tr>
+      <tr><td><span class="c">/sf-city-hall-wedding/</span></td><td class="num">1,062</td><td class="num bad">3</td></tr>
+      <tr><td><span class="c">/holiday-parties/</span></td><td class="num">1,041</td><td class="num bad">3</td></tr>
+      <tr><td><span class="c">/about-us/</span></td><td class="num">1,708</td><td class="num bad">3</td></tr>
+      <tr><td>every other service page</td><td class="num">723&ndash;832</td><td class="num bad">3</td></tr>
+      <tr><td>Blog posts (best case)</td><td class="num">1,281&ndash;3,039</td><td class="num warn">9&ndash;10</td></tr>
+    </table>
+    <p>Every commercial page carries exactly three in-body links — the same three, from a shared CTA component. The 181 inbound links each money page receives are all global navigation, which distributes identically everywhere and therefore differentiates nothing. After a replatform, internal linking is one of the main ways you re-signal to Google which pages matter. That signal is currently flat across the whole site.</p>
+  </div>
+
+  <div class="panel p-high" id="content">
+    <div class="tag">High</div>
+    <h3>The geo page set does not match the markets the business serves</h3>
+    <ul>
+      <li><b>Two competing San Francisco pages.</b> <span class="c">/event-planning-san-francisco/</span> (956 words, published after 3 August) and <span class="c">/event-planning-san-francisco-25-years/</span> (808 words, 34% unique) are both live, both indexable, both self-canonical, both targeting the same city and service. Direct cannibalisation on the single most important geographic term — and introduced <em>after</em> the relaunch, not by it.</li>
+      <li><b>A New York page for a market with no presence.</b> <span class="c">/event-planning-new-york/</span> is 723 words, 33% unique, and carries the same <span class="c">LocalBusiness</span> markup with San Francisco NAP and geo coordinates as every other page. The business markets three locations in its own schema, its own <span class="c">llms.txt</span> and its own homepage copy — New York is in none of them. A thin, templated, geo-targeted page for an unserved market carrying another city's address in its structured data is the shape Google's guidelines describe as a doorway page, and it is a liability on a site currently being re-evaluated.</li>
+      <li><b>No Lake Tahoe page at all.</b> The pre-launch site had one; it now redirects into the generic corporate hub. The site markets Tahoe and ranks a Tahoe blog post, but has no Tahoe service page — while carrying a New York page for a market it does not serve.</li>
+    </ul>
+  </div>
+
+  <div class="panel p-high" id="schema">
+    <div class="tag">High</div>
+    <h3>Three answer-engine surfaces are missing, and one was lost at the launch</h3>
+    <ul>
+      <li><b>No <span class="c">FAQPage</span> markup anywhere.</b> The service pages already contain question-shaped headings and answer prose. The content exists; the markup that makes it extractable does not. This is the cheapest AEO win available on the site.</li>
+      <li><b>No <span class="c">Review</span> or <span class="c">AggregateRating</span> markup.</b> The business has a <b>4.9&#9733; / 74-review</b> Yelp profile and expresses none of that reputation in machine-readable form on its own site. <b>No competitor benchmarked on 3 August carries review markup either</b> — this is uncontested ground available to whoever claims it first.</li>
+      <li><b>No feed of any kind.</b> <span class="c">/rss.xml</span> and <span class="c">/feed.xml</span> both 404, and the old WordPress <span class="c">/feed/</span> URL now redirects to the <span class="c">/blogs/</span> HTML page. Every aggregator and syndication consumer that read that feed pre-launch now receives a web page. Syndication is a launch casualty with nothing replacing it.</li>
+      <li><b>No <span class="c">llms-full.txt</span></b> (404). The index exists; the full-content companion does not.</li>
+    </ul>
+  </div>
+
+  <div class="panel p-high">
+    <div class="tag">High</div>
+    <h3>Title and description hygiene across 182 pages</h3>
+    <p>Every page has a unique title, a meta description and exactly one H1 — there are no duplicates and nothing missing, which is better than most sites of this size. Three patterns are worth correcting:</p>
+    <ul>
+      <li><b>42 titles exceed 60 characters</b>, mostly through brand-suffix duplication. The longest runs to 101 characters — a tag archive whose title repeats the full post headline and then appends both "Tag" and the brand.</li>
+      <li><b>87 meta descriptions are under 70 characters</b>, concentrated in the archive pages, leaving Google to write the snippet itself.</li>
+      <li><b>Duplicate H1s between tag archives and their posts</b> — the archive and the article it lists share the same heading, which is a duplication signal on top of a thin page.</li>
+    </ul>
+  </div>
+
+  <div class="panel p-high">
+    <div class="tag">High</div>
+    <h3>Internal search results are indexable</h3>
+    <p><span class="c">/?s=wedding</span> returns <b>HTTP 200</b> with <span class="c">index, follow</span>. Search-result URLs are indexable and unbounded in number. Nothing currently links to them, so this is exposure rather than an active problem — but it is an open surface on a site already carrying 125 thin pages, and it sits oddly beside the removal of <span class="c">SearchAction</span> markup: the site has an indexable search surface it no longer declares.</p>
+  </div>
+
+  <div class="fix">
+    <b>Direction —</b> the high-priority findings divide cleanly. Host consolidation and legacy-URL signal transfer are watch-and-verify items rather than build items; they resolve on their own if the recrawl path is cleared. Brand-entity defence, editorial internal linking, the geo page set and the missing answer-engine surfaces are build items, and they are the ones that decide whether the site comes out of this launch stronger than it went in. Which of them run first, and how they sequence against the critical items above, is set within the engagement scope.
+  </div>
+</section>
+
+<!-- ===== MEASUREMENT ===== -->
+<section id="measure">
+  <div class="sec-title">Measurement</div>
+  <h2 class="sec-h1">What is not a risk, and should not absorb budget</h2>
+  <p class="sec-sub">Named explicitly so remediation effort is not spent where there is nothing to fix.</p>
+  <div class="panel">
+    <table>
+      <tr><th>Area</th><th>Measurement</th><th>Verdict</th></tr>
+      <tr><td>Availability</td><td>74/74 pre-launch URLs return 200; zero 404s; every redirect single-hop</td><td class="ok">Settled</td></tr>
+      <tr><td>Content integrity</td><td>62 pages re-measured with one parser both sides; zero lost body copy</td><td class="ok">Settled</td></tr>
+      <tr><td>Crawl access</td><td>All 182 <span class="c">index, follow</span>, self-canonical, <span class="c">www</span>, consistent</td><td class="ok">Settled</td></tr>
+      <tr><td>Empty shells</td><td>Zero pages return 200 with chrome-only content</td><td class="ok">Fixed since 25 July</td></tr>
+      <tr><td>Server response</td><td>TTFB 130&ndash;140&nbsp;ms on money pages; HSTS <span class="c">max-age=63072000</span>; Vercel edge</td><td class="ok">Strong</td></tr>
+      <tr><td>Image accessibility</td><td>4,046 images, zero missing <span class="c">alt</span>, 97 correctly decorative</td><td class="ok">Complete</td></tr>
+      <tr><td>Analytics continuity</td><td>GA4 <span class="c">G-CQ7SL4ESSY</span> preserved across cutover</td><td class="ok">Preserved</td></tr>
+      <tr><td><span class="c">llms.txt</span></td><td>16&nbsp;KB, HTTP 200, categorised index with real descriptions</td><td class="ok">Above category norm</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    <b>Only one page was slower than the rest.</b> <span class="c">/blogs/</span> returned in 590&nbsp;ms against 130&ndash;140&nbsp;ms elsewhere, on a response marked <span class="c">x-vercel-cache: STALE</span> — a cache miss rather than a page problem. Worth a second look only if it recurs.
+  </div>
+</section>
+
+<!-- ===== ROADMAP ===== -->
+<section id="roadmap">
+  <div class="sec-title">Roadmap</div>
+  <h2 class="sec-h1">Sequence</h2>
+  <p class="sec-sub">Ordered by what protects current visibility soonest. Effort and delivery sequencing are set within the engagement scope.</p>
+
+  <div class="group">
+    <h3>First — restore the ability to see what is happening</h3>
+    <ol class="ol">
+      <li>Confirm Search Console verification status. Both externally observable verification methods were removed at cutover. This gates everything else in this list.</li>
+      <li>Settle the <span class="c">/corporate-holiday-party-ideas/</span> question against first-party impressions and average position, rather than against a second external pull.</li>
+      <li>Re-establish a like-for-like ranking instrument so 3 August, today, and every future reading are comparable.</li>
+      <li>Establish an answer-engine citation baseline <em>while</em> the brand-collision and legacy-duplicate conditions still exist, so that fixing them has a measurable before and after.</li>
+    </ol>
+  </div>
+
+  <div class="group">
+    <h3>Second — stop the active leaks</h3>
+    <ol class="ol">
+      <li>Decide the disposition of the legacy WordPress property so it stops being an independent source for <em>all</em> agents, not just Googlebot.</li>
+      <li>Restore <span class="c">BreadcrumbList</span>, <span class="c">WebSite</span>/<span class="c">SearchAction</span> and <span class="c">Organization</span> to sitewide coverage — returning the site to its own pre-launch parity.</li>
+      <li>Re-establish tag management and audit which conversion events are currently unmeasured.</li>
+      <li>Resolve the two San Francisco geo pages into one, and decide the New York page and the missing Lake Tahoe page together.</li>
+    </ol>
+  </div>
+
+  <div class="group">
+    <h3>Third — clear the recovery path</h3>
+    <ol class="ol">
+      <li>Decide the index status of the 125 archives and align the sitemap to that decision.</li>
+      <li>Add change dates to the sitemap so recrawl can be prioritised.</li>
+      <li>Close the indexable internal-search surface.</li>
+      <li>Fix the redirect destinations that do not match intent — the contact page in particular.</li>
+      <li>Correct the 42 over-length titles and the 87 short meta descriptions.</li>
+    </ol>
+  </div>
+
+  <div class="group">
+    <h3>Fourth — build the advantage</h3>
+    <ol class="ol">
+      <li>Add <span class="c">FAQPage</span> markup to the question-and-answer content the service pages already contain.</li>
+      <li>Add <span class="c">Review</span> and <span class="c">AggregateRating</span> markup — uncontested by every competitor benchmarked.</li>
+      <li>Differentiate the six revenue pages so each owns a distinct query instead of competing with the other five.</li>
+      <li>Build genuine editorial internal linking from the blog corpus into the commercial pages, starting with the pages that already rank.</li>
+      <li>Restore a feed so syndication consumers have something to read again.</li>
+      <li>Give the wedding page the named-principal treatment the competing results all use.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== WHAT TO WATCH ===== -->
+<section id="watch">
+  <div class="sec-title">What to Watch</div>
+  <h2 class="sec-h1">Four readings that define whether the launch is settling</h2>
+  <div class="panel">
+    <table>
+      <tr><th>Reading</th><th>Healthy</th><th>Unhealthy</th></tr>
+      <tr><td><b>Query-level position, first-party</b></td><td>Impressions and average position stable, or seasonally rising into autumn for holiday terms</td><td class="bad">A step change in average position dated near or after cutover</td></tr>
+      <tr><td><b>Apex &rarr; www consolidation</b></td><td>Apex URLs steadily giving way to <span class="c">www</span> in index coverage</td><td class="bad">The split persisting, or apex URLs still ranking two to three months out</td></tr>
+      <tr><td><b>Legacy URL signal transfer</b></td><td>Destination URLs replacing redirected legacy URLs in results</td><td class="bad">Legacy URLs still ranking months out, or the ranking vanishing without the destination picking it up</td></tr>
+      <tr><td><b>Indexed count vs intended</b></td><td>Indexed count converging on the URLs actually meant to be indexed</td><td class="bad">Indexed count tracking all 182, or coverage filling with "Crawled &ndash; currently not indexed" on the archives</td></tr>
+    </table>
+  </div>
+  <div class="callout">
+    <b>Answer-engine visibility has no baseline yet.</b> Nothing has re-measured it since 25 July, and the tooling for it was unavailable in this run. Two conditions make establishing one urgent rather than routine: a same-named larger domain is currently winning brand search, and a full self-canonical duplicate of your content remains readable by every AI crawler. Whether assistants are citing you, the other company, or the old site is measurable — and currently unmeasured.
+  </div>
+</section>
+
+<!-- ===== METHODOLOGY ===== -->
+<section id="method">
+  <div class="sec-title">Methodology</div>
+  <h2 class="sec-h1">How this was measured</h2>
+  <p class="sec-sub">Every figure in this report traces to a measurement taken on 20 August 2026. Nothing is estimated.</p>
+  <div class="panel">
+    <ul>
+      <li><b>Fresh crawl.</b> All 182 sitemap URLs fetched on 20 August and cached to disk. Every subsequent measurement reads that cache — nothing was re-fetched or inferred.</li>
+      <li><b>Launch acceptance diff.</b> The 74 pre-launch URLs from the 14 July migration baseline were each followed live to record status, redirect count and final destination. The 74 raw pre-cutover HTML files were re-parsed with the <em>same</em> extractor used on the live crawl, so old and new word counts are directly comparable — the standard trap in migration audits, and the reason this report can state that no content was lost.</li>
+      <li><b>Structured data.</b> JSON-LD parsed from served HTML on both sides, with <span class="c">@type</span> collected recursively through nested nodes. Identical detection on both sides, so the diff holds regardless of parser quirks.</li>
+      <li><b>Content uniqueness.</b> Five-word phrase shingles across all 56 pages and posts; phrases appearing on more than half the site removed as boilerplate; pairwise similarity computed on what remained.</li>
+      <li><b>Link graph.</b> Every anchor in every cached page resolved to an absolute URL and classified. In-body counts exclude navigation, header and footer.</li>
+      <li><b>Live search.</b> Same-day pulls for the query set used in the 3 August benchmark, plus brand-scoped queries.</li>
+      <li><b>Supporting documents.</b> Eight companion documents hold the full per-URL evidence behind every section of this report.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== LIMITS ===== -->
+<section id="limits">
+  <div class="sec-title">Limits</div>
+  <h2 class="sec-h1">What this report could not measure</h2>
+  <p class="sec-sub">Stated rather than estimated. An audit that fills gaps with plausible numbers is worse than one that names them.</p>
+  <div class="panel p-high">
+    <table>
+      <tr><th>Channel</th><th>Status</th><th>Consequence</th></tr>
+      <tr><td>Search Console — impressions, position, coverage</td><td class="bad">Not available</td><td>No first-party ranking or index data. Every ranking statement here is external inference.</td></tr>
+      <tr><td>Google SERP scraper</td><td class="bad">Monthly quota exhausted</td><td>Position readings came from a different instrument. Presence and absence are reliable; ordinal shifts are not comparable to 3 August.</td></tr>
+      <tr><td>AI Overview / AI Mode / ChatGPT / Perplexity capture</td><td class="bad">Not run — same quota</td><td><b>Answer-engine citation behaviour is not measured in this report.</b> The AEO findings describe the machine-readable surface that <em>feeds</em> those engines, not observed citations.</td></tr>
+      <tr><td>Core Web Vitals field data (CrUX / PSI)</td><td class="bad">Not pulled</td><td>Performance score held at the standing placeholder rather than asserted. Lab timings are excellent and no remediation is indicated.</td></tr>
+      <tr><td>Rendered DOM</td><td class="warn">Not captured</td><td>All measurements are of served HTML. The site is server-rendered and structured data was found inline on every page, so client-side injection is unlikely — but it is not disproven.</td></tr>
+      <tr><td>Geo-emulated search</td><td class="warn">Not used</td><td>No pull pinned a San Francisco location. Local-intent results vary substantially by searcher location.</td></tr>
+      <tr><td>Legacy host full crawl</td><td class="warn">Root document only</td><td>The legacy property's complete page set was not re-crawled. Its root document, robots.txt and live sitemap are the evidence base.</td></tr>
+      <tr><td>Pre-launch inventory completeness</td><td class="warn">Baseline scope</td><td>The migration baseline enumerates pages, posts and tags. Any old URL absent from both it and the raw pre-cutover cache cannot be tested.</td></tr>
+    </table>
+  </div>
+</section>
+
+<footer class="foot">
+  <p><b>Launch Preservation Report · eventsolutions-sf.com · 20 August 2026</b></p>
+  <p>182 live URLs crawled and diffed against 74 pre-cutover URLs. Full per-URL evidence is held in <b>eight supporting documents</b> filed alongside this report.</p>
+  <p class="src">Prepared for Event Solutions Productions, Inc. Findings are diagnostic. Implementation, remediation sequencing and the answer-engine baseline are set within the engagement scope.</p>
+</footer>
+
+</div>
+</body>
+</html>
